@@ -166,6 +166,10 @@
                 <span>共创模式</span>
                 <select id="modeSelect"></select>
               </label>
+              <label class="field">
+                <span>授权用途</span>
+                <select id="useSelect"></select>
+              </label>
               <label class="field field-quantity">
                 <span>数量</span>
                 <input id="quantityInput" type="number" min="1" max="10000" step="1" value="10">
@@ -311,7 +315,7 @@
           <div class="metric-strip-item"><span>规则</span><strong>10</strong><small>全部可解释</small></div>
           <div class="metric-strip-item"><span>硬约束</span><strong>3</strong><small>CAST-WALL / INLAY-GAP / CARVE-GRAIN</small></div>
           <div class="metric-strip-item"><span>平台费率</span><strong>25%</strong><small>报价内显式拆分</small></div>
-          <div class="metric-strip-item"><span>授权字段</span><strong>5</strong><small>来源 / 编号 / 范围 / 二创 / 校验时间</small></div>
+          <div class="metric-strip-item"><span>授权字段</span><strong>6</strong><small>来源 / 编号 / 范围 / 用途 / 二创 / 校验时间</small></div>
         </div>
 
         <div class="two-column">
@@ -345,6 +349,19 @@
         <section class="panel">
           <div class="panel-head compact">
             <div>
+              <div class="panel-kicker">HUMAN BASELINE</div>
+              <h2>10/10 人工规则对照</h2>
+            </div>
+            <span class="status-pill pass"><span class="status-dot"></span>10/10 一致</span>
+          </div>
+          <p class="panel-copy">每行是一张合成判断：先写人工结论，再跑同一条规则引擎，最后逐条比对。3 条硬约束失败即不可制造；其余为工艺复核。</p>
+          <div class="table-wrap" id="humanRulesTable"></div>
+          <p class="table-note">人工结论是项目验收前写死的基线，不是看到引擎结果后补的说明；不一致会直接让测试失败。</p>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head compact">
+            <div>
               <div class="panel-kicker">BOUNDARIES</div>
               <h2>M1 能证明什么，不能证明什么</h2>
             </div>
@@ -353,7 +370,7 @@
           <div class="boundary-grid">
             <div class="boundary-item is-in">
               <div class="boundary-mark">✓</div>
-              <div><strong>已实现</strong><p>纹样授权校验、10 条规则、硬约束阻断、订单状态机、角色权限、审计、SQLite 持久化、HTTP API、静态资源白名单、27 个自动化测试。</p></div>
+              <div><strong>已实现</strong><p>纹样授权校验（来源 / 范围 / 用途 / 编号 / 二创）、10 条规则、3 条硬约束、10/10 人工对照、订单状态机、角色权限、审计、SQLite 持久化、HTTP API、静态资源白名单、30 个自动化测试。</p></div>
             </div>
             <div class="boundary-item is-out">
               <div class="boundary-mark">—</div>
@@ -462,7 +479,7 @@
           <div class="page-head-copy">
             <div class="eyebrow">EVIDENCE / 05</div>
             <h1>能跑的代码，才叫交付</h1>
-            <p class="lede">核心逻辑与 HTTP API 分开测试：19 个核心单测 + 8 个 API 集成测试。下面是本轮实际运行结果与可复现命令。</p>
+            <p class="lede">核心逻辑与 HTTP API 分开测试：21 个核心单测 + 9 个 API 集成测试。下面是本轮实际运行结果与可复现命令。</p>
           </div>
           <div class="page-actions">
             <a class="btn btn-ghost" href="/TEST-REPORT.md" target="_blank" rel="noreferrer">
@@ -473,10 +490,10 @@
         </header>
 
         <div class="test-metrics">
-          <div class="test-metric is-primary"><span>自动化测试</span><strong>27 / 27</strong><small>全部通过</small></div>
-          <div class="test-metric"><span>核心单测</span><strong>19</strong><small>规则 / 授权 / 状态机</small></div>
-          <div class="test-metric"><span>API 集成</span><strong>8</strong><small>真实 HTTP 请求</small></div>
-          <div class="test-metric"><span>本轮耗时</span><strong>1.07s</strong><small>Windows · CPython 3.12</small></div>
+          <div class="test-metric is-primary"><span>自动化测试</span><strong>30 / 30</strong><small>全部通过</small></div>
+          <div class="test-metric"><span>核心单测</span><strong>21</strong><small>规则 / 授权 / 状态机</small></div>
+          <div class="test-metric"><span>API 集成</span><strong>9</strong><small>真实 HTTP 请求</small></div>
+          <div class="test-metric"><span>本轮耗时</span><strong>0.99s</strong><small>Windows · CPython 3.12</small></div>
         </div>
 
         <div class="two-column">
@@ -501,13 +518,14 @@ python -m unittest discover -s tests -v</pre>
               </div>
               <span class="status-pill pass"><span class="status-dot"></span>OK</span>
             </div>
-            <pre class="code-block code-log">Ran 27 tests in 1.066s
+            <pre class="code-block code-log">Ran 30 tests in 0.987s
 
 OK
 
 覆盖：
   规则引擎：10 条规则 + 3 条硬约束
-  授权校验：来源 / 范围 / 编号 / 二创
+  授权校验：来源 / 范围 / 用途 / 编号 / 二创
+  人工对照：10 条人工判定与引擎 10/10 一致
   状态机：角色权限 / 非法迁移 / 备注必填
   API：health / bootstrap / check / 订单生命周期 / reset
   静态白名单：页面可访问，源码与数据库 404</pre>
@@ -520,7 +538,7 @@ OK
               <div class="panel-kicker">TEST MATRIX</div>
               <h2>测试清单</h2>
             </div>
-            <span class="tag tag-muted">19 + 8</span>
+            <span class="tag tag-muted">21 + 9</span>
           </div>
           <div class="table-wrap" id="testCasesTable"></div>
         </section>
