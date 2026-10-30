@@ -68,6 +68,7 @@ PROCESS_LABELS = {
 MATERIAL_LABELS = {"brass": "黄铜", "silver": "银", "wood": "木"}
 FINISH_LABELS = {"polished": "抛光", "matte": "哑光", "oil": "木油", "wax": "木蜡"}
 MODE_LABELS = {"copy": "复刻", "recombine": "重组", "original": "原创"}
+USE_LABELS = {"commercial": "商业使用", "internal": "内部使用", "personal": "个人非商业"}
 
 UNIT_CENTS = {"casting": 4200, "inlay": 6800, "engraving": 2800, "joinery": 5200, "carving": 4600}
 
@@ -348,6 +349,39 @@ def _find_pattern(pattern_id: str) -> dict[str, Any] | None:
     return None
 
 
+HUMAN_RULE_CASES: list[dict[str, Any]] = [
+    {"id": "H01", "title": "薄壁铸件", "ruleId": "CAST-WALL", "process": "casting", "material": "brass", "finish": "polished", "params": {"wallThickness": 0.5}, "human": "不可制造", "expected": "blocked"},
+    {"id": "H02", "title": "脱模角不足", "ruleId": "CAST-UNDERCUT", "process": "casting", "material": "brass", "finish": "polished", "params": {"undercutAngle": 1}, "human": "需工艺复核", "expected": "review"},
+    {"id": "H03", "title": "镶口间隙过小", "ruleId": "INLAY-GAP", "process": "inlay", "material": "brass", "finish": "polished", "params": {"inlayGap": 0.05}, "human": "不可制造", "expected": "blocked"},
+    {"id": "H04", "title": "宝石硬度过高", "ruleId": "INLAY-HARDNESS", "process": "inlay", "material": "brass", "finish": "polished", "params": {"stoneHardness": 8}, "human": "需工艺复核", "expected": "review"},
+    {"id": "H05", "title": "刻线过窄", "ruleId": "ENGRAVE-WIDTH", "process": "engraving", "material": "brass", "finish": "polished", "params": {"engraveWidth": 0.1}, "human": "需工艺复核", "expected": "review"},
+    {"id": "H06", "title": "榫卯过深", "ruleId": "JOINT-DEPTH", "process": "joinery", "material": "wood", "finish": "oil", "params": {"jointDepth": 13, "thickness": 20}, "human": "需工艺复核", "expected": "review"},
+    {"id": "H07", "title": "逆纹深雕", "ruleId": "CARVE-GRAIN", "process": "carving", "material": "wood", "finish": "oil", "params": {"grainAngle": 60, "carveDepth": 5}, "human": "不可制造", "expected": "blocked"},
+    {"id": "H08", "title": "木材含水率偏高", "ruleId": "WOOD-MOISTURE", "process": "joinery", "material": "wood", "finish": "oil", "params": {"moisture": 15}, "human": "需工艺复核", "expected": "review"},
+    {"id": "H09", "title": "大石爪数不足", "ruleId": "PRONG-COUNT", "process": "casting", "material": "brass", "finish": "polished", "params": {"stoneDiameter": 4, "prongs": 3}, "human": "需工艺复核", "expected": "review"},
+    {"id": "H10", "title": "金属表面用木油", "ruleId": "SURFACE-FINISH", "process": "casting", "material": "brass", "finish": "oil", "params": {}, "human": "需工艺复核", "expected": "review"},
+]
+
+
+def human_rule_results() -> list[dict[str, Any]]:
+    names = {rule["id"]: rule["name"] for rule in RULES}
+    rows: list[dict[str, Any]] = []
+    for case in HUMAN_RULE_CASES:
+        result = run_checks(case["process"], case["material"], case["finish"], case["params"])
+        failed = [row["id"] for row in result["failures"]]
+        rows.append({
+            "id": case["id"],
+            "title": case["title"],
+            "ruleId": case["ruleId"],
+            "ruleName": names.get(case["ruleId"], case["ruleId"]),
+            "human": case["human"],
+            "expected": case["expected"],
+            "actual": result["verdict"],
+            "matched": result["verdict"] == case["expected"] and case["ruleId"] in failed,
+        })
+    return rows
+
+
 def check_request(
     pattern_id: str,
     process: str,
@@ -356,6 +390,7 @@ def check_request(
     quantity: int,
     params: dict[str, Any] | None,
     mode: str = "recombine",
+    use: str = "commercial",
 ) -> dict[str, Any]:
     errors: list[str] = []
     pattern = _find_pattern(pattern_id)
@@ -369,6 +404,8 @@ def check_request(
         errors.append("表面处理不在允许范围内")
     if mode not in MODE_LABELS:
         errors.append("共创模式不在允许范围内")
+    if use not in USE_LABELS:
+        errors.append("授权用途不在允许范围内")
     try:
         qty = int(quantity)
     except (TypeError, ValueError):
@@ -376,7 +413,7 @@ def check_request(
     if qty < 1 or qty > 10000:
         errors.append("数量需在 1–10000 之间")
     derivative = mode in {"recombine", "original"}
-    license_result = validate_license(pattern, "commercial", derivative)
+    license_result = validate_license(pattern, use, derivative)
     checks = run_checks(process, material, finish, params)
     normalized = normalize_params(params)
     if checks["hardFail"]:
@@ -390,6 +427,8 @@ def check_request(
         "material": material,
         "finish": finish,
         "mode": mode,
+        "use": use,
+        "useLabel": USE_LABELS.get(use, use),
         "quantity": qty,
         "params": normalized,
         "license": license_result,
@@ -408,10 +447,11 @@ def create_order(
     params: dict[str, Any] | None,
     mode: str = "recombine",
     actor_role: str = "designer",
+    use: str = "commercial",
 ) -> dict[str, Any]:
     if actor_role not in {"designer", "admin"}:
         return {"ok": False, "error": "permission_denied", "errors": ["当前角色不能创建订单"]}
-    request = check_request(pattern_id, process, material, finish, quantity, params, mode)
+    request = check_request(pattern_id, process, material, finish, quantity, params, mode, use)
     if not request["ok"]:
         return {"ok": False, "error": "validation_failed", "errors": request["errors"], "checks": request.get("checks")}
     now = utcnow()
@@ -426,6 +466,8 @@ def create_order(
         "finishLabel": FINISH_LABELS[finish],
         "mode": mode,
         "modeLabel": MODE_LABELS[mode],
+        "use": request["use"],
+        "useLabel": request["useLabel"],
         "quantity": request["quantity"],
         "params": request["params"],
         "license": request["license"]["snapshot"],
