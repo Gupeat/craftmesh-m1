@@ -19,7 +19,7 @@
     boot: null, health: null, patterns: [], orders: [],
     stats: { orders: 0, open: 0, passed: 0, audit: 0, byStatus: {}, recentAudit: [] },
     role: "designer", patternId: "moon-gate", process: "casting", material: "brass",
-    finish: "polished", mode: "copy", quantity: 10, params: {}, check: null,
+    finish: "polished", mode: "copy", use: "commercial", quantity: 10, params: {}, check: null,
     selectedOrder: null, view: "dashboard", filterStatus: "", search: "", busy: false, toastTimer: null
   };
 
@@ -54,6 +54,7 @@
   function materialLabel(id) { return state.boot && state.boot.materials ? state.boot.materials[id] || id || "—" : id || "—"; }
   function finishLabel(id) { return state.boot && state.boot.finishes ? state.boot.finishes[id] || id || "—" : id || "—"; }
   function modeLabel(id) { return state.boot && state.boot.modes ? state.boot.modes[id] || id || "—" : id || "—"; }
+  function useLabel(id) { return state.boot && state.boot.uses ? state.boot.uses[id] || id || "—" : id || "—"; }
   function statusLabel(id) { return (state.boot && state.boot.statuses && state.boot.statuses[id]) || STATUS_FALLBACK[id] || id || "—"; }
   function roleName(id) { return state.boot && state.boot.actors && state.boot.actors[id] ? state.boot.actors[id].name : id; }
 
@@ -159,6 +160,7 @@
     fillSelect($("#materialSelect"), state.boot.materials, state.material);
     fillSelect($("#finishSelect"), state.boot.finishes, state.finish);
     fillSelect($("#modeSelect"), state.boot.modes, state.mode);
+    fillSelect($("#useSelect"), state.boot.uses, state.use);
     const qty = $("#quantityInput");
     if (qty) qty.value = state.quantity;
   }
@@ -239,23 +241,24 @@
 
   const ACCEPTANCE = [
     { id: "A01", item: "洁净机 README / 一条命令启动 / 至少四条可点流程", scope: "Demo / M1", state: "已演示", cls: "pass" },
-    { id: "A02", item: "授权来源、使用范围字段校验 + 正反例", scope: "Demo / M1", state: "已演示", cls: "pass" },
-    { id: "A03", item: "10 条可制造性规则，其中 3 条不可制造", scope: "Demo / M1", state: "已演示", cls: "pass" },
+    { id: "A02", item: "授权来源、使用范围与用途校验 + 正反例", scope: "Demo / M1", state: "正反例已演示", cls: "pass" },
+    { id: "A03", item: "10 条可制造性规则，其中 3 条不可制造", scope: "Demo / M1", state: "10/10 人工对照", cls: "pass" },
     { id: "A04", item: "C2M 订单生命周期、退款与争议状态", scope: "M2", state: "未开始", cls: "na" },
     { id: "A05", item: "两个行业组件按配置接入 + FDE 手册", scope: "M3", state: "未开始", cls: "na" },
     { id: "A06", item: "多语言站点 / SEO / 询盘进入 CRM 的 E2E", scope: "M3", state: "未开始", cls: "na" },
     { id: "A07", item: "文化 IP 管线、1 支样片与授权模板", scope: "M4", state: "未开始", cls: "na" },
-    { id: "A08", item: "授权、规则、状态机、分账的单元测试，一条命令全绿", scope: "Demo / M1", state: "27/27", cls: "pass" },
+    { id: "A08", item: "授权、规则、状态机、分账的单元测试，一条命令全绿", scope: "Demo / M1", state: "30/30", cls: "pass" },
     { id: "A09", item: "文档、命令、界面真实对应，不靠 PPT 演示", scope: "Demo / M1", state: "已交付", cls: "pass" },
     { id: "A10", item: "合成数据；不接真实客户 / 工厂；不主张独占传统文化", scope: "Demo / M1", state: "已声明", cls: "pass" }
   ];
 
   const TEST_GROUPS = [
     { group: "规则引擎", count: "10 条 + 3 硬约束", covers: "硬约束阻断、软约束复核、非法输入", result: "PASS" },
-    { group: "授权校验", count: "4 条负例 + 1 条正例", covers: "来源、范围、编号、二创", result: "PASS" },
+    { group: "授权校验", count: "5 条", covers: "来源、范围、用途、编号、二创", result: "PASS" },
+    { group: "人工规则对照", count: "10/10", covers: "10 条人工判定与引擎结论一致，3 条硬约束阻断", result: "PASS" },
     { group: "订单快照", count: "2 条", covers: "授权与报价固化、硬约束拒绝", result: "PASS" },
     { group: "状态机", count: "4 条", covers: "全链路、越权、非法迁移、备注必填", result: "PASS" },
-    { group: "HTTP API", count: "5 条", covers: "health / bootstrap / check / 生命周期", result: "PASS" },
+    { group: "HTTP API", count: "6 条", covers: "health / bootstrap / check / 生命周期", result: "PASS" },
     { group: "权限与重置", count: "2 条", covers: "角色 403、管理员 reset", result: "PASS" },
     { group: "静态白名单", count: "1 条", covers: "页面/JS 可访问，源码与 DB 返回 404", result: "PASS" },
     { group: "持久化", count: "1 条", covers: "临时 SQLite 关闭与清理", result: "PASS" }
@@ -307,6 +310,7 @@
     const licenseResult = state.check && state.check.license ? state.check.license : null;
     const source = snapshot ? snapshot.source : pattern.source;
     const scope = snapshot ? snapshot.useScope : (pattern.useScope || []);
+    const checkedUse = snapshot ? snapshot.use : state.use;
     const checkedAt = snapshot && snapshot.checkedAt ? formatTime(snapshot.checkedAt) : "运行检查后固化";
     const ok = !licenseResult || licenseResult.ok;
     container.innerHTML =
@@ -315,6 +319,7 @@
       '<div class="license-row"><span>授权编号</span><strong>' + esc((snapshot && snapshot.licenseId) || pattern.licenseId || "—") + "</strong></div>" +
       '<div class="license-row"><span>来源编号</span><strong>' + esc((snapshot && snapshot.sourceId) || pattern.sourceId || "—") + "</strong></div>" +
       '<div class="license-row"><span>使用范围</span><strong>' + esc((scope || []).join(" / ") || "—") + "</strong></div>" +
+      '<div class="license-row"><span>本次用途</span><strong>' + esc(useLabel(checkedUse)) + "</strong></div>" +
       '<div class="license-row"><span>二创</span><strong>' + (((snapshot ? snapshot.derivativeAllowed : pattern.derivativeAllowed)) ? "允许" : "不允许") + "</strong></div>" +
       '<div class="license-state ' + (ok ? "ok" : "bad") + '"><span class="status-dot"></span>' + (ok ? "授权校验通过" : "授权校验失败") + " · 快照 " + esc(checkedAt) + "</div>";
   }
@@ -373,7 +378,8 @@
       finish: state.finish,
       quantity: Number(state.quantity) || 1,
       params: state.params,
-      mode: state.mode
+      mode: state.mode,
+      use: state.use
     };
   }
 
@@ -498,6 +504,21 @@
       }).join("") + "</tbody></table>";
   }
 
+  function renderHumanRules() {
+    const container = $("#humanRulesTable");
+    if (!container || !state.boot) return;
+    const rows = state.boot.humanRules || [];
+    container.innerHTML = '<table class="data-table"><thead><tr><th>样例</th><th>目标规则</th><th>人工结论</th><th>引擎结论</th><th>对齐</th></tr></thead><tbody>' +
+      rows.map((row) => {
+        const meta = VERDICT_META[row.actual] || VERDICT_META.review;
+        return '<tr><td><span class="rule-id">' + esc(row.id) + '</span><span class="rule-name">' + esc(row.title) + "</span></td>" +
+          "<td>" + esc(row.ruleName || row.ruleId) + "</td>" +
+          '<td class="muted">' + esc(row.human) + "</td>" +
+          '<td><span class="status-pill ' + esc(meta.cls) + '"><span class="status-dot"></span>' + esc(meta.tag) + "</span></td>" +
+          '<td><span class="status-pill ' + (row.matched ? "pass" : "fail") + '"><span class="status-dot"></span>' + (row.matched ? "一致" : "不一致") + "</span></td></tr>";
+      }).join("") + "</tbody></table>";
+  }
+
   function renderLicenseTable() {
     const container = $("#licenseTable");
     if (!container) return;
@@ -547,6 +568,7 @@
       renderOrdersTable();
       renderLicenseTable();
       renderRules();
+      renderHumanRules();
       renderRoles();
       if (state.selectedOrder) {
         const fresh = state.orders.find((order) => order.id === state.selectedOrder.id);
@@ -645,6 +667,7 @@
       '<div class="license-row"><span>授权编号</span><strong>' + esc(license.licenseId || "—") + "</strong></div>" +
       '<div class="license-row"><span>来源编号</span><strong>' + esc(license.sourceId || "—") + "</strong></div>" +
       '<div class="license-row"><span>使用范围</span><strong>' + esc((license.useScope || []).join(" / ") || "—") + "</strong></div>" +
+      '<div class="license-row"><span>本次用途</span><strong>' + esc(license.useLabel || useLabel(license.use)) + "</strong></div>" +
       '<div class="license-state ok"><span class="status-dot"></span>创建时已校验</div></div></div>' +
       '<div class="detail-section"><div class="detail-section-title">报价快照 <span>USD</span></div><div class="quote-body">' +
       '<div class="quote-line"><span>小计</span><strong>' + esc(formatMoney((order.quote || {}).amountCents)) + "</strong></div>" +
@@ -701,6 +724,7 @@
     state.material = "brass";
     state.finish = "polished";
     state.mode = "copy";
+    state.use = "commercial";
     state.quantity = 10;
     state.params = Object.assign({}, state.params, { wallThickness: 0.5, undercutAngle: 3 });
     renderPatternGrid();
@@ -772,7 +796,7 @@
       invalidateCheck();
     });
 
-    const selectMap = { processSelect: "process", materialSelect: "material", finishSelect: "finish", modeSelect: "mode" };
+    const selectMap = { processSelect: "process", materialSelect: "material", finishSelect: "finish", modeSelect: "mode", useSelect: "use" };
     Object.keys(selectMap).forEach((id) => {
       const node = $("#" + id);
       if (node) node.addEventListener("change", (event) => {
@@ -896,6 +920,7 @@
       renderRecentAudit();
       renderOrdersTable();
       renderRules();
+      renderHumanRules();
       renderLicenseTable();
       renderAcceptance();
       renderTestCases();
