@@ -11,8 +11,9 @@ from urllib.parse import unquote, urlparse
 
 from core import (
     ACTORS, FINISH_LABELS, MATERIAL_LABELS, MODE_LABELS, PARAM_DEFS, PATTERNS,
-    PROCESS_LABELS, RULES, STATUS_LABELS, TRANSITIONS, apply_transition,
-    check_request, create_order, public_pattern, public_rule, public_transition, utcnow,
+    PROCESS_LABELS, RULES, STATUS_LABELS, TRANSITIONS, USE_LABELS, apply_transition,
+    check_request, create_order, human_rule_results, public_pattern, public_rule,
+    public_transition, utcnow,
 )
 from store import Store
 
@@ -111,9 +112,11 @@ class ApiHandler(BaseHTTPRequestHandler):
                     "materials": MATERIAL_LABELS,
                     "finishes": FINISH_LABELS,
                     "modes": MODE_LABELS,
+                    "uses": USE_LABELS,
                     "statuses": STATUS_LABELS,
                     "actors": ACTORS,
                     "transitions": [public_transition(a, s) for a, s in TRANSITIONS.items()],
+                    "humanRules": human_rule_results(),
                     "orders": self.store.list(),
                     "stats": self.store.stats(),
                 })
@@ -150,6 +153,7 @@ class ApiHandler(BaseHTTPRequestHandler):
                     payload.get("quantity", 1),
                     payload.get("params") or {},
                     str(payload.get("mode") or "recombine"),
+                    str(payload.get("use") or "commercial"),
                 )
                 self._send_json(200, {"ok": True, "result": result})
                 return
@@ -164,6 +168,7 @@ class ApiHandler(BaseHTTPRequestHandler):
                     payload.get("params") or {},
                     str(payload.get("mode") or "recombine"),
                     str(payload.get("role") or "designer"),
+                    str(payload.get("use") or "commercial"),
                 )
                 if not result["ok"]:
                     status = 403 if result.get("error") == "permission_denied" else 422
