@@ -400,7 +400,7 @@ h1 {
 .pattern-name { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 5px; font-size: 12px; font-weight: 650; }
 .pattern-source { color: var(--muted); font-family: var(--font-mono); font-size: 9px; letter-spacing: .03em; }
 .pattern-card .mini-license { color: var(--muted-2); font-size: 9.5px; }
-.form-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.form-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
 .field > span { color: var(--muted); font-size: 10px; }
 .field select, .field input {
