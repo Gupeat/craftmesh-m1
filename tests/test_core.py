@@ -78,6 +78,22 @@ class CoreTests(unittest.TestCase):
         result = core.validate_license(pattern, "commercial", False)
         self.assertFalse(result["ok"])
 
+    def test_check_rejects_internal_use(self):
+        result = core.check_request(
+            "moon-gate", "casting", "brass", "polished", 1, BASE_PARAMS, "copy", "internal",
+        )
+        self.assertFalse(result["ok"])
+        self.assertFalse(result["license"]["ok"])
+        self.assertEqual(result["license"]["snapshot"]["use"], "internal")
+        self.assertTrue(any("internal" in error for error in result["license"]["errors"]))
+
+    def test_human_rule_cases_match_ten_of_ten(self):
+        rows = core.human_rule_results()
+        self.assertEqual(len(rows), 10)
+        self.assertEqual(sum(1 for row in rows if row["actual"] == "blocked"), 3)
+        self.assertTrue(all(row["matched"] for row in rows), [row for row in rows if not row["matched"]])
+        self.assertEqual({row["ruleId"] for row in rows}, {rule["id"] for rule in core.RULES})
+
     def test_derivative_permission_is_rejected(self):
         pattern = dict(core.PATTERNS[0], derivativeAllowed=False)
         result = core.validate_license(pattern, "commercial", True)
