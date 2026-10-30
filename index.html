@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>CraftMesh · 工艺协同中台 M1</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" class="svg-sprite" aria-hidden="true">
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="i-orders" viewBox="0 0 24 24"><path d="M7 3h10l3 4v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7l3-4Z"/><path d="M4 7h16M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v6c0 4.6 3.2 8 7.5 9 4.3-1 7.5-4.4 7.5-9V6L12 3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 6.3M20 5v6h-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"/><path d="M4.5 5.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6M4.5 11.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13 4l-2 16"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6V3Z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></symbol>
+</svg>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">CM</div>
+      <div>
+        <div class="brand-name">CraftMesh</div>
+        <div class="brand-sub">工艺协同中台 · M1</div>
+      </div>
+    </div>
+
+    <div class="workspace-pill">
+      <span class="live-dot"></span>
+      <span>参考实现环境</span>
+      <span class="workspace-version">M1.0</span>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="主导航">
+      <button class="nav-item is-active" data-view="dashboard">
+        <svg class="icon"><use href="#i-grid"></use></svg>
+        <span>工作台</span>
+      </button>
+      <button class="nav-item" data-view="orders">
+        <svg class="icon"><use href="#i-orders"></use></svg>
+        <span>订单中心</span>
+        <span class="nav-count" id="navOrderCount">0</span>
+      </button>
+      <button class="nav-item" data-view="rules">
+        <svg class="icon"><use href="#i-shield"></use></svg>
+        <span>规则与授权</span>
+      </button>
+      <button class="nav-item" data-view="architecture">
+        <svg class="icon"><use href="#i-layers"></use></svg>
+        <span>架构与验收</span>
+      </button>
+      <button class="nav-item" data-view="tests">
+        <svg class="icon"><use href="#i-check"></use></svg>
+        <span>测试证据</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-section-label">交付说明</div>
+    <div class="sidebar-meta">
+      <div><span>数据</span><strong>全部合成 / 脱敏</strong></div>
+      <div><span>服务</span><strong>Python HTTP API</strong></div>
+      <div><span>存储</span><strong>SQLite · 本地</strong></div>
+      <div><span>规则</span><strong>10 条 / 3 条硬约束</strong></div>
+    </div>
+
+    <div class="sidebar-note">
+      <div class="note-kicker">这不是静态原型</div>
+      <p>页面上的判定、授权、报价、订单状态与审计记录，均由本地 API 与 SQLite 生成。</p>
+    </div>
+
+    <div class="sidebar-foot">
+      <span class="live-dot"></span>
+      <span id="apiVersion">API M1.0</span>
+      <span class="dot-sep">·</span>
+      <span id="apiState">连接中</span>
+    </div>
+  </aside>
+
+  <div class="main-column">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-button menu-button" id="menuButton" aria-label="打开导航">
+          <svg class="icon"><use href="#i-grid"></use></svg>
+        </button>
+        <div class="crumb">
+          <span class="crumb-root">CraftMesh</span>
+          <span class="crumb-sep">/</span>
+          <strong id="crumbCurrent">工作台</strong>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <span class="api-badge" id="apiBadge"><span class="live-dot"></span><span>API 在线</span></span>
+        <label class="role-switcher">
+          <span>当前角色</span>
+          <select id="roleSelect" aria-label="切换演示角色"></select>
+        </label>
+        <button class="btn btn-ghost btn-small" id="refreshButton">
+          <svg class="icon"><use href="#i-refresh"></use></svg>
+          刷新
+        </button>
+        <button class="btn btn-ghost btn-small" id="resetButton" disabled>
+          <svg class="icon"><use href="#i-refresh"></use></svg>
+          重置数据
+        </button>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="view is-active" id="view-dashboard" data-title="工作台">
+        <header class="page-head">
+          <div class="page-head-copy">
+            <div class="eyebrow">WORKBENCH / 01</div>
+            <h1>把非标工艺，做成可交付的订单</h1>
+            <p class="lede">纹样授权、可制造性判定、报价与订单状态在同一条链路上完成。页面不是静态稿——每一次判定都来自服务端规则引擎。</p>
+          </div>
+          <div class="page-actions">
+            <span class="tag tag-muted">M1 垂直切片</span>
+            <button class="btn btn-ghost" data-action="load-unmanufacturable">载入不可制造样例</button>
+          </div>
+        </header>
+
+        <div class="kpi-grid" id="kpiGrid"></div>
+
+        <div class="work-grid">
+          <section class="panel composer-panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-kicker">01 / ORDER COMPOSER</div>
+                <h2>新建共创单</h2>
+              </div>
+              <span class="server-chip"><span class="chip-dot"></span>服务端判定</span>
+            </div>
+
+            <div class="flow-steps">
+              <div class="flow-step is-current"><span>01</span>选纹样</div>
+              <div class="flow-line"></div>
+              <div class="flow-step"><span>02</span>定工艺</div>
+              <div class="flow-line"></div>
+              <div class="flow-step"><span>03</span>看判定</div>
+            </div>
+
+            <div class="field-label">纹样库 <span>3 个合成纹样 · 授权状态随单快照</span></div>
+            <div class="pattern-grid" id="patternGrid"></div>
+
+            <div class="form-grid">
+              <label class="field">
+                <span>工艺</span>
+                <select id="processSelect"></select>
+              </label>
+              <label class="field">
+                <span>材料</span>
+                <select id="materialSelect"></select>
+              </label>
+              <label class="field">
+                <span>表面处理</span>
+                <select id="finishSelect"></select>
+              </label>
+              <label class="field">
+                <span>共创模式</span>
+                <select id="modeSelect"></select>
+              </label>
+              <label class="field field-quantity">
+                <span>数量</span>
+                <input id="quantityInput" type="number" min="1" max="10000" step="1" value="10">
+              </label>
+            </div>
+
+            <div class="param-head">
+              <div>
+                <span class="field-label">工艺参数</span>
+                <span class="param-help">输入会发送到 <code>/api/check</code>，由规则引擎判定</span>
+              </div>
+              <button class="text-button" id="resetParamsButton" type="button">恢复默认</button>
+            </div>
+            <div class="param-grid" id="paramGrid"></div>
+
+            <div class="composer-actions">
+              <button class="btn btn-primary" id="checkButton">
+                <svg class="icon"><use href="#i-check"></use></svg>
+                运行可制造性检查
+              </button>
+              <button class="btn btn-ghost" id="createButton" disabled>
+                <svg class="icon"><use href="#i-plus"></use></svg>
+                创建订单草稿
+              </button>
+              <span class="action-hint" id="createHint">先运行检查</span>
+            </div>
+            <div class="check-state" id="checkState" aria-live="polite"></div>
+          </section>
+
+          <aside class="side-stack">
+            <section class="panel verdict-panel" id="verdictPanel">
+              <div class="panel-head compact">
+                <div>
+                  <div class="panel-kicker">02 / VERDICT</div>
+                  <h2>判定摘要</h2>
+                </div>
+                <span class="tag tag-muted" id="verdictTag">待运行</span>
+              </div>
+              <div class="verdict-body" id="verdictBody">
+                <p class="empty-copy">运行检查后，这里会显示逐条规则结果、授权校验与报价。</p>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-head compact">
+                <div>
+                  <div class="panel-kicker">03 / LICENSE</div>
+                  <h2>授权快照</h2>
+                </div>
+                <span class="tag tag-muted">随单固化</span>
+              </div>
+              <div id="licensePanel" class="license-panel"></div>
+            </section>
+
+            <section class="panel quote-panel">
+              <div class="panel-head compact">
+                <div>
+                  <div class="panel-kicker">04 / QUOTE</div>
+                  <h2>报价</h2>
+                </div>
+                <span class="tag tag-muted">USD</span>
+              </div>
+              <div id="quotePanel" class="quote-body"></div>
+            </section>
+          </aside>
+        </div>
+
+        <div class="dashboard-lower">
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">LIVE DATA</div>
+                <h2>最近订单</h2>
+              </div>
+              <button class="text-button" data-view-jump="orders">全部订单 <span aria-hidden="true">→</span></button>
+            </div>
+            <div id="recentOrders" class="compact-list"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">AUDIT TRAIL</div>
+                <h2>审计动态</h2>
+              </div>
+              <span class="server-chip"><span class="chip-dot"></span>SQLite</span>
+            </div>
+            <div id="recentAudit" class="timeline compact"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="view-orders" data-title="订单中心">
+        <header class="page-head">
+          <div class="page-head-copy">
+            <div class="eyebrow">ORDERS / 02</div>
+            <h1>订单状态机与角色权限</h1>
+            <p class="lede">从草稿到结算，每一次状态迁移都有角色限制、版本号和审计记录。切换右上角角色，可以观察同一订单上不同角色的可执行动作。</p>
+          </div>
+          <div class="page-actions">
+            <span class="tag tag-muted" id="orderSummaryTag">—</span>
+            <button class="btn btn-ghost" id="refreshOrdersButton">
+              <svg class="icon"><use href="#i-refresh"></use></svg>
+              刷新订单
+            </button>
+          </div>
+        </header>
+
+        <section class="panel">
+          <div class="table-toolbar">
+            <div class="filter-row">
+              <label class="filter-field">
+                <span>状态</span>
+                <select id="statusFilter"></select>
+              </label>
+              <label class="filter-field filter-search">
+                <span>搜索</span>
+                <input id="orderSearch" type="search" placeholder="订单号 / 纹样 / 工艺">
+              </label>
+            </div>
+            <span class="server-chip"><span class="chip-dot"></span>GET /api/orders</span>
+          </div>
+          <div class="table-wrap" id="ordersTable"></div>
+        </section>
+
+        <section class="panel order-detail-panel" id="orderDetailPanel">
+          <div id="orderDetail"></div>
+        </section>
+      </section>
+
+      <section class="view" id="view-rules" data-title="规则与授权">
+        <header class="page-head">
+          <div class="page-head-copy">
+            <div class="eyebrow">RULES &amp; LICENSE / 03</div>
+            <h1>规则不是文案，是可执行代码</h1>
+            <p class="lede">10 条可制造性规则、3 条硬约束和一个显式授权校验器。规则以 Python 函数执行，返回逐条证据；授权字段随订单快照保存。</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-ghost" data-view-jump="tests">查看测试证据</button>
+          </div>
+        </header>
+
+        <div class="metric-strip">
+          <div class="metric-strip-item"><span>规则</span><strong>10</strong><small>全部可解释</small></div>
+          <div class="metric-strip-item"><span>硬约束</span><strong>3</strong><small>CAST-WALL / INLAY-GAP / CARVE-GRAIN</small></div>
+          <div class="metric-strip-item"><span>平台费率</span><strong>25%</strong><small>报价内显式拆分</small></div>
+          <div class="metric-strip-item"><span>授权字段</span><strong>5</strong><small>来源 / 编号 / 范围 / 二创 / 校验时间</small></div>
+        </div>
+
+        <div class="two-column">
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">RULE ENGINE</div>
+                <h2>可制造性规则</h2>
+              </div>
+              <span class="server-chip"><span class="chip-dot"></span>core.py</span>
+            </div>
+            <div class="table-wrap" id="rulesTable"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">PATTERN REGISTRY</div>
+                <h2>纹样授权台账</h2>
+              </div>
+              <span class="tag tag-muted">合成数据</span>
+            </div>
+            <div id="licenseTable" class="license-ledger"></div>
+            <div class="callout">
+              <strong>授权负例是显式的：</strong>
+              来源不在允许范围、商业范围不含用途、授权纹样缺编号、二创未授权，都会让检查返回失败，而不是只弹一个提示。
+            </div>
+          </section>
+        </div>
+
+        <section class="panel">
+          <div class="panel-head compact">
+            <div>
+              <div class="panel-kicker">BOUNDARIES</div>
+              <h2>M1 能证明什么，不能证明什么</h2>
+            </div>
+            <span class="tag tag-muted">范围诚实</span>
+          </div>
+          <div class="boundary-grid">
+            <div class="boundary-item is-in">
+              <div class="boundary-mark">✓</div>
+              <div><strong>已实现</strong><p>纹样授权校验、10 条规则、硬约束阻断、订单状态机、角色权限、审计、SQLite 持久化、HTTP API、静态资源白名单、27 个自动化测试。</p></div>
+            </div>
+            <div class="boundary-item is-out">
+              <div class="boundary-mark">—</div>
+              <div><strong>不在 M1</strong><p>真实工厂排产、支付通道、C2M 预售、跨境物流、多语言站点、文化 IP 短片。它们是 M2–M4 的范围。</p></div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="view-architecture" data-title="架构与验收">
+        <header class="page-head">
+          <div class="page-head-copy">
+            <div class="eyebrow">ARCHITECTURE / 04</div>
+            <h1>一条可追踪的请求链路</h1>
+            <p class="lede">浏览器不计算业务结果，只呈现 API 返回的证据。授权、规则、报价与状态迁移都在同一条 Python 服务端链路里完成。</p>
+          </div>
+          <div class="page-actions">
+            <span class="tag tag-muted">M1 参考实现</span>
+          </div>
+        </header>
+
+        <div class="arch-flow panel">
+          <div class="arch-node">
+            <div class="arch-icon"><svg class="icon"><use href="#i-grid"></use></svg></div>
+            <div class="arch-node-label">01 / BROWSER</div>
+            <strong>工作台 UI</strong>
+            <p>表单、状态、时间线</p>
+            <code>index.html + app.js</code>
+          </div>
+          <div class="arch-arrow"><span>JSON</span><svg class="icon"><use href="#i-arrow"></use></svg></div>
+          <div class="arch-node is-accent">
+            <div class="arch-icon"><svg class="icon"><use href="#i-orders"></use></svg></div>
+            <div class="arch-node-label">02 / HTTP API</div>
+            <strong>ThreadingHTTPServer</strong>
+            <p>8 个端点、输入校验</p>
+            <code>/api/check · /api/orders</code>
+          </div>
+          <div class="arch-arrow"><span>调用</span><svg class="icon"><use href="#i-arrow"></use></svg></div>
+          <div class="arch-node">
+            <div class="arch-icon"><svg class="icon"><use href="#i-shield"></use></svg></div>
+            <div class="arch-node-label">03 / DOMAIN CORE</div>
+            <strong>规则 / 授权 / 状态机</strong>
+            <p>纯 Python，可单测</p>
+            <code>core.py</code>
+          </div>
+          <div class="arch-arrow"><span>持久化</span><svg class="icon"><use href="#i-arrow"></use></svg></div>
+          <div class="arch-node">
+            <div class="arch-icon"><svg class="icon"><use href="#i-db"></use></svg></div>
+            <div class="arch-node-label">04 / STORAGE</div>
+            <strong>SQLite</strong>
+            <p>订单快照 + 审计</p>
+            <code>orders · audit</code>
+          </div>
+        </div>
+
+        <div class="two-column arch-lower">
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">REQUEST LIFECYCLE</div>
+                <h2>一次判定的完整路径</h2>
+              </div>
+            </div>
+            <ol class="numbered-list">
+              <li><span>01</span><div><strong>选择纹样与参数</strong><p>UI 只收集输入，不伪造结果。</p></div></li>
+              <li><span>02</span><div><strong>POST /api/check</strong><p>服务端校验工艺、材料、表面、数量、授权和 10 条规则。</p></div></li>
+              <li><span>03</span><div><strong>返回逐条证据</strong><p>每条规则 pass / fail / 不适用，附条件与实测值；硬约束失败即阻断。</p></div></li>
+              <li><span>04</span><div><strong>创建订单快照</strong><p>授权、参数、报价、判定写入订单；创建动作写入审计。</p></div></li>
+              <li><span>05</span><div><strong>角色迁移状态</strong><p>每次迁移检查角色与前置状态，版本号递增，事件追加。</p></div></li>
+            </ol>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">RESPONSIBILITY</div>
+                <h2>责任边界</h2>
+              </div>
+            </div>
+            <div class="responsibility-list">
+              <div><span class="resp-dot gold"></span><div><strong>AI 初审</strong><p>只做规则初筛和证据生成，不替代工艺师签核。</p></div></div>
+              <div><span class="resp-dot green"></span><div><strong>服务端事实</strong><p>授权字段与状态由服务端保存，页面刷新不丢失。</p></div></div>
+              <div><span class="resp-dot red"></span><div><strong>不越界承诺</strong><p>不声称已接入真实工厂、真实支付或真实版权库。</p></div></div>
+            </div>
+            <div class="callout warm">
+              <strong>演示数据声明：</strong>纹样、工厂、角色与订单均为合成样本，不含真实客户或工厂数据；真实项目开始前需替换为获授权或脱敏资料。
+            </div>
+          </section>
+        </div>
+
+        <section class="panel">
+          <div class="panel-head compact">
+            <div>
+              <div class="panel-kicker">ACCEPTANCE MAP</div>
+              <h2>验收项对照 · 不虚标</h2>
+            </div>
+            <span class="tag tag-muted">A01–A10</span>
+          </div>
+          <div class="table-wrap" id="acceptanceTable"></div>
+          <p class="table-note">“Demo / M1”表示本文档可点验；“M2–M4”表示后续阶段交付，不在本页冒充完成。</p>
+        </section>
+      </section>
+
+      <section class="view" id="view-tests" data-title="测试证据">
+        <header class="page-head">
+          <div class="page-head-copy">
+            <div class="eyebrow">EVIDENCE / 05</div>
+            <h1>能跑的代码，才叫交付</h1>
+            <p class="lede">核心逻辑与 HTTP API 分开测试：19 个核心单测 + 8 个 API 集成测试。下面是本轮实际运行结果与可复现命令。</p>
+          </div>
+          <div class="page-actions">
+            <a class="btn btn-ghost" href="/TEST-REPORT.md" target="_blank" rel="noreferrer">
+              <svg class="icon"><use href="#i-doc"></use></svg>
+              原始测试报告
+            </a>
+          </div>
+        </header>
+
+        <div class="test-metrics">
+          <div class="test-metric is-primary"><span>自动化测试</span><strong>27 / 27</strong><small>全部通过</small></div>
+          <div class="test-metric"><span>核心单测</span><strong>19</strong><small>规则 / 授权 / 状态机</small></div>
+          <div class="test-metric"><span>API 集成</span><strong>8</strong><small>真实 HTTP 请求</small></div>
+          <div class="test-metric"><span>本轮耗时</span><strong>1.07s</strong><small>Windows · CPython 3.12</small></div>
+        </div>
+
+        <div class="two-column">
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">RUN</div>
+                <h2>复现命令</h2>
+              </div>
+              <span class="server-chip"><span class="chip-dot"></span>unittest</span>
+            </div>
+            <pre class="code-block">cd 1724-demo
+python -m unittest discover -s tests -v</pre>
+            <p class="panel-copy">测试使用临时 SQLite 数据库，结束后自动清理；API 测试真实启动 HTTP 服务并发出请求，不 mock 传输层。</p>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">LATEST OUTPUT</div>
+                <h2>本轮结果</h2>
+              </div>
+              <span class="status-pill pass"><span class="status-dot"></span>OK</span>
+            </div>
+            <pre class="code-block code-log">Ran 27 tests in 1.066s
+
+OK
+
+覆盖：
+  规则引擎：10 条规则 + 3 条硬约束
+  授权校验：来源 / 范围 / 编号 / 二创
+  状态机：角色权限 / 非法迁移 / 备注必填
+  API：health / bootstrap / check / 订单生命周期 / reset
+  静态白名单：页面可访问，源码与数据库 404</pre>
+          </section>
+        </div>
+
+        <section class="panel">
+          <div class="panel-head compact">
+            <div>
+              <div class="panel-kicker">TEST MATRIX</div>
+              <h2>测试清单</h2>
+            </div>
+            <span class="tag tag-muted">19 + 8</span>
+          </div>
+          <div class="table-wrap" id="testCasesTable"></div>
+        </section>
+
+        <div class="callout">
+          <strong>测试不是装饰：</strong>如果把硬约束改软，或允许越权迁移，测试会失败。当前实现把“不可制造”和“越权操作”当作阻断路径，而不是提示文案。
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>CraftMesh M1 · 工艺协同中台参考实现</span>
+      <span class="footer-sep">/</span>
+      <span>合成数据 · 非生产环境</span>
+      <span class="footer-sep">/</span>
+      <span>API v1 · Built for 区域特色产业 AI 赋能一期</span>
+    </footer>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
