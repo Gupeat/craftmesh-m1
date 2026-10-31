@@ -141,6 +141,7 @@ M1 另有 10 条人工规则基线：`core.human_rule_results()` 返回 10/10 �
     index.html / app.js / styles.css   M1 页面
     Dockerfile / render.yaml          部署
     scripts/keep_public_tunnel.ps1    公网隧道断线自动重连守护
+    scripts/guard_demo.ps1            Windows 计划任务兜底：服务/隧道进程掉线后自动拉起
 
 ## 验证记录
 
@@ -150,9 +151,10 @@ M1 另有 10 条人工规则基线：`core.human_rule_results()` 返回 10/10 �
 
 ## 部署与公网演示
 
-- 完整源码包（无需 Git 账号）：服务启动后访问 `/downloads/craftmesh-1724-source.zip`，同目录 `.sha256` 提供校验值；包内 `SOURCE-MANIFEST.json` 列出每个文件的字节数与 SHA-256。重新打包：`python make_source_bundle.py`。
+- 完整源码包（无需 Git 账号）：稳定下载 https://gupeat.github.io/craftmesh-m1/downloads/craftmesh-1724-source.zip （同目录 `.sha256`；服务启动后也可访问 `/downloads/craftmesh-1724-source.zip`）。包内 `SOURCE-MANIFEST.json` 列出每个文件的字节数与 SHA-256。重新打包：`python make_source_bundle.py`。
 - Docker：见上；`render.yaml` 提供 Render Blueprint（免费计划，`python server.py --host 0.0.0.0 --port $PORT`，健康检查 `/api/health`）。
 - 稳定公网入口：GitHub Pages 静态页 https://gupeat.github.io/craftmesh-m1/ 读取 docs/live.json 获取当前隧道地址；localhost.run 免费隧道地址变化时由 `scripts/keep_public_tunnel.ps1` 调用 `scripts/publish_demo_url.py` 自动更新 live.json 并提交到 GitHub。私有 key 只保存在托管主机，不进入仓库。
+- Windows 常驻兜底：`scripts/guard_demo.ps1` 由计划任务每 5 分钟检查本地服务与隧道守护进程，缺失则按同一组参数拉起；日志写入 `data/guard.log`。这层只解决进程退出，不改变“托管主机需在线”的边界。
 - 备选：`cloudflared tunnel --url http://127.0.0.1:8787` 生成临时 trycloudflare 地址（重启会变化，只作应急）。
 - 无外网依赖：全部素材与规则在仓库内，离线可跑。
 
