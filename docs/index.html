@@ -60,7 +60,7 @@
       <a class="btn" id="liveDemo" href="https://94fdcfdd8968a5.lhr.life/">进入在线 Demo</a>
       <span id="liveStatus" class="live-status">正在读取当前演示地址…</span>
       <a class="btn ghost" id="liveCockpit" href="https://94fdcfdd8968a5.lhr.life/pages/evidence.html?autorun=1&amp;export=1">一键验收驾驶舱</a>
-      <a class="btn ghost" id="liveZip" href="https://94fdcfdd8968a5.lhr.life/downloads/craftmesh-1724-source.zip">下载完整源码包</a>
+      <a class="btn ghost" id="liveZip" href="downloads/craftmesh-1724-source.zip">下载完整源码包</a>
     </div>
     <div class="stats">
       <div class="stat"><b>85/85</b><span>自动化测试通过（unittest）</span></div>
@@ -86,7 +86,7 @@
     <p>每条平台验收标准都绑定到具体检查：文件是否存在、源码里是否有关键逻辑、单测是否全绿、模块链路是否真的跑通。一键自检会依次跑静态检查、模块探活与三套场景，并把结果写成可下载的 Markdown 证据包。</p>
     <div class="links">
       <div class="link"><b>验收驾驶舱</b><code id="liveCockpitText">https://94fdcfdd8968a5.lhr.life/pages/evidence.html</code></div>
-      <div class="link"><b>完整源码包（ZIP）</b><code id="liveZipText">https://94fdcfdd8968a5.lhr.life/downloads/craftmesh-1724-source.zip</code></div>
+      <div class="link"><b>完整源码包（ZIP）</b><code id="liveZipText">https://gupeat.github.io/craftmesh-m1/downloads/craftmesh-1724-source.zip</code></div>
       <div class="link"><b>GitHub 仓库</b><code>https://github.com/Gupeat/craftmesh-m1</code></div>
       <div class="link"><b>本机启动</b><code>python server.py → http://127.0.0.1:8787/</code></div>
     </div>
@@ -102,9 +102,9 @@
     var b = base.replace(/\/$/, '');
     document.getElementById('liveDemo').href = b + '/';
     document.getElementById('liveCockpit').href = b + '/pages/evidence.html?autorun=1&export=1';
-    document.getElementById('liveZip').href = b + '/downloads/craftmesh-1724-source.zip';
+    document.getElementById('liveZip').href = 'downloads/craftmesh-1724-source.zip';
     document.getElementById('liveCockpitText').textContent = b + '/pages/evidence.html';
-    document.getElementById('liveZipText').textContent = b + '/downloads/craftmesh-1724-source.zip';
+    document.getElementById('liveZipText').textContent = 'https://gupeat.github.io/craftmesh-m1/downloads/craftmesh-1724-source.zip';
   }
   setLinks(fallback);
   fetch('live.json?ts=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (j) {
