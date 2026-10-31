@@ -29,9 +29,8 @@
 ## 在线演示（稳定入口 + 自动更新当前隧道地址）
 
 - **稳定入口（域名不变）：https://gupeat.github.io/craftmesh-m1/**
-- 当前在线 Demo：https://8f9787495987ce.lhr.life/
-- 验收驾驶舱：https://8f9787495987ce.lhr.life/pages/evidence.html
-- 完整源码包：https://8f9787495987ce.lhr.life/downloads/craftmesh-1724-source.zip
+- 当前在线 Demo / 驾驶舱 / 源码包：在稳定入口页面点击对应按钮，按钮由页面读取 `live.json` 自动指向当前隧道。
+- 当前隧道地址（自动更新）：https://gupeat.github.io/craftmesh-m1/live.json
 - 稳定入口是 GitHub Pages 上的静态页：它读取同目录 `docs/live.json`，把按钮指向当前隧道。localhost.run 免费隧道的主机名可能变化，`scripts/keep_public_tunnel.ps1` 在重连拿到新地址时调用 `scripts/publish_demo_url.py` 自动更新并推送 `live.json`，因此入口本身不会失效。
 - 在线 Demo 依赖托管主机保持在线，不承诺与托管主机无关的 SLA；所有数据仍为合成/脱敏。若暂时打不开，源码包解压后一条命令即可在本机复现。
 
