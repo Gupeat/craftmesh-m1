@@ -1,0 +1,193 @@
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>CraftMesh · M2 预售与工厂派单</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="pages.css">>
+</head>
+<body data-page="m2"><div id="static-demo-banner" style="position:sticky;top:0;z-index:9999;background:#9b4a30;color:#fffdf8;font:13px/1.7 'Segoe UI','Microsoft YaHei',sans-serif;padding:7px 14px;text-align:center"><b>静态演示快照</b> · 数据来自一次真实 API 运行，交互已冻结 · <a href="index.html" style="color:#ffd9a8">M1 工作台</a> · <a href="m2.html" style="color:#ffd9a8">M2 预售与派单</a> · <a href="ai.html" style="color:#ffd9a8">B 企业 AI</a> · <a href="ip.html" style="color:#ffd9a8">C 文化 IP</a> · <a href="evidence.html" style="color:#ffd9a8">验收驾驶舱</a> · <a href="https://github.com/Gupeat/craftmesh-m1" style="color:#ffd9a8">源码/测试</a></div><svg xmlns="http://www.w3.org/2000/svg" class="svg-sprite" aria-hidden="true"><symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></symbol><symbol id="i-orders" viewBox="0 0 24 24"><path d="M7 3h10l3 4v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7l3-4Z"></path><path d="M4 7h16M9 12h6M9 16h6"></path></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v6c0 4.6 3.2 8 7.5 9 4.3-1 7.5-4.4 7.5-9V6L12 3Z"></path><path d="m9 12 2 2 4-4"></path></symbol><symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Z"></path><path d="m3 12 9 5 9-5M3 16l9 5 9-5"></path></symbol><symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 6.3M20 5v6h-6"></path></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></symbol><symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"></ellipse><path d="M4.5 5.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6M4.5 11.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"></path></symbol><symbol id="i-code" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13 4l-2 16"></path></symbol><symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6V3Z"></path><path d="M14 3v5h5M9 13h7M9 17h7"></path></symbol><symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"></path><circle cx="12" cy="12" r="2.5"></circle></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7-11-7Z"></path></symbol><symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"></path></symbol><symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"></path></symbol></svg>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">CM</div>
+        <div>
+          <div class="brand-name">CraftMesh</div>
+          <div class="brand-sub">工艺协同中台 · 全栈交付</div>
+        </div>
+      </div>
+      <div class="workspace-pill">
+        <span class="live-dot"></span>
+        <span>参考实现环境</span>
+        <span class="workspace-version">M1+M2+B+C</span>
+      </div>
+      <nav class="sidebar-nav" aria-label="主导航"><a class="nav-item nav-link" href="index.html">
+        <svg class="icon"><use href="#i-grid"></use></svg>
+        <span>工作台（M1）</span>
+        
+      </a><a class="nav-item nav-link is-active" href="m2.html">
+        <svg class="icon"><use href="#i-orders"></use></svg>
+        <span>预售与工厂派单</span>
+        <span class="nav-kicker">M2</span>
+      </a><a class="nav-item nav-link" href="ai.html">
+        <svg class="icon"><use href="#i-db"></use></svg>
+        <span>企业 AI 服务层</span>
+        <span class="nav-kicker">B</span>
+      </a><a class="nav-item nav-link" href="ip.html">
+        <svg class="icon"><use href="#i-layers"></use></svg>
+        <span>文化 IP 短剧管线</span>
+        <span class="nav-kicker">C</span>
+      </a><a class="nav-item nav-link" href="evidence.html">
+        <svg class="icon"><use href="#i-check"></use></svg>
+        <span>验收驾驶舱</span>
+        
+      </a></nav>
+      <div class="sidebar-section-label">交付说明</div>
+      <div class="sidebar-meta">
+        <div><span>数据</span><strong>全部合成 / 脱敏</strong></div>
+        <div><span>服务</span><strong>Python HTTP API</strong></div>
+        <div><span>存储</span><strong>SQLite · 本地</strong></div>
+        <div><span>规则</span><strong>JSON 配置文件</strong></div>
+      </div>
+      <div class="sidebar-note">
+        <div class="note-kicker">不是静态原型</div>
+        <p>本页所有状态、金额与判定均由本地 API 与 SQLite 实时生成，可复跑、可审计。</p>
+      </div>
+      <div class="sidebar-foot">
+        <span class="live-dot"></span>
+        <span id="apiVersion">API M1.0</span>
+        <span class="dot-sep">·</span>
+        <span id="apiState">SQLite 3 订单</span>
+      </div></aside>
+  <main class="main-column">
+    <header class="topbar" id="topbar">
+      <div class="topbar-left">
+        <div class="crumb">
+          <span class="crumb-root">CraftMesh</span>
+          <span class="crumb-sep">/</span>
+          <strong>M2 预售与派单</strong>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <span class="api-badge" id="apiBadge"><span class="live-dot"></span><span>API 在线</span></span>
+        <label class="role-switcher"><span>当前角色</span>
+          <select id="shellRole" aria-label="切换演示角色">
+            <option value="designer">设计师</option><option value="ops">生产运营</option><option value="workshop">工坊</option><option value="finance">财务</option><option value="buyer">买家 / 支持者</option><option value="admin">管理员</option>
+          </select>
+        </label>
+        <a class="btn btn-ghost btn-small" href="index.html">返回 M1 工作台</a>
+      </div></header>
+    <div class="content">
+      <section class="page-head">
+        <div class="page-head-copy">
+          <div class="eyebrow">M2 · C2M 预售与制造协同</div>
+          <h1>从一张纹样，到预售成团、工坊派单与分账</h1>
+          <p class="lede">预售价复用 M1 的报价与授权规则；成团、派单、质检、返工、结算、争议全部由本地 API 与 SQLite 实时生成。派单前会按工坊公开能力（工艺 / 材料 / 尺寸 / 起订量 / 在制产能）做 5 项校验，不匹配就拒绝并说明原因。</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-primary" data-action="run-scenario" id="btnScenario">
+            <svg class="icon"><use href="#i-refresh"></use></svg><span>一键跑通全链路</span>
+          </button>
+          <button class="btn" data-action="reset-demo" id="btnReset">重置演示数据</button>
+          <a class="btn btn-ghost" href="/api/m2/config" target="_blank" rel="noreferrer">查看规则配置</a>
+        </div>
+      </section>
+
+      <div class="role-strip" id="roleStrip"><span>当前角色 <strong>管理员</strong></span><span class="dot-sep">·</span><span>可执行 12 项业务动作，其余请求由服务端拒绝（403）</span><span class="dot-sep">·</span><span>在右上角切换角色后重试同一操作，可验证权限确实生效</span></div>
+
+      <section class="kpi-grid" id="kpis" aria-label="M2 概览"><div class="kpi-card"><div class="kpi-top"><span>预售活动</span></div><div class="kpi-value">1</div><div class="kpi-foot">0 进行中 · 1 已成团</div></div><div class="kpi-card"><div class="kpi-top"><span>定金归集</span></div><div class="kpi-value">¥252.00</div><div class="kpi-foot">支持者定金累计（含成团后转工艺单）</div></div><div class="kpi-card"><div class="kpi-top"><span>在制工艺单</span></div><div class="kpi-value">0</div><div class="kpi-foot">共 1 张 · 已结算 1</div></div><div class="kpi-card"><div class="kpi-top"><span>交易总额</span></div><div class="kpi-value">¥840.00</div><div class="kpi-foot">平台 25% / 授权 10% / 工坊余额</div></div><div class="kpi-card"><div class="kpi-top"><span>台账净额</span></div><div class="kpi-value">¥1,092.00</div><div class="kpi-foot">7 笔分账与退款</div></div></section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">一键验收 · 可复跑</div>
+            <h2>16 步全链路自检</h2>
+            <p class="panel-copy">服务端用与页面相同的业务函数跑完整条链路，其中第 ⑤ 步故意派给不做该工艺的工坊，用来证明能力校验真的会拒绝。运行前会重置 M2 演示数据。</p>
+          </div>
+          <span class="server-chip" id="scenarioChip">未运行</span>
+        </div>
+        <div id="scenarioBody" class="scenario-body"><p class="empty-copy">尚未运行。点击「一键跑通全链路」会在服务端重置 M2 数据并跑完 16 步，逐条返回结果与证据。</p></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">A-03 预售下单 · 成团</div>
+            <h2>预售活动</h2>
+          </div>
+          <span class="server-chip" id="campaignChip">1 条</span>
+        </div>
+        <div class="split-panel aside-left">
+          <div>
+            <div class="table-wrap">
+              <table class="data-table" id="campaignTable">
+                <thead><tr><th>活动</th><th>进度</th><th>状态</th></tr></thead>
+                <tbody><tr class="is-selected"><td><button class="row-button" data-action="select-campaign" data-id="cmp-84042edc">月洞门 · 黄铜书签预售（合成样例）</button><div class="table-sub">cmp-84042edc</div></td><td><div class="progress-track"><div class="progress-fill is-done" style="width:100%"></div></div><div class="table-sub">20/20 份 · 定金 ¥252.00</div></td><td><span class="tag tag-green">已完成</span></td></tr></tbody>
+              </table>
+            </div>
+            <form class="mod-form" id="createCampaignForm" data-action="create-campaign">
+              <div>
+                <div class="field-label">新建预售 <span>价格由 M1 报价规则计算</span></div>
+                <div class="form-grid" id="campaignFormFields"><label class="field"><span>纹样</span><select name="patternId"><option value="moon-gate">月洞门 · 原创 · ORIG-SYN-001</option><option value="wave-lattice">海浪格 · 授权 · LIC-SYN-2026-001</option><option value="cloud-scroll">云纹 · 公版 · PD-SYN-009</option></select></label><label class="field"><span>工艺</span><select name="process"><option value="casting">铸造（起订 20 份）</option><option value="inlay">镶嵌（起订 12 份）</option><option value="engraving">雕刻（起订 15 份）</option><option value="joinery">榫卯（起订 10 份）</option><option value="carving">木雕（起订 12 份）</option></select></label><label class="field"><span>材料</span><select name="material"><option value="brass">黄铜</option><option value="silver">银</option><option value="wood">木</option></select></label><label class="field"><span>表面处理</span><select name="finish"><option value="polished">抛光</option><option value="matte">哑光</option><option value="oil">木油</option><option value="wax">木蜡</option></select></label><label class="field"><span>每份件数</span><input name="quantityPerUnit" type="number" min="1" max="200" value="1"></label><label class="field"><span>预售天数</span><input name="deadlineDays" type="number" min="1" max="90" value="14"></label><label class="field"><span>标题（可选）</span><input name="title" placeholder="留空自动生成"></label></div>
+              </div>
+              <div class="form-actions">
+                <button class="btn btn-small" type="submit">创建草稿</button>
+                <p class="form-hint">创建者为设计师 / 管理员；草稿创建后需手动开放预售。</p>
+              </div>
+            </form>
+          </div>
+          <div id="campaignDetail"><div class="detail-head"><div><div class="mono">cmp-84042edc</div><h3>月洞门 · 黄铜书签预售（合成样例）</h3></div><span class="tag tag-green">已完成</span></div><div class="stepper"><div class="step is-done"><span class="step-dot"></span>草稿</div><div class="step is-done"><span class="step-dot"></span>预售中</div><div class="step is-done"><span class="step-dot"></span>已成团</div><div class="step is-done"><span class="step-dot"></span>生产中</div><div class="step is-current"><span class="step-dot"></span>已完成</div></div><div class="kv-list"><div class="kv-row"><span>纹样</span><strong>月洞门 · 原创</strong></div><div class="kv-row"><span>工艺 / 材料 / 表面</span><strong>铸造 · 黄铜 · 抛光</strong></div><div class="kv-row"><span>单价（每份）</span><strong>¥42.00 × 1 件</strong></div><div class="kv-row"><span>定金比例</span><strong>30% · ¥12.60 / 份</strong></div><div class="kv-row"><span>起订量</span><strong>20 份</strong></div><div class="kv-row"><span>预售截止</span><strong>11/14 21:23</strong></div></div><div class="license-box"><strong>授权快照</strong>　月洞门　来源：original　许可：ORIG-SYN-001<br>用途：commercial　范围：commercial / derivative　衍生：允许　校验：<span class="ok">在授权范围内</span></div><div class="subhead" style="margin:14px 0 6px"><h3>支持者定金</h3><span class="mono muted">20/20 份 · ¥252.00</span></div><div class="progress-track"><div class="progress-fill is-done" style="width:100%"></div></div><div class="table-wrap" style="margin-top:10px"><table class="data-table"><thead><tr><th>支持者</th><th>份数</th><th>定金</th><th>时间</th></tr></thead><tbody><tr><td>支持者 A（合成）</td><td>12</td><td>¥151.20</td><td class="mono muted">10/31 21:23</td></tr><tr><td>支持者 B（合成）</td><td>8</td><td>¥100.80</td><td class="mono muted">10/31 21:23</td></tr></tbody></table></div><div class="action-block"><p class="block-title">已生成工艺单</p><div class="action-row"><button class="btn btn-small" data-action="select-order" data-id="po-9a2b22b8">查看工艺单 po-9a2b22b8</button></div></div></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">A-04 工厂派单 · 生产协同</div>
+            <h2>工艺单、派单与质检</h2>
+            <p class="panel-copy">成团后自动生成工艺单。派单前先做能力预检，再按工坊公开能力派单；接单、开工、质检、返工、发货、结算都会写入审计轨迹。</p>
+          </div>
+          <span class="server-chip" id="orderChip">1 条</span>
+        </div>
+        <div class="split-panel aside-right">
+          <div id="orderDetail"><div class="detail-head"><div><div class="mono">po-9a2b22b8 · 预售 cmp-84042edc</div><h3>月洞门 · 铸造 · 20 份</h3></div><span class="tag tag-green">已结算</span></div><div class="stepper"><div class="step is-done"><span class="step-dot"></span>待派单</div><div class="step is-done"><span class="step-dot"></span>已派单</div><div class="step is-done"><span class="step-dot"></span>已接单</div><div class="step is-done"><span class="step-dot"></span>生产中</div><div class="step is-done"><span class="step-dot"></span>待质检</div><div class="step is-done"><span class="step-dot"></span>质检通过</div><div class="step is-done"><span class="step-dot"></span>已发货</div><div class="step is-current"><span class="step-dot"></span>已结算</div></div><div class="kv-list"><div class="kv-row"><span>材料 / 表面</span><strong>黄铜 · 抛光</strong></div><div class="kv-row"><span>单价 / 总额</span><strong>¥42.00 × 20 = ¥840.00</strong></div><div class="kv-row"><span>已收定金</span><strong>¥252.00</strong></div><div class="kv-row"><span>派单工坊</span><strong>滨海珠宝精密工坊（合成样例）</strong></div><div class="kv-row"><span>发货</span><strong>顺丰（合成） · SF-DEMO-0001</strong></div><div class="kv-row"><span>分账</span><strong>平台 ¥210.00 / 授权 ¥84.00 / 工坊 ¥546.00</strong></div></div><div class="subhead" style="margin-top:14px"><h3>质检记录</h3><span class="mono muted">返工 1 次</span></div><div class="table-wrap"><table class="data-table"><thead><tr><th>时间</th><th>结论</th><th>说明</th></tr></thead><tbody><tr><td class="mono muted">10/31 21:23</td><td><span class="status-pill fail">不通过</span></td><td>边角有砂眼，需补蜡重铸</td></tr><tr><td class="mono muted">10/31 21:23</td><td><span class="status-pill pass">通过</span></td><td>抽检 5 件外观合格</td></tr></tbody></table></div><div class="action-block"><p class="block-title">买家发起争议</p><form class="inline-form" data-action="dispute" data-id="po-9a2b22b8"><label class="field field-narrow"><span>类型</span><select name="type"><option value="quality">质量</option><option value="timing">交期</option><option value="damage">破损</option></select></label><label class="field" style="flex:1;min-width:200px"><span>原因（至少 4 字）</span><input name="reason" value="收到后 2 件表面有轻微色差（演示数据）" required=""></label><button class="btn btn-small" type="submit">提交争议</button></form><p class="form-hint">需要角色：买家 / 支持者 / 管理员</p></div><div class="action-block"><p class="block-title">争议记录</p><div class="doc-block" style="margin-bottom:8px"><strong>dsp-c84f625a</strong>　quality　<span class="tag tag-green">已结案</span><br>收到后 2 件表面有轻微色差（演示数据）<br>退款 ¥252.00</div><p class="form-hint">需要角色：财务 / 生产运营 / 管理员</p></div></div>
+          <div id="capabilityPanel"><div class="doc-block"><strong>工坊公开能力</strong><br>滨海珠宝精密工坊（合成样例）：铸造/镶嵌/雕刻 · 黄铜/银 · ≤120mm · 起订 10 · 交期 7 天<br>湾区镶嵌小工坊（合成样例）：镶嵌/雕刻 · 黄铜/银 · ≤80mm · 起订 12 · 交期 5 天<br>山门木作工坊（合成样例）：榫卯/木雕 · 木 · ≤400mm · 起订 8 · 交期 10 天<br>木纹车旋小组（合成样例）：木雕 · 木 · ≤260mm · 起订 12 · 交期 12 天</div><p class="mini-note">能力来自 config/workshops.json，为合成样例。</p></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">分账 · 审计</div>
+            <h2>分账台账与审计轨迹</h2>
+            <p class="panel-copy">平台服务费、纹样授权分成、工坊结算款与争议退款逐笔入账；审计轨迹记录每次状态变化与操作角色。</p>
+          </div>
+          <span class="server-chip" id="ledgerChip">7 笔</span>
+        </div>
+        <div class="split-panel">
+          <div>
+            <div class="table-wrap">
+              <table class="data-table" id="ledgerTable">
+                <thead><tr><th>时间</th><th>类型</th><th>对象</th><th>金额</th></tr></thead>
+                <tbody><tr><td class="mono muted">—</td><td>工坊调整</td><td class="mono muted">dsp-c84f625a<br>工坊</td><td class="amount-neg">¥-252.00</td></tr><tr><td class="mono muted">—</td><td>买家退款</td><td class="mono muted">dsp-c84f625a<br>买家</td><td class="amount-neg">+¥252.00</td></tr><tr><td class="mono muted">—</td><td>工坊结算</td><td class="mono muted">po-9a2b22b8<br>工坊</td><td class="amount-pos">+¥546.00</td></tr><tr><td class="mono muted">—</td><td>授权分成</td><td class="mono muted">po-9a2b22b8<br>授权方</td><td class="amount-pos">+¥84.00</td></tr><tr><td class="mono muted">—</td><td>平台服务费</td><td class="mono muted">po-9a2b22b8<br>平台</td><td class="amount-pos">+¥210.00</td></tr><tr><td class="mono muted">—</td><td>定金</td><td class="mono muted">plg-5e9e3c4c<br>买家</td><td class="amount-pos">+¥100.80</td></tr><tr><td class="mono muted">—</td><td>定金</td><td class="mono muted">plg-f6f321b4<br>买家</td><td class="amount-pos">+¥151.20</td></tr></tbody>
+              </table>
+            </div>
+            <p class="table-note">金额单位：元。分账规则来自 <code>config/m2_rules.json</code>（平台 25%、授权 10%），修改文件刷新即生效，无需改代码。</p>
+          </div>
+          <div>
+            <div class="subhead"><h3>审计轨迹</h3><span class="server-chip" id="eventChip">最近 17 条</span></div>
+            <div class="timeline compact" id="eventTimeline"><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>退款结案</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">dispute · - · 财务 · 按 30% 退款并结案 · open → resolved</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>买家发起争议</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">dispute · - · 买家 / 支持者 · 收到后 2 件表面有轻微色差（演示数据） · - → open</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>结算分账</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">order · - · 财务 · shipped → settled</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>发货</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">order · - · 生产运营 · SF-DEMO-0001 · qc_passed → shipped</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>质检通过</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">order · - · 生产运营 · 抽检 5 件外观合格 · qc_pending → qc_passed</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>提交质检</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">order · - · 生产运营 · in_progress → qc_pending</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>开工</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">order · - · 工坊 · rework → in_progress</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>质检不通过</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">order · - · 生产运营 · 边角有砂眼，需补蜡重铸 · qc_pending → rework</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>提交质检</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">order · - · 生产运营 · in_progress → qc_pending</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>开工</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">order · - · 工坊 · accepted → in_progress</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>工坊接单</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">dispatch · - · 工坊 · offered → accepted</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>派单给 滨海珠宝精密工坊（合成样例）</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">order · - · 生产运营 · created → dispatched</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>支持者 B（合成） 定金下单 8 份</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">campaign · - · 买家 / 支持者 · 累计 20/20；达成起订量，自动成团 · funded → funded</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>成团生成工艺单</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">order · - · 买家 / 支持者 · gross=84000 分 · - → created</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>支持者 A（合成） 定金下单 12 份</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">campaign · - · 买家 / 支持者 · 累计 12/20 · open → open</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>开放预售</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">campaign · - · 管理员 · draft → open</div></div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>创建预售活动</span><span class="timeline-time">10/31 21:23</span></div><div class="timeline-note">campaign · - · 管理员 · - → draft</div></div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <p class="table-note">本页所有工坊、买家、运单与金额均为合成样例，用于演示协同流程，不代表真实工厂产能或真实客户订单。</p>
+    </div>
+  </main>
+</div>
+
+
+
+
+
+</body></html>

@@ -1,0 +1,326 @@
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>CraftMesh · B 企业 AI 服务层</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="pages.css">>
+<link rel="stylesheet" href="ai.css">>
+</head>
+<body data-page="ai"><div id="static-demo-banner" style="position:sticky;top:0;z-index:9999;background:#9b4a30;color:#fffdf8;font:13px/1.7 'Segoe UI','Microsoft YaHei',sans-serif;padding:7px 14px;text-align:center"><b>静态演示快照</b> · 数据来自一次真实 API 运行，交互已冻结 · <a href="index.html" style="color:#ffd9a8">M1 工作台</a> · <a href="m2.html" style="color:#ffd9a8">M2 预售与派单</a> · <a href="ai.html" style="color:#ffd9a8">B 企业 AI</a> · <a href="ip.html" style="color:#ffd9a8">C 文化 IP</a> · <a href="evidence.html" style="color:#ffd9a8">验收驾驶舱</a> · <a href="https://github.com/Gupeat/craftmesh-m1" style="color:#ffd9a8">源码/测试</a></div><svg xmlns="http://www.w3.org/2000/svg" class="svg-sprite" aria-hidden="true"><symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></symbol><symbol id="i-orders" viewBox="0 0 24 24"><path d="M7 3h10l3 4v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7l3-4Z"></path><path d="M4 7h16M9 12h6M9 16h6"></path></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v6c0 4.6 3.2 8 7.5 9 4.3-1 7.5-4.4 7.5-9V6L12 3Z"></path><path d="m9 12 2 2 4-4"></path></symbol><symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Z"></path><path d="m3 12 9 5 9-5M3 16l9 5 9-5"></path></symbol><symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 6.3M20 5v6h-6"></path></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></symbol><symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"></ellipse><path d="M4.5 5.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6M4.5 11.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"></path></symbol><symbol id="i-code" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13 4l-2 16"></path></symbol><symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6V3Z"></path><path d="M14 3v5h5M9 13h7M9 17h7"></path></symbol><symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"></path><circle cx="12" cy="12" r="2.5"></circle></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7-11-7Z"></path></symbol><symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"></path></symbol><symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"></path></symbol></svg>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">CM</div>
+        <div>
+          <div class="brand-name">CraftMesh</div>
+          <div class="brand-sub">工艺协同中台 · 全栈交付</div>
+        </div>
+      </div>
+      <div class="workspace-pill">
+        <span class="live-dot"></span>
+        <span>参考实现环境</span>
+        <span class="workspace-version">M1+M2+B+C</span>
+      </div>
+      <nav class="sidebar-nav" aria-label="主导航"><a class="nav-item nav-link" href="index.html">
+        <svg class="icon"><use href="#i-grid"></use></svg>
+        <span>工作台（M1）</span>
+        
+      </a><a class="nav-item nav-link" href="m2.html">
+        <svg class="icon"><use href="#i-orders"></use></svg>
+        <span>预售与工厂派单</span>
+        <span class="nav-kicker">M2</span>
+      </a><a class="nav-item nav-link is-active" href="ai.html">
+        <svg class="icon"><use href="#i-db"></use></svg>
+        <span>企业 AI 服务层</span>
+        <span class="nav-kicker">B</span>
+      </a><a class="nav-item nav-link" href="ip.html">
+        <svg class="icon"><use href="#i-layers"></use></svg>
+        <span>文化 IP 短剧管线</span>
+        <span class="nav-kicker">C</span>
+      </a><a class="nav-item nav-link" href="evidence.html">
+        <svg class="icon"><use href="#i-check"></use></svg>
+        <span>验收驾驶舱</span>
+        
+      </a></nav>
+      <div class="sidebar-section-label">交付说明</div>
+      <div class="sidebar-meta">
+        <div><span>数据</span><strong>全部合成 / 脱敏</strong></div>
+        <div><span>服务</span><strong>Python HTTP API</strong></div>
+        <div><span>存储</span><strong>SQLite · 本地</strong></div>
+        <div><span>规则</span><strong>JSON 配置文件</strong></div>
+      </div>
+      <div class="sidebar-note">
+        <div class="note-kicker">不是静态原型</div>
+        <p>本页所有状态、金额与判定均由本地 API 与 SQLite 实时生成，可复跑、可审计。</p>
+      </div>
+      <div class="sidebar-foot">
+        <span class="live-dot"></span>
+        <span id="apiVersion">API M1.0</span>
+        <span class="dot-sep">·</span>
+        <span id="apiState">SQLite 3 订单</span>
+      </div></aside>
+  <main class="main-column">
+    <header class="topbar" id="topbar">
+      <div class="topbar-left">
+        <div class="crumb">
+          <span class="crumb-root">CraftMesh</span>
+          <span class="crumb-sep">/</span>
+          <strong>B 企业 AI 服务层</strong>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <span class="api-badge" id="apiBadge"><span class="live-dot"></span><span>API 在线</span></span>
+        <label class="role-switcher"><span>当前角色</span>
+          <select id="shellRole" aria-label="切换演示角色">
+            <option value="designer">设计师</option><option value="ops">生产运营</option><option value="workshop">工坊</option><option value="finance">财务</option><option value="buyer">买家 / 支持者</option><option value="admin">管理员</option>
+          </select>
+        </label>
+        <a class="btn btn-ghost btn-small" href="index.html">返回 M1 工作台</a>
+      </div></header>
+    <div class="content">
+      <section class="page-head">
+        <div class="page-head-copy">
+          <div class="eyebrow">B · 六产业共享企业 AI 服务层</div>
+          <h1>知识、智能体与自动化，<br>在一个可点通的服务层里</h1>
+          <p class="lede">这不是静态原型：术语、知识库、智能体工具轨迹、工作流运行、CRM 线索、三语站点文案与 SEO 检查，全部由本地 Python API 与 SQLite 实时生成。引擎是<strong>本地确定性关键词 / 字符 n-gram 规则引擎</strong>，不调用外部大模型或 API；客户、工坊、价格与文案均为合成样例。</p>
+          <div class="ai-engine-badge"><span class="live-dot"></span><span id="engineChip">本地规则引擎 · 木作定制 · AI-B.1.0</span><span class="dot-sep">·</span><span>可复跑 · 可审计 · 不虚标</span></div>
+        </div>
+        <div class="page-actions">
+          <label class="ai-industry-switch" for="industrySelect">
+            <span>行业配置</span>
+            <select id="industrySelect" data-perm="industry.switch" aria-label="切换行业配置"><option value="jewelry">珠宝定制（Jewelry Customization）</option><option value="woodcraft" selected="">木作定制（Woodcraft &amp; Joinery）</option></select>
+          </label>
+          <button class="btn btn-primary" data-action="run-scenario" data-perm="scenario.run" id="btnScenario">
+            <svg class="icon"><use href="#i-refresh"></use></svg><span>一键全链路自检</span>
+          </button>
+          <button class="btn" data-action="reset-demo" data-perm="demo.reset" id="btnReset">重置演示数据</button>
+          <a class="btn btn-ghost" href="/api/ai/config" target="_blank" rel="noreferrer">查看行业配置</a>
+        </div>
+      </section>
+
+      <div class="role-strip" id="roleStrip"><span>当前角色 <strong>管理员</strong></span><span class="dot-sep">·</span><span>可执行 11 / 11 项动作</span><span class="dot-sep">·</span><span>右上角切换角色后重试同一操作，可验证权限真的生效</span></div>
+
+      <div class="ai-flow-ribbon" aria-label="服务层数据流">
+        <span class="flow-chip"><b>行业配置</b> 术语 · 模板 · 三语文案</span><span class="flow-arrow">→</span>
+        <span class="flow-chip"><b>知识库</b> 切块 · 引用</span><span class="flow-arrow">→</span>
+        <span class="flow-chip"><b>智能体</b> 意图 · 工具调用</span><span class="flow-arrow">→</span>
+        <span class="flow-chip"><b>工作流</b> 条件 · 重试</span><span class="flow-arrow">→</span>
+        <span class="flow-chip"><b>CRM</b> 线索 · 阶段</span><span class="flow-arrow">→</span>
+        <span class="flow-chip"><b>增长</b> 三语站点 · SEO</span>
+      </div>
+
+      <section class="kpi-grid" id="kpis" aria-label="AI 服务层概览"><div class="kpi-card"><div class="kpi-top"><span>知识文档</span></div><div class="kpi-value">5</div><div class="kpi-foot">已发布 5 · 切块 14 个</div></div><div class="kpi-card"><div class="kpi-top"><span>CRM 线索</span></div><div class="kpi-value">4</div><div class="kpi-foot">待跟进 4 · 已成交 0</div></div><div class="kpi-card"><div class="kpi-top"><span>工作流实例</span></div><div class="kpi-value">1</div><div class="kpi-foot">运行 3 次 · 成功 2 / 失败 1</div></div><div class="kpi-card"><div class="kpi-top"><span>智能体会话</span></div><div class="kpi-value">1</div><div class="kpi-foot">4 条消息 · 工具 3 类可调用</div></div><div class="kpi-card"><div class="kpi-top"><span>站点语言</span></div><div class="kpi-value">3</div><div class="kpi-foot">zh / en / ja · SEO 确定性检查</div></div><div class="kpi-card"><div class="kpi-top"><span>运行成功率</span></div><div class="kpi-value">66.7%</div><div class="kpi-foot">平均 55.5ms · 本地规则引擎</div></div></section>
+
+      <section class="panel" id="scenarioPanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">一键验收 · 服务端直接调用业务函数</div>
+            <h2>17 步企业 AI 全链路自检</h2>
+            <p class="panel-copy">自检会先重置本模块演示数据，再覆盖：切行业 → 建文档 → 检索引用 → 智能体两轮（检索 / 建线索）→ 询盘写 CRM → 推进阶段 → 工作流成功、缺字段失败、补齐重试 → 三语站点与 SEO → FDE 手册 → 越权与空查询被拒。第 ⑯⑰ 步为预期失败，用来证明权限与校验真实生效。</p>
+          </div>
+          <span class="server-chip" id="scenarioChip">未运行</span>
+        </div>
+        <div id="scenarioBody" class="scenario-body"><p class="empty-copy">尚未运行。点击右上角「一键全链路自检」会在服务端重置 B 模块数据并跑完 17 步，逐条返回结果与证据；第 ⑯⑰ 步为预期拒绝，用来证明权限与空值校验真实生效。</p></div>
+      </section>
+
+      <section class="panel" id="knowledgePanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">行业知识库 · 带引用检索</div>
+            <h2>文档自动切块，命中可回溯到 docId#chunk</h2>
+            <p class="panel-copy">发布状态的文档才参与检索。写入正文会按段落与句号自动切块（单块 ≤180 字），抽取术语与字符 n-gram 关键词；检索打分由关键词、二元组、三元组、标题与术语表共同决定，空查询返回 400，无命中返回空结果与改写建议。</p>
+          </div>
+          <span class="server-chip" id="kbChip">5 篇 · 5 已发布</span>
+        </div>
+        <div class="split-panel aside-left">
+          <div>
+            <div class="subhead"><h3>文档台账</h3><span class="server-chip" id="docCountChip">5 篇</span></div>
+            <div class="ai-doc-list" id="knowledgeList"><button type="button" class="ai-doc-card is-selected" data-action="select-doc" data-doc="kb-wd-demo-outdoor"><div class="ai-doc-top"><span class="ai-doc-title">户外木作含水率与木蜡油养护（演示文档）</span><span class="tag tag-green">已发布</span></div><div class="ai-doc-meta">v1.0 · 2 块 · 10/31 21:23</div><div class="ai-doc-keywords"><span class="ai-kw">含水率</span><span class="ai-kw">含水</span><span class="ai-kw">水率</span><span class="ai-kw">环境</span></div></button><button type="button" class="ai-doc-card" data-action="select-doc" data-doc="kb-wd-moisture"><div class="ai-doc-top"><span class="ai-doc-title">木材含水率与榫卯稳定性</span><span class="tag tag-green">已发布</span></div><div class="ai-doc-meta">v1.2 · 3 块 · 10/20 08:00</div><div class="ai-doc-keywords"><span class="ai-kw">含水率</span><span class="ai-kw">实木</span><span class="ai-kw">养生</span><span class="ai-kw">板材</span></div></button><button type="button" class="ai-doc-card" data-action="select-doc" data-doc="kb-wd-finish"><div class="ai-doc-top"><span class="ai-doc-title">木蜡油涂装与养护说明</span><span class="tag tag-green">已发布</span></div><div class="ai-doc-meta">v1.5 · 3 块 · 10/16 08:00</div><div class="ai-doc-keywords"><span class="ai-kw">木蜡油</span><span class="ai-kw">两底两面</span><span class="ai-kw">固化</span><span class="ai-kw">湿度</span></div></button><button type="button" class="ai-doc-card" data-action="select-doc" data-doc="kb-wd-qc"><div class="ai-doc-top"><span class="ai-doc-title">木作出厂质检与包装规范</span><span class="tag tag-green">已发布</span></div><div class="ai-doc-meta">v1.1 · 3 块 · 10/10 08:00</div><div class="ai-doc-keywords"><span class="ai-kw">出厂质检</span><span class="ai-kw">榫卯缝隙</span><span class="ai-kw">五金</span><span class="ai-kw">抽屉</span></div></button><button type="button" class="ai-doc-card" data-action="select-doc" data-doc="kb-wd-custom"><div class="ai-doc-top"><span class="ai-doc-title">木作定制流程、交期与安装</span><span class="tag tag-green">已发布</span></div><div class="ai-doc-meta">v1.0 · 3 块 · 10/08 08:00</div><div class="ai-doc-keywords"><span class="ai-kw">定制流程</span><span class="ai-kw">测量</span><span class="ai-kw">深化图</span><span class="ai-kw">交期</span></div></button></div>
+            <form class="ai-form" id="knowledgeForm" data-perm-form="knowledge.write" data-allowed="1">
+              <div class="field-label">新建 / 更新文档 <span>合成样例 · 自动切块</span></div>
+              <label class="field"><span>标题 *</span><input name="title" required="" maxlength="120" placeholder="例如：户外木作含水率与养护（演示）"></label>
+              <div class="ai-form-row">
+                <label class="field"><span>状态</span><select name="status"><option value="published">已发布（参与检索）</option><option value="draft">草稿（不参与检索）</option><option value="retired">已下线</option></select></label>
+                <label class="field"><span>版本</span><input name="version" value="v1.0" maxlength="16"></label>
+              </div>
+              <label class="field"><span>正文 * <em>20–12000 字</em></span><textarea name="content" rows="5" required="" placeholder="粘贴合成样例正文；空行分段，句号/问号/分号会被作为切块边界。"></textarea></label>
+              <div class="ai-form-actions">
+                <button class="btn btn-primary btn-small" type="submit" data-perm="knowledge.write">写入并切块</button>
+                <span class="ai-hint" id="kbHint">写入后自动进入检索索引。</span>
+              </div>
+            </form>
+          </div>
+          <div>
+            <div class="subhead"><h3>检索验证</h3><span class="server-chip" id="searchChip">等待查询</span></div>
+            <form class="ai-searchbar" id="searchForm">
+              <input name="query" maxlength="200" placeholder="例如：木蜡油要涂几遍？含水率控制在多少？" aria-label="知识库检索词">
+              <select name="topK" aria-label="返回条数"><option value="3">Top 3</option><option value="5">Top 5</option><option value="8">Top 8</option></select>
+              <button class="btn btn-primary btn-small" type="submit" data-perm="knowledge.search">检索</button>
+            </form>
+            <div class="ai-chiprow" id="searchExamples"><button type="button" class="ai-chip" data-action="search-example" data-q="木蜡油要做几遍？含水率控制在多少？">木蜡油要做几遍？含水率控制在多少？</button><button type="button" class="ai-chip" data-action="search-example" data-q="户外黑胡桃餐桌的报价与交期怎么算？">户外黑胡桃餐桌的报价与交期怎么算？</button></div>
+            <div class="ai-search-results" id="searchResults"><p class="empty-copy">输入问题后检索；每条命中会显示 score 与引用。空查询会被服务端拒绝，无命中会给出建议而不是编造答案。</p></div>
+            <div id="knowledgeDetail"><div class="ai-doc-detail"><div class="ai-doc-detail-head"><div><div class="ai-mini-kicker">DOCUMENT</div><div class="ai-mini-title">户外木作含水率与木蜡油养护（演示文档）</div></div><span class="tag tag-green">published</span></div><div class="ai-kv"><div class="kv-row"><span>文档 ID</span><strong><span class="mono">kb-wd-demo-outdoor</span></strong></div><div class="kv-row"><span>行业</span><strong>woodcraft</strong></div><div class="kv-row"><span>版本 / 来源</span><strong>v1.0 · 页面新建（合成样例）</strong></div><div class="kv-row"><span>切块 / 关键词</span><strong>2 块 / 19 个</strong></div></div><div class="ai-chunk"><div class="ai-chunk-head"><span class="mono">c1</span><span>1 / 2</span></div><p>户外木作推荐使用黑胡桃、白蜡木或柚木。板材含水率应控制在 8%–10%，沿海高湿环境取 8%，北方干燥环境可放宽至 10%。出厂前必须用含水率仪复测，并在交付单记录测量点。</p><div class="ai-doc-keywords"><span class="ai-kw">含水率</span><span class="ai-kw">含水</span><span class="ai-kw">水率</span><span class="ai-kw">环境</span><span class="ai-kw">户外</span><span class="ai-kw">外木</span><span class="ai-kw">木作</span><span class="ai-kw">作推</span><span class="ai-kw">推荐</span></div></div><div class="ai-chunk"><div class="ai-chunk-head"><span class="mono">c2</span><span>2 / 2</span></div><p>木蜡油采用两底两面，每遍间隔 4–6 小时；完成面 24 小时可轻用，7 天完全固化。户外家具建议每 6–12 个月补涂一次，雨季前检查榫卯、五金与排水。</p><div class="ai-doc-keywords"><span class="ai-kw">榫卯</span><span class="ai-kw">木蜡油</span><span class="ai-kw">小时</span><span class="ai-kw">木蜡</span><span class="ai-kw">蜡油</span><span class="ai-kw">油采</span><span class="ai-kw">采用</span><span class="ai-kw">用两</span><span class="ai-kw">两底</span><span class="ai-kw">底两</span></div></div><div class="subhead"><h3>行业术语表（用于检索加权）</h3></div><div class="table-wrap"><table class="data-table"><thead><tr><th>中文</th><th>English</th><th>日本語</th><th>口径</th></tr></thead><tbody><tr><td>含水率</td><td>moisture content</td><td>含水率</td><td>8%–12%，每批养生后复测</td></tr><tr><td>榫卯</td><td>mortise-and-tenon joint</td><td>指物（ほぞ組み）</td><td>配合间隙 0.2–0.4mm</td></tr><tr><td>木蜡油</td><td>hardwax oil</td><td>蜜蝋オイル</td><td>两底两面，7 天完全固化</td></tr><tr><td>复尺</td><td>site re-measurement</td><td>再採寸</td><td>异形空间至少两次</td></tr><tr><td>深化图</td><td>shop drawing</td><td>実施図</td><td>确认后起算生产周期</td></tr><tr><td>打样</td><td>sample / prototype</td><td>試作</td><td>可选，确认材色与工艺</td></tr></tbody></table></div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="agentPanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">智能体 · 本地规则引擎 + 工具调用</div>
+            <h2>多轮对话，工具轨迹与引用都摊开给你看</h2>
+            <p class="panel-copy">意图路由只有三类：问知识 → <code>search_knowledge</code> 并引用；留联系方式 → <code>create_lead</code> 写 CRM；要自动化 → <code>draft_workflow</code> 生成草稿。所有工具调用都会记录参数、结果摘要、成功状态与耗时，不伪造未执行的工具。</p>
+          </div>
+          <div class="ai-head-actions">
+            <span class="server-chip" id="agentChip">未建会话</span>
+            <button class="btn btn-small" id="btnNewSession" data-action="new-session" data-perm="agent.chat">新建会话</button>
+          </div>
+        </div>
+        <div class="agent-layout">
+          <div class="agent-main">
+            <div class="agent-agentline" id="agentAgentLine"><span class="live-dot"></span><span>选择示例问题，或先新建会话。</span></div>
+            <div class="chat ai-chat" id="agentChat"><p class="empty-copy">还没有会话。示例问题会真实创建会话、调用工具并写入 SQLite；回答基于已发布文档片段，引用格式 docId#chunk。</p></div>
+            <div class="ai-chiprow" id="starterQuestions"><button type="button" class="ai-chip" data-action="ask-starter" data-q="黑胡桃餐桌的含水率要控制在多少？">黑胡桃餐桌的含水率要控制在多少？</button><button type="button" class="ai-chip" data-action="ask-starter" data-q="木蜡油要涂几遍，多久能使用？">木蜡油要涂几遍，多久能使用？</button><button type="button" class="ai-chip" data-action="ask-starter" data-q="异形柜的复尺和交期怎么安排？">异形柜的复尺和交期怎么安排？</button></div>
+            <form class="ai-agent-form" id="agentForm" data-perm-form="agent.chat" data-allowed="1">
+              <textarea name="content" rows="2" maxlength="2000" placeholder="例如：黑胡桃餐桌的含水率要控制在多少？" aria-label="给智能体发消息"></textarea>
+              <div class="ai-agent-actions">
+                <span class="ai-hint">回复由本地确定性规则生成，不调用外部大模型。</span>
+                <button class="btn btn-primary btn-small" type="submit" data-perm="agent.chat">发送</button>
+              </div>
+            </form>
+          </div>
+          <aside class="agent-side">
+            <div class="ai-mini-panel">
+              <div class="ai-mini-kicker">ENGINE</div>
+              <div class="ai-mini-title" id="agentEngineLabel">本地规则引擎</div>
+              <p class="ai-mini-copy" id="agentEngineCopy">关键词与字符 n-gram 检索 + 意图路由，无外部 API。</p>
+              <div class="ai-kv" id="agentFacts"><div class="kv-row"><span>会话</span><strong>未创建</strong></div><div class="kv-row"><span>行业</span><strong>木作定制</strong></div><div class="kv-row"><span>消息数</span><strong>0</strong></div><div class="kv-row"><span>可用工具</span><strong>search_knowledge · create_lead · draft_workflow</strong></div></div>
+            </div>
+            <div class="ai-mini-panel">
+              <div class="ai-mini-kicker">TOOL TRACE</div>
+              <div class="ai-mini-title">工具调用轨迹</div>
+              <div id="toolTrail"><p class="empty-copy">首轮回复后显示工具名、参数摘要与耗时。</p></div>
+            </div>
+            <div class="ai-mini-panel">
+              <div class="ai-mini-kicker">CITATIONS</div>
+              <div class="ai-mini-title">引用片段</div>
+              <div id="agentCitations"><p class="empty-copy">知识类回答会附带 docId#chunk 引用。</p></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="panel" id="workflowPanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">自动化工作流 · 触发 / 条件 / 动作 / 重试</div>
+            <h2>每一步都真执行，失败步骤可以补齐后重试</h2>
+            <p class="panel-copy">模板来自 <code>config/ai_industries.json</code>，实例落库后可反复运行。运行记录保存输入、逐步状态、耗时与失败原因；缺必填字段会让校验步骤真实失败，补齐后同一条失败运行可重试并生成 attempt 2，而不是把失败改成成功。</p>
+          </div>
+          <span class="server-chip" id="workflowChip">2 个模板</span>
+        </div>
+        <div class="split-panel aside-left">
+          <div>
+            <div class="subhead"><h3>工作流模板</h3><span class="server-chip" id="templateChip">2 个</span></div>
+            <div class="ai-workflow-list" id="workflowTemplates"><div class="ai-workflow-card is-template"><div class="ai-workflow-top"><div class="ai-workflow-name">木作询盘分诊与打样评估</div><span class="tag tag-muted">v1.1</span></div><p class="ai-workflow-desc">空间木作询盘进入后：校验字段 → 检索含水率与交期口径 → 线索分级 → 写 CRM → 生成报价草稿 → 通知项目组。</p><div class="ai-workflow-meta"><span>7 步</span><span>官网 / 门店询盘提交时</span></div><div class="ai-doc-keywords"><span class="ai-kw">name</span><span class="ai-kw">email</span><span class="ai-kw">interest</span></div><div class="ai-form-actions"><button type="button" class="btn btn-small" data-action="create-workflow" data-template="wf-wd-inquiry">从模板创建实例</button></div></div><div class="ai-workflow-card is-template"><div class="ai-workflow-top"><div class="ai-workflow-name">三语站点发布前 SEO 检查</div><span class="tag tag-muted">v1.0</span></div><p class="ai-workflow-desc">站点发布前检查三语 SEO 元数据与关键词覆盖，覆盖不足则失败，修改后重试。</p><div class="ai-workflow-meta"><span>3 步</span><span>发布前手动触发</span></div><div class="ai-doc-keywords"><span class="ai-kw">lang</span></div><div class="ai-form-actions"><button type="button" class="btn btn-small" data-action="create-workflow" data-template="wf-wd-site-seo">从模板创建实例</button></div></div></div>
+            <div class="subhead ai-subhead-gap"><h3>工作流实例</h3><span class="server-chip" id="instanceChip">1 个</span></div>
+            <div class="ai-workflow-list" id="workflowInstances"><button type="button" class="ai-workflow-card" data-action="select-workflow" data-workflow="wf-aef1ccd6"><div class="ai-workflow-top"><span class="ai-workflow-name">木作询盘分诊 · 全链路自检</span><span class="tag tag-green">启用</span></div><div class="ai-workflow-meta"><span class="mono">wf-aef1ccd6</span><span>7 步 · 已运行 3 次</span></div></button></div>
+          </div>
+          <div>
+            <div id="workflowDetail"><p class="empty-copy">选择左侧实例查看步骤、运行表单与结果。</p></div>
+            <div id="runResult"></div>
+          </div>
+        </div>
+        <div class="subhead ai-subhead-gap"><h3>运行历史</h3><span class="server-chip" id="runChip">3 条</span></div>
+        <div class="ai-run-history" id="runHistory"><div class="ai-history-card"><div class="ai-history-top"><div><div class="ai-history-title">木作询盘分诊 · 全链路自检</div><div class="ai-history-meta"><span class="mono">run-da1692ae</span><span>attempt 1</span><span>57.79ms</span><span>10/31 21:23</span></div></div><span class="tag tag-green">成功</span></div><div class="ai-form-actions"><button type="button" class="btn btn-small" data-action="view-run" data-run="run-da1692ae">查看逐步结果</button></div></div><div class="ai-history-card"><div class="ai-history-top"><div><div class="ai-history-title">木作询盘分诊 · 全链路自检</div><div class="ai-history-meta"><span class="mono">run-a3fb89fb</span><span>attempt 1</span><span>0.19ms</span><span>10/31 21:23</span></div></div><span class="tag tag-red">失败</span></div><div class="ai-step-detail">失败 #1 校验询盘必填字段：缺少必填字段：email</div><div class="ai-form-actions"><button type="button" class="btn btn-small" data-action="view-run" data-run="run-a3fb89fb">查看逐步结果</button><button type="button" class="btn btn-small" data-action="prepare-retry" data-run="run-a3fb89fb">补齐并重试</button></div></div><div class="ai-history-card"><div class="ai-history-top"><div><div class="ai-history-title">木作询盘分诊 · 全链路自检</div><div class="ai-history-meta"><span class="mono">run-0300ce47</span><span>attempt 2 · retryOf run-a3fb89fb</span><span>54.25ms</span><span>10/31 21:23</span></div></div><span class="tag tag-green">成功</span></div><div class="ai-form-actions"><button type="button" class="btn btn-small" data-action="view-run" data-run="run-0300ce47">查看逐步结果</button></div></div></div>
+      </section>
+
+      <section class="panel" id="crmPanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">询盘 / CRM · 与智能体共用一套线索</div>
+            <h2>表单、智能体与工作流写进同一张线索表</h2>
+            <p class="panel-copy">邮箱格式不通过返回 422；阶段只能按行业配置向前推进并记录 notes 与操作人。智能体的 <code>create_lead</code>、工作流的「写入 CRM」与本页询盘表单共用同一存储，不是三套演示数据。</p>
+          </div>
+          <span class="server-chip" id="leadChip">4 条 · 4 待跟进</span>
+        </div>
+        <div class="split-panel aside-right">
+          <div>
+            <div class="table-wrap">
+              <table class="data-table" id="leadTable">
+                <thead><tr><th>线索</th><th>联系</th><th>意向</th><th>预算</th><th>评级</th><th>阶段</th></tr></thead>
+                <tbody><tr data-action="select-lead" data-lead="lead-e9e3c14d"><td><div class="ai-lead-name">林女士</div><div class="ai-lead-sub mono">lead-e9e3c14d</div></td><td><div>lin@example.com</div><div class="ai-lead-sub">中国 · zh</div></td><td>白蜡木书柜定制</td><td>120000</td><td><span class="tag tag-green">A</span></td><td><span class="tag tag-accent">已联系</span></td></tr><tr data-action="select-lead" data-lead="lead-741a3101"><td><div class="ai-lead-name">周先生</div><div class="ai-lead-sub mono">lead-741a3101</div></td><td><div>zhou@example.com</div><div class="ai-lead-sub">中国 · zh</div></td><td>黑胡桃户外餐桌</td><td>8 万</td><td><span class="tag tag-green">A</span></td><td><span class="tag tag-accent">新询盘</span></td></tr><tr data-action="select-lead" data-lead="lead-29314e31"><td><div class="ai-lead-name">王先生</div><div class="ai-lead-sub mono">lead-29314e31</div></td><td><div>wang@example.com</div><div class="ai-lead-sub">中国 · zh</div></td><td>黑胡桃餐桌 2.2 米</td><td>200000</td><td><span class="tag tag-green">A</span></td><td><span class="tag tag-accent">新询盘</span></td></tr><tr data-action="select-lead" data-lead="lead-055049ff"><td><div class="ai-lead-name">陈先生</div><div class="ai-lead-sub mono">lead-055049ff</div></td><td><div>chen@example.com</div><div class="ai-lead-sub">中国 · zh</div></td><td>白蜡木书柜</td><td>60000</td><td><span class="tag tag-green">A</span></td><td><span class="tag tag-accent">新询盘</span></td></tr></tbody>
+              </table>
+            </div>
+            <div id="leadDetail"><p class="empty-copy">选择一条线索推进阶段并记录备注；阶段与备注都会写入历史。</p></div>
+          </div>
+          <div>
+            <div class="subhead"><h3>独立站询盘</h3><span class="server-chip">写 CRM</span></div>
+            <form class="ai-form" id="inquiryForm">
+              <div class="ai-form-row">
+                <label class="field"><span>姓名 *</span><input name="name" required="" maxlength="60" placeholder="合成姓名，如 林女士"></label>
+                <label class="field"><span>邮箱 *</span><input name="email" type="email" required="" maxlength="120" placeholder="lin@example.com"></label>
+              </div>
+              <div class="ai-form-row">
+                <label class="field"><span>国家 / 地区</span><input name="country" maxlength="8" value="CN" placeholder="CN / US / JP"></label>
+                <label class="field"><span>预算（数字或文本）</span><input name="budget" maxlength="40" placeholder="120000 或 12 万"></label>
+              </div>
+              <label class="field"><span>需求 *</span><input name="interest" required="" maxlength="120" placeholder="例如：黑胡桃户外餐桌"></label>
+              <label class="field"><span>留言</span><textarea name="message" rows="3" maxlength="600" placeholder="希望 11 月上门复尺（合成样例）"></textarea></label>
+              <label class="field"><span>提交语言</span><select name="lang"><option value="zh">中文</option><option value="en">English</option><option value="ja">日本語</option></select></label>
+              <div class="ai-form-actions">
+                <button class="btn btn-primary btn-small" type="submit" data-perm="lead.create">提交询盘并写线索</button>
+                <span class="ai-hint">只接受 example.com 等合成样例邮箱；不做真实外发。</span>
+              </div>
+            </form>
+            <div id="inquiryResult"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="growthPanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">出海增长 · 三语独立站 + SEO 元数据</div>
+            <h2>中文 / English / 日本語，同一套行业配置驱动</h2>
+            <p class="panel-copy">站点文案、title / description / keywords、herobanner 与 FAQ 全部来自行业 JSON；SEO 面板用确定性字符串匹配统计关键词覆盖与长度检查，不承诺真实搜索排名。当前演示页设置 <code>noindex,nofollow</code>。</p>
+          </div>
+          <span class="server-chip" id="growthChip">zh · 100% 关键词覆盖</span>
+        </div>
+        <div class="ai-tabs" id="langTabs" role="tablist">
+          <button class="ai-tab is-active" data-action="set-lang" data-lang="zh" role="tab">中文</button>
+          <button class="ai-tab" data-action="set-lang" data-lang="en" role="tab">English</button>
+          <button class="ai-tab" data-action="set-lang" data-lang="ja" role="tab">日本語</button>
+        </div>
+        <div class="split-panel aside-right">
+          <div class="ai-site-preview" id="sitePreview"><div class="ai-site-hero"><div class="ai-site-kicker">木作定制 · 中文 · 合成演示站</div><div class="ai-site-title">山门木作 · 实木定制与空间木作（合成样例）</div><h3>让木头按空间的尺寸生长</h3><p>从复尺、深化图到安装验收，每一步都有可核对的数字。</p><span class="ai-site-cta">预约测量</span></div><p class="ai-md">实木桌柜与空间木作的定制交付：含水率 8%–12%，榫卯间隙 0.2–0.4mm，木蜡油两底两面，生产周期 25–35 天，安装验收留档。</p><div class="ai-site-sections"><div class="ai-site-section"><h4>木材先养生，再投产</h4><p>实木含水率控制在 8%–12%，每批养生 7–14 天后复测；偏差超过 2% 的板材二次平衡。</p></div><div class="ai-site-section"><h4>细木作的公差写进合同</h4><p>榫卯配合间隙 0.2–0.4mm，抽屉左右间隙差不超过 1mm，安装验收逐项签字。</p></div><div class="ai-site-section"><h4>涂装与交期</h4><p>木蜡油两底两面，环境湿度低于 75%；深化图确认后生产周期 25–35 天，异形空间需两次复尺。</p></div></div><div class="ai-site-sections"><div class="ai-faq"><div class="ai-faq-title">实木会不会开裂？</div><div class="ai-faq-a">含水率控制在 8%–12% 并做穿带 / 卸力槽可降低风险，但实木仍有自然变化，报价单会书面提示。</div></div><div class="ai-faq"><div class="ai-faq-title">交期多久？</div><div class="ai-faq-a">深化图确认后 25–35 个自然日；异形或大板项目需额外预留养生与试装时间。</div></div><div class="ai-faq"><div class="ai-faq-title">运输和安装怎么算？</div><div class="ai-faq-a">大件使用木架包装，到货 48 小时内验收；安装范围与费用按项目单独确认。</div></div></div><p class="ai-hint">当前为合成演示站，robots 设为 noindex,nofollow；站长与备案信息以真实交付为准。</p></div>
+          <div id="seoPanel"><div class="ai-seo"><div class="ai-seo-head"><div><div class="ai-mini-kicker">SEO</div><div class="ai-mini-title">确定性命中检查</div></div><div class="ai-seo-score">100%</div></div><div class="ai-seo-meta"><div class="kv-row"><span>title</span><strong>山门木作 · 实木定制与空间木作（合成样例）</strong></div><div class="kv-row"><span>description</span><strong>实木桌柜与空间木作的定制交付：含水率 8%–12%，榫卯间隙 0.2–0.4mm，木蜡油两底两面，生产周期 25–35 天，安装验收留档。</strong></div><div class="kv-row"><span>robots</span><strong>noindex,nofollow（合成演示，禁止被搜索引擎收录）</strong></div><div class="kv-row"><span>canonical</span><strong><span class="mono">/pages/ai.html?lang=zh&amp;industry=woodcraft</span></strong></div></div><div class="ai-check-list"><div class="ai-check pass"><span class="dot"></span><div><div class="ai-check-name">标题长度</div><div class="ai-check-detail">22 字符（建议 10–70）</div></div></div><div class="ai-check pass"><span class="dot"></span><div><div class="ai-check-name">描述长度</div><div class="ai-check-detail">69 字符（建议 40–200）</div></div></div><div class="ai-check pass"><span class="dot"></span><div><div class="ai-check-name">关键词数量</div><div class="ai-check-detail">6 个（至少 3 个）</div></div></div><div class="ai-check pass"><span class="dot"></span><div><div class="ai-check-name">首屏主文案</div><div class="ai-check-detail">主标题与副标题均已配置</div></div></div><div class="ai-check pass"><span class="dot"></span><div><div class="ai-check-name">内容区块</div><div class="ai-check-detail">3 个（至少 3 个）</div></div></div><div class="ai-check pass"><span class="dot"></span><div><div class="ai-check-name">FAQ 条数</div><div class="ai-check-detail">3 条（至少 3 条）</div></div></div><div class="ai-check pass"><span class="dot"></span><div><div class="ai-check-name">关键词覆盖</div><div class="ai-check-detail">100.0%（阈值 80%）</div></div></div><div class="ai-check pass"><span class="dot"></span><div><div class="ai-check-name">三语 hreflang</div><div class="ai-check-detail">zh / en / ja 三个语言版本均已配置</div></div></div></div><div class="ai-keyword-row"><span class="ai-kw">实木定制</span><span class="ai-kw">木作</span><span class="ai-kw">榫卯</span><span class="ai-kw">木蜡油</span><span class="ai-kw">含水率</span><span class="ai-kw">交期</span></div><p class="ai-hint">分数只代表关键词与长度规则的确定性匹配，不代表真实搜索排名或流量承诺。</p></div></div>
+        </div>
+      </section>
+
+      <section class="panel" id="handbookPanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">FDE 驻企交付手册 · 可折叠</div>
+            <h2>访谈、接入、知识库运维、权限审计、验收与退出</h2>
+            <p class="panel-copy">这是给驻企交付工程师的工作手册，不是营销文案。内容明确写了「不做」的边界、SLA 演示口径、验收方法与退出交接条件；页面用轻量 markdown 渲染，不做富文本执行。</p>
+          </div>
+          <div class="ai-head-actions">
+            <span class="server-chip" id="handbookChip">9 节 · 3900 字符</span>
+            <button class="btn btn-small" data-action="expand-handbook">展开全部</button>
+            <button class="btn btn-small" data-action="collapse-handbook">收起全部</button>
+          </div>
+        </div>
+        <div class="ai-md-wrap" id="handbookBody"><div class="ai-md-intro"><p class="ai-md"># FDE 驻企交付手册（演示版）</p><blockquote class="ai-md">适用：六产业共享企业 AI 服务层 · 珠宝定制 / 木作定制两类行业配置。本文是合成样例交付方法，不构成对真实客户、真实产能或法律效力的承诺。</blockquote></div><section class="ai-md-section"><h3>0. 交付边界与前提</h3><ul><li><strong>交付物</strong>：本地规则引擎（关键词 / 字符 n-gram 检索 + 意图路由）、知识库、智能体会话、自动化工作流、三语站点文案、询盘 CRM、本手册与验证记录。</li><li><strong>明确不做</strong>：不接入外部大模型，不发送真实邮件 / 短信，不做支付与电子合同，不做多租户隔离，不承诺真实交期与价格。</li><li><strong>前提</strong>：企业指定一名业务负责人（知识库 owner）与一名 IT 接口人；提供可公开的合成样例数据用于联调；生产域名与备案由企业负责。</li><li><strong>成功定义</strong>：业务人员能在不写代码的前提下维护术语、知识、工作流模板与站点文案；每条 AI 回答可回溯到文档 / 版本 / 片段。</li></ul></section><section class="ai-md-section"><h3>1. 访谈清单（Day 0–2）</h3><div class="ai-md-table-wrap"><table class="data-table"><thead><tr><th>对象</th><th>必问问题</th><th>产出</th></tr></thead><tbody><tr><td>业务负责人</td><td>哪些问题占客服量前 20%？答错会造成什么后果？</td><td>高频问题清单、回答红线</td></tr><tr><td>知识库 owner</td><td>现有文档的版本、生效日期、失效流程是什么？</td><td>文档台账与 owner 名单</td></tr><tr><td>销售 / 客服</td><td>一条合格询盘至少要有哪些字段？如何分级？</td><td>线索字段表与分级规则</td></tr><tr><td>交付 / 工坊</td><td>哪些节点最容易延误？异常如何通知？</td><td>工作流触发点与升级路径</td></tr><tr><td>IT / 数据</td><td>数据从哪里来、谁有导出权、如何脱敏？</td><td>接入清单与权限矩阵</td></tr><tr><td>财务 / 法务</td><td>报价口径、有效期、免责声明由谁审核？</td><td>文案审核人与发布流程</td></tr></tbody></table></div><p class="ai-md">访谈结论必须在 48 小时内形成《口径确认单》，由业务负责人签字后再写入知识库；未确认的口径只能以草稿状态存在。</p></section><section class="ai-md-section"><h3>2. 数据接入与清洗</h3><h4>2.1 最小接入集</h4><div class="ai-md-table-wrap"><table class="data-table"><thead><tr><th>数据</th><th>最小字段</th><th>接入方式</th><th>频率</th></tr></thead><tbody><tr><td>知识文档</td><td>标题、正文、版本、owner、状态</td><td>页面录入或 JSON 导入</td><td>变更时</td></tr><tr><td>询盘</td><td>姓名、邮箱、国家、意向、预算、留言</td><td>站点表单 / API</td><td>实时</td></tr><tr><td>线索阶段</td><td>阶段、备注、操作人、时间</td><td>CRM 页面</td><td>实时</td></tr><tr><td>工作流运行</td><td>输入、步骤、耗时、结果</td><td>引擎自动记录</td><td>实时</td></tr><tr><td>审计事件</td><td>动作、角色、对象、结果</td><td>引擎自动记录</td><td>实时</td></tr></tbody></table></div><h4>2.2 清洗规则（当前实现）</h4><ul><li>文本统一去首尾空格；连续空行折叠为段落分隔；单文档上限 12000 字符，超出拒收并提示拆分。</li><li>邮箱统一小写并做格式校验；不通过则返回 422，不写入线索。</li><li>行业、语言、阶段均取自数据文件白名单，非法值返回 422，避免脏数据进入检索。</li><li>文档自动切块：按段落与句号切分，单块不超过 180 字符；块 ID 形如 <code>c1</code>，引用格式 <code>docId#c1</code>。</li><li><strong>未做</strong>：去重合并、PII 自动识别、富文本 / PDF 解析、图片 OCR。这些需在生产接入时补，当前演示仅接受纯文本。</li></ul><h4>2.3 脱敏与合规</h4><ul><li>演示数据全部为合成姓名、<code>example.com</code> 邮箱与虚构企业，不含真实个人信息。</li><li>生产导入前须删除身份证号、银行卡号、私人手机号；如必须保留，需加密存储并限制导出权限。</li><li>日志只记录线索 ID 与阶段变更，不记录完整留言正文，避免审计日志成为二次泄露源。</li></ul></section><section class="ai-md-section"><h3>3. 知识库运维与版本</h3><ul><li><strong>状态机</strong>：<code>draft</code>（草稿，不参与检索）→ <code>published</code>（已发布，检索可见）→ <code>retired</code>（已下线，保留引用）。</li><li><strong>版本</strong>：每次内容变更必须递增版本号（如 v1.2 → v1.3），并在变更说明中写清改了什么、依据是什么。</li><li><strong>切块复核</strong>：发布前人工抽查至少 3 个块，确认没有把否定句、例外条款切断；问答类文档应保持“问题 + 答案”在同一块内。</li><li><strong>引用可追溯</strong>：回答只允许引用 <code>published</code> 文档；引用包含 docId、版本与 chunkId，客户可见文档标题与片段。</li><li><strong>月度复核</strong>：owner 每月检查一次价格、工期、售后条款；过期内容先改 <code>retired</code>，再发布新版，禁止直接覆盖历史版本。</li><li><strong>失效处理</strong>：发现错误回答时，先下线对应文档，再在事件记录中标注影响范围；不要只改页面文案。</li><li><strong>权限</strong>：仅 <code>ops</code> 与管理員可写；设计与财务可检索；工坊只读；客户 / 销售可检索与建线索。</li></ul></section><section class="ai-md-section"><h3>4. 权限与审计</h3><div class="ai-md-table-wrap"><table class="data-table"><thead><tr><th>动作</th><th>允许角色</th><th>服务端行为</th></tr></thead><tbody><tr><td>检索知识库</td><td>designer / ops / workshop / finance / buyer / admin</td><td>返回片段与引用，空结果给建议</td></tr><tr><td>写入知识库</td><td>ops / admin</td><td>自动切块、版本校验、写审计事件</td></tr><tr><td>智能体对话</td><td>designer / ops / buyer / admin</td><td>记录消息、工具轨迹与引用</td></tr><tr><td>建 / 改线索</td><td>buyer / ops / admin</td><td>邮箱校验、阶段只能向前推进</td></tr><tr><td>建 / 跑 / 重试工作流</td><td>ops / admin</td><td>逐步记录耗时与失败原因</td></tr><tr><td>切行业 / 自检</td><td>ops / admin</td><td>记录当前行业与场景结果</td></tr><tr><td>重置演示数据</td><td>admin</td><td>清空业务集合并恢复基线知识库</td></tr></tbody></table></div><p class="ai-md">审计事件至少包含：<code>at</code>、<code>action</code>、<code>role</code>、<code>target</code>、<code>ok</code>、<code>detail</code>。越权请求返回 403 并记录被拒动作；不记录请求体中的敏感字段。</p></section><section class="ai-md-section"><h3>5. 验收标准</h3><div class="ai-md-table-wrap"><table class="data-table"><thead><tr><th>验收项</th><th>方法</th><th>通过标准</th></tr></thead><tbody><tr><td>行业切换</td><td>切换 jewelry / woodcraft</td><td>术语、知识库、工作流模板、站点文案同步变化</td></tr><tr><td>知识检索</td><td>搜“木蜡油 施工”等</td><td>命中片段带 score 与 <code>docId#chunk</code>；空查询 400；无命中返回空并给建议</td></tr><tr><td>智能体</td><td>首轮问知识、二轮留邮箱</td><td>首轮有检索工具轨迹与引用；二轮创建线索且阶段为 new</td></tr><tr><td>工作流</td><td>缺邮箱运行 → 补齐重试</td><td>首次 failed 且失败步骤明确；重试 success，步骤与耗时完整</td></tr><tr><td>CRM</td><td>表单提交 → 推进阶段</td><td>邮箱非法被拒；阶段只能向前；备注与操作人留痕</td></tr><tr><td>三语站点</td><td>切换 zh / en / ja</td><td>文案、SEO title / description / keywords / FAQ 完整</td></tr><tr><td>自检场景</td><td>POST /api/ai/scenario</td><td>≥14 步，2 步预期失败，其余通过</td></tr><tr><td>权限</td><td>buyer 写知识库</td><td>403 forbidden，页面提示而非静默失败</td></tr><tr><td>可复跑</td><td>重置后重复自检</td><td>每一步结果可重现，计数一致</td></tr></tbody></table></div></section><section class="ai-md-section"><h3>6. SLA 与服务等级（演示口径）</h3><ul><li>服务时间：工作日 09:00–18:00（Asia/Shanghai）；演示环境不承诺 7×24。</li><li>可用性目标：99.5% / 月；计划维护提前 1 个工作日通知。</li><li>故障分级：P1（全站不可用）30 分钟响应、4 小时恢复；P2（核心流程受阻）2 小时响应、1 个工作日恢复；P3（展示 / 文案问题）1 个工作日响应。</li><li>数据备份：SQLite 每日快照，RPO ≤ 24 小时、RTO ≤ 4 小时；备份文件与密钥分离存放。</li><li>变更窗口：生产知识库与工作流模板变更需 owner 审核；高风险变更在低峰期执行并保留回滚版本。</li><li>以上为演示目标，正式合同须由企业 IT 与法务确认后生效。</li></ul></section><section class="ai-md-section"><h3>7. 退出与交接</h3><ol><li><strong>数据导出</strong>：文档、线索、工作流运行、审计事件按 JSON / CSV 导出，附带 schema 与字段说明。</li><li><strong>账号回收</strong>：停用驻企账号，移交管理员账号；撤销 API 凭证与备份访问权限。</li><li><strong>知识归档</strong>：保留最终版与最近三个历史版本，标注 owner 与生效日期；其余版本按企业留存策略销毁。</li><li><strong>交接清单</strong>：配置说明、知识台账、工作流清单、未关闭问题、SLA 记录、联系人。</li><li><strong>过渡期</strong>：不少于 30 天并行支持；交接完成后由企业书面确认，驻企人员退出。</li></ol></section><section class="ai-md-section"><h3>8. 已知边界</h3><ul><li>检索是关键词 / 字符 n-gram 匹配，不做语义向量；同义改写、长句推理能力有限，需靠术语表与文档标题补足。</li><li>智能体是本地规则路由，不是大模型；不会生成开放式创作，只做检索引用、线索登记、工作流草稿三类动作。</li><li>工作流重试按整条流程重跑；若失败发生在写 CRM 之后，可能产生重复线索，生产接入需增加幂等键。</li><li>通知仅写入站内模拟记录，不发送邮件 / 短信；报价草稿为区间建议，必须人工复核后才能对外。</li><li>页面未做移动端深度适配与无障碍全量审计；演示数据未加密，禁止放入真实客户信息。</li></ul></section></div>
+      </section>
+
+      <p class="table-note">合成与脱敏声明：本页客户、工坊、报价、站点与知识文档均为演示样例（邮箱使用 example.com），不代表真实客户、真实工厂设备清单、版权归属或法律效力。AI 为本地规则引擎，不调用外部大模型、不发送真实邮件 / 短信。</p>
+    </div>
+  </main>
+</div>
+
+
+
+
+</body></html>

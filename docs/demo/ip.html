@@ -1,0 +1,330 @@
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>CraftMesh · C 文化 IP 短剧管线 · 山谷回声</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="pages.css">>
+<link rel="stylesheet" href="ip.css">>
+</head>
+<body data-page="ip"><div id="static-demo-banner" style="position:sticky;top:0;z-index:9999;background:#9b4a30;color:#fffdf8;font:13px/1.7 'Segoe UI','Microsoft YaHei',sans-serif;padding:7px 14px;text-align:center"><b>静态演示快照</b> · 数据来自一次真实 API 运行，交互已冻结 · <a href="index.html" style="color:#ffd9a8">M1 工作台</a> · <a href="m2.html" style="color:#ffd9a8">M2 预售与派单</a> · <a href="ai.html" style="color:#ffd9a8">B 企业 AI</a> · <a href="ip.html" style="color:#ffd9a8">C 文化 IP</a> · <a href="evidence.html" style="color:#ffd9a8">验收驾驶舱</a> · <a href="https://github.com/Gupeat/craftmesh-m1" style="color:#ffd9a8">源码/测试</a></div><svg xmlns="http://www.w3.org/2000/svg" class="svg-sprite" aria-hidden="true"><symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></symbol><symbol id="i-orders" viewBox="0 0 24 24"><path d="M7 3h10l3 4v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7l3-4Z"></path><path d="M4 7h16M9 12h6M9 16h6"></path></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v6c0 4.6 3.2 8 7.5 9 4.3-1 7.5-4.4 7.5-9V6L12 3Z"></path><path d="m9 12 2 2 4-4"></path></symbol><symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Z"></path><path d="m3 12 9 5 9-5M3 16l9 5 9-5"></path></symbol><symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 6.3M20 5v6h-6"></path></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></symbol><symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"></ellipse><path d="M4.5 5.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6M4.5 11.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"></path></symbol><symbol id="i-code" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13 4l-2 16"></path></symbol><symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6V3Z"></path><path d="M14 3v5h5M9 13h7M9 17h7"></path></symbol><symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"></path><circle cx="12" cy="12" r="2.5"></circle></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7-11-7Z"></path></symbol><symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"></path></symbol><symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"></path></symbol></svg>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">CM</div>
+        <div>
+          <div class="brand-name">CraftMesh</div>
+          <div class="brand-sub">工艺协同中台 · 全栈交付</div>
+        </div>
+      </div>
+      <div class="workspace-pill">
+        <span class="live-dot"></span>
+        <span>参考实现环境</span>
+        <span class="workspace-version">M1+M2+B+C</span>
+      </div>
+      <nav class="sidebar-nav" aria-label="主导航"><a class="nav-item nav-link" href="index.html">
+        <svg class="icon"><use href="#i-grid"></use></svg>
+        <span>工作台（M1）</span>
+        
+      </a><a class="nav-item nav-link" href="m2.html">
+        <svg class="icon"><use href="#i-orders"></use></svg>
+        <span>预售与工厂派单</span>
+        <span class="nav-kicker">M2</span>
+      </a><a class="nav-item nav-link" href="ai.html">
+        <svg class="icon"><use href="#i-db"></use></svg>
+        <span>企业 AI 服务层</span>
+        <span class="nav-kicker">B</span>
+      </a><a class="nav-item nav-link is-active" href="ip.html">
+        <svg class="icon"><use href="#i-layers"></use></svg>
+        <span>文化 IP 短剧管线</span>
+        <span class="nav-kicker">C</span>
+      </a><a class="nav-item nav-link" href="evidence.html">
+        <svg class="icon"><use href="#i-check"></use></svg>
+        <span>验收驾驶舱</span>
+        
+      </a></nav>
+      <div class="sidebar-section-label">交付说明</div>
+      <div class="sidebar-meta">
+        <div><span>数据</span><strong>全部合成 / 脱敏</strong></div>
+        <div><span>服务</span><strong>Python HTTP API</strong></div>
+        <div><span>存储</span><strong>SQLite · 本地</strong></div>
+        <div><span>规则</span><strong>JSON 配置文件</strong></div>
+      </div>
+      <div class="sidebar-note">
+        <div class="note-kicker">不是静态原型</div>
+        <p>本页所有状态、金额与判定均由本地 API 与 SQLite 实时生成，可复跑、可审计。</p>
+      </div>
+      <div class="sidebar-foot">
+        <span class="live-dot"></span>
+        <span id="apiVersion">API M1.0</span>
+        <span class="dot-sep">·</span>
+        <span id="apiState">SQLite 3 订单</span>
+      </div></aside>
+  <main class="main-column">
+    <header class="topbar" id="topbar">
+      <div class="topbar-left">
+        <div class="crumb">
+          <span class="crumb-root">CraftMesh</span>
+          <span class="crumb-sep">/</span>
+          <strong>C 文化 IP 短剧管线</strong>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <span class="api-badge" id="apiBadge"><span class="live-dot"></span><span>API 在线</span></span>
+        <label class="role-switcher"><span>当前角色</span>
+          <select id="shellRole" aria-label="切换演示角色">
+            <option value="designer">设计师</option><option value="ops">生产运营</option><option value="workshop">工坊</option><option value="finance">财务</option><option value="buyer">买家 / 支持者</option><option value="admin">管理员</option>
+          </select>
+        </label>
+        <a class="btn btn-ghost btn-small" href="index.html">返回 M1 工作台</a>
+      </div></header>
+    <div class="content">
+      <section class="page-head">
+        <div class="page-head-copy">
+          <div class="eyebrow">C · 文化 IP 短剧管线 · A07 内容资产纵切</div>
+          <h1>《山谷回声》——从双角色手册，到 40.4 秒可播放样片</h1>
+          <p class="lede">一个真实可点通的原创纸影短剧管线：双角色设定 → 6 场剧本 → 12 格分镜 → 自制 SVG 场景 → 本机语音合成 WAV + SRT 字幕 → 浏览器内时间轴样片 → 规则审核台 → 授权草稿与衍生品规格。所有数据、角色、品牌与规格均为合成样例；所有「智能」判断由本地确定性规则完成，不调用外部大模型。</p>
+          <div class="pill-row">
+            <span class="tag tag-green">可运行 · 非静态原型</span>
+            <span class="tag">合成 / 脱敏样例</span>
+            <span class="tag">离线生成 · 无外部素材</span>
+            <span class="tag">本地规则引擎</span>
+          </div>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-primary" data-action="run-scenario" id="btnScenario">
+            <svg class="icon"><use href="#i-refresh"></use></svg><span>一键跑通 16 步自检</span>
+          </button>
+          <button class="btn" data-action="reset-demo" id="btnReset">重置演示数据</button>
+          <a class="btn btn-ghost" href="/api/ip/config" target="_blank" rel="noreferrer">查看规则配置</a>
+        </div>
+      </section>
+
+      <div class="role-strip" id="roleStrip"><span>当前角色 <strong>管理员</strong></span><span class="dot-sep">·</span><span>可执行 5 项业务动作：内容审核、生成授权草稿、发布衍生品、素材校验、重置演示数据</span><span class="dot-sep">·</span><span>权限由服务端逐次校验，越权请求返回 403，不会只靠前端隐藏按钮</span></div>
+
+      <section class="kpi-grid" id="kpis" aria-label="文化 IP 管线概览"><div class="kpi-card"><div class="kpi-top"><span>原创角色 / 设定</span><span class="tag tag-green">双原创</span></div><div class="kpi-value">2<small>个</small></div><div class="kpi-foot">6 场剧本 · 外观 / 声音 / 边界</div></div><div class="kpi-card"><div class="kpi-top"><span>分镜格数</span><span class="tag tag-green">≥ 10</span></div><div class="kpi-value">12<small>格</small></div><div class="kpi-foot">每格含画面 / 镜头 / 台词 / 音效</div></div><div class="kpi-card"><div class="kpi-top"><span>样片总时长</span><span class="tag tag-green">区间通过</span></div><div class="kpi-value">40.4<small>秒</small></div><div class="kpi-foot">30–45 秒硬性区间 · 逐格累加校验</div></div><div class="kpi-card"><div class="kpi-top"><span>自制素材</span><span class="tag tag-green">0 缺失</span></div><div class="kpi-value">41<small>项</small></div><div class="kpi-foot">12 SVG · 12 WAV · 12 SRT</div></div><div class="kpi-card"><div class="kpi-top"><span>审核留痕</span><span class="tag tag-red">最新拒绝</span></div><div class="kpi-value">2<small>条</small></div><div class="kpi-foot">通过 1 · 需修改 0 · 拒绝 1</div></div><div class="kpi-card"><div class="kpi-top"><span>授权草稿</span><span class="tag tag-muted">模板</span></div><div class="kpi-value">1<small>份</small></div><div class="kpi-foot">IP-LIC-20261031-5895199C</div></div><div class="kpi-card"><div class="kpi-top"><span>衍生品 SKU</span><span class="tag tag-amber">待授权</span></div><div class="kpi-value">6<small>个</small></div><div class="kpi-foot">规格 / 起订量 / 建议零售价 / 分成</div></div><div class="kpi-card"><div class="kpi-top"><span>本地规则审核</span><span class="tag tag-green">确定性</span></div><div class="kpi-value">9<small>条</small></div><div class="kpi-foot">关键词 + 否定词 + 豁免词 · 无外部模型</div></div></section>
+
+      <section class="panel" id="characters">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">A07 · 角色手册 · 双原创角色</div>
+            <h2>远视与远听：先有「能与不能」，再有故事</h2>
+            <p class="panel-copy">两个角色的外观母题、声音画像、能与不能都来自 <code>config/ip_story.json</code>，不是页面里写死的装饰文案。头像与场景卡均为仓库内自制 SVG，无真人照片、无外部素材。</p>
+          </div>
+          <span class="server-chip" id="characterChip">2 个原创角色 · 能与不能均写入配置</span>
+        </div>
+        <div class="ip-character-grid" id="charactersGrid"><article class="ip-character-card" style="--ch:#0f3b3a"><div class="ip-character-portrait"><img src="media/characters/yuanshi.svg" alt="远视 角色设定卡（自制 SVG）" loading="lazy"><span class="ip-character-symbol">圆镜 + 斜向光束</span></div><div class="ip-character-body"><div class="ip-character-top"><div><div class="ip-character-role">守灯人 · 视觉角色</div><h3>远视 <small>YUANSHI</small></h3></div><span class="tag tag-green">原创</span></div><p class="ip-character-tagline">看见还没被说出口的光</p><p class="ip-character-setting">回声邮局的守灯人，纸影精灵。她能看见远处极细的光线，也能把月光折成一根可以点灯的线。她寡言，习惯先观察再行动，嘴上说怕黑，却总在夜里最后一个离开屋顶。</p><div class="ip-character-motifs"><span class="tag">单圆镜片</span><span class="tag">折光纸棱</span><span class="tag">深青披风</span><span class="tag">四十五度光束</span></div><div class="ip-character-abilities"><div><span class="ip-ability-label">能</span><ul><li>看见远处微光与完整光路</li><li>用单圆镜片折光点火</li><li>记住一座山谷里亮过的每一扇窗</li></ul></div><div class="is-cannot"><span class="ip-ability-label is-cannot">不能</span><ul><li>听见石头里的回声</li><li>替别人做决定</li><li>改变已经发生的事</li></ul></div></div><div class="ip-character-voice"><strong>声音画像 · Microsoft Huihui Desktop / rate 0</strong>低而稳，句尾收得快；本机 Huihui 音色，语速偏慢<br><em>「别出声，我把月光借过来。」</em></div></div></article><article class="ip-character-card" style="--ch:#0f3b3a"><div class="ip-character-portrait"><img src="media/characters/yuanting.svg" alt="远听 角色设定卡（自制 SVG）" loading="lazy"><span class="ip-character-symbol">贝壳耳 + 同心声波</span></div><div class="ip-character-body"><div class="ip-character-top"><div><div class="ip-character-role">听潮人 · 听觉角色</div><h3>远听 <small>YUANTING</small></h3></div><span class="tag tag-green">原创</span></div><p class="ip-character-tagline">听见旧物里没说完的话</p><p class="ip-character-setting">回声邮局的听潮人，纸影精灵。她把贝壳形的耳廓借给风，能从石头、纸页和旧灯罩里听见残留的声音。她话多、好奇，常用玩笑掩饰认真；她相信每一句没说完的话都值得再听一遍。</p><div class="ip-character-motifs"><span class="tag">贝壳耳廓</span><span class="tag">同心声波</span><span class="tag">朱砂披带</span><span class="tag">纸鹤折角</span></div><div class="ip-character-abilities"><div><span class="ip-ability-label">能</span><ul><li>分辨回声方向与距离</li><li>听见旧物里残留的声音</li><li>模仿一段只听过一次的旋律</li></ul></div><div class="is-cannot"><span class="ip-ability-label is-cannot">不能</span><ul><li>看见光路</li><li>读心或预知未来</li><li>让已经消失的声音永久留下</li></ul></div></div><div class="ip-character-voice"><strong>声音画像 · Microsoft Huihui Desktop / rate 2</strong>节奏快、尾音上扬；本机 Huihui 音色，语速偏快<br><em>「等等，我听见灯在抖。」</em></div></div></article></div>
+      </section>
+
+      <section class="panel" id="sample">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">样片播放器 · 时间轴切场景 + 真实配音 + 字幕</div>
+            <h2>40.4 秒可播放样片：<span id="playerTitle">山谷回声</span></h2>
+            <p class="panel-copy">下方播放器用 <code>&lt;audio&gt;</code> 播放本机 SAPI 生成的总配音，并按服务端 <code>/api/ip/media-manifest</code> 的真实时间轴切换 12 张 SVG 场景卡。浏览器要求用户手势后才能播放声音，因此不会自动播放。</p>
+          </div>
+          <div class="ip-head-chips">
+            <span class="server-chip" id="playerDurationChip"><span class="tag tag-green">通过</span> 总时长 40.4 秒 · 30.0 秒–45.0 秒</span>
+            <span class="server-chip" id="playerFormatChip">Microsoft Huihui Desktop · 22.05 kHz · 12 段</span>
+          </div>
+        </div>
+        <div class="ip-player-grid">
+          <div class="ip-player-main">
+            <div class="ip-stage" id="stageFrame">
+              <img id="stageImage" src="media/scenes/shot-01.svg" alt="分镜 1 场景卡">
+              <div class="ip-stage-shade"></div>
+              <div class="ip-stage-meta">
+                <span class="ip-scene-no" id="stageNo">SHOT 01 / 12</span>
+                <span id="stageScene">回声邮局 · 外景 · 夜</span>
+              </div>
+              <div class="ip-stage-title">山谷回声 <span>VALLEY ECHO</span></div>
+              <div class="ip-subtitle" id="stageCaption"><b id="stageSpeaker">旁白</b><span id="stageLine">山谷尽头的灯，今晚只剩一线。</span></div>
+              <button class="ip-endcard" id="endCard" type="button" data-action="restart-sample" aria-label="重播样片">
+                <span class="ip-endcard-mark">END</span>
+                <strong>样片结束</strong>
+                <span>点击重播 · 全部画面与声音均为本地自制</span>
+              </button>
+            </div>
+            <div class="ip-controls">
+              <button class="btn btn-primary ip-play" id="btnPlay" type="button" aria-label="播放样片"><span id="playLabel">播放</span></button>
+              <button class="btn btn-small" id="btnRestart" type="button">重播</button>
+              <button class="btn btn-small" id="btnMute" type="button" aria-pressed="false">静音</button>
+              <div class="ip-time"><span id="timeNow">00:00.0</span><span class="ip-time-sep">/</span><span id="timeTotal">00:40.4</span></div>
+              <span class="ip-play-note" id="playNote">音频已就绪 · 40.4 秒 · 点击播放（需用户手势，不自动播放）</span>
+            </div>
+            <div class="ip-timeline" id="timeline" role="slider" aria-label="样片时间轴" aria-valuemin="0" aria-valuemax="40400" aria-valuenow="0" tabindex="0">
+              <div class="ip-timeline-segments" id="timelineSegments"><div class="ip-timeline-seg is-active" data-index="0" style="width:7.9208%" title="SHOT 01 · 回声邮局 · 外景 · 夜 · 3.2s"><span>01</span></div><div class="ip-timeline-seg" data-index="1" style="width:7.4257%" title="SHOT 02 · 石阶 · 雾中 · 3.0s"><span>02</span></div><div class="ip-timeline-seg" data-index="2" style="width:8.4158%" title="SHOT 03 · 邮局窗前 · 3.4s"><span>03</span></div><div class="ip-timeline-seg" data-index="3" style="width:7.9208%" title="SHOT 04 · 石中旧声 · 3.2s"><span>04</span></div><div class="ip-timeline-seg" data-index="4" style="width:8.9109%" title="SHOT 05 · 旧旋律 · 纸带 · 3.6s"><span>05</span></div><div class="ip-timeline-seg" data-index="5" style="width:8.4158%" title="SHOT 06 · 折光 · 3.4s"><span>06</span></div><div class="ip-timeline-seg" data-index="6" style="width:7.4257%" title="SHOT 07 · 灯芯复燃 · 3.0s"><span>07</span></div><div class="ip-timeline-seg" data-index="7" style="width:8.9109%" title="SHOT 08 · 纸鸟振翅 · 3.6s"><span>08</span></div><div class="ip-timeline-seg" data-index="8" style="width:7.9208%" title="SHOT 09 · 山谷亮灯 · 3.2s"><span>09</span></div><div class="ip-timeline-seg" data-index="9" style="width:8.9109%" title="SHOT 10 · 屋顶 · 并肩 · 3.6s"><span>10</span></div><div class="ip-timeline-seg" data-index="10" style="width:7.9208%" title="SHOT 11 · 远视的答案 · 3.2s"><span>11</span></div><div class="ip-timeline-seg" data-index="11" style="width:9.9010%" title="SHOT 12 · 片尾 · 山谷回声 · 4.0s"><span>12</span></div></div>
+              <div class="ip-timeline-progress" id="timelineProgress" style="width: 0%;"></div>
+              <div class="ip-timeline-head" id="timelineHead" style="left: 0%;"></div>
+            </div>
+            <audio id="ipAudio" preload="metadata" src="blob:http://127.0.0.1:8787/d0bbe5a9-de2a-4eda-81fd-01911eb6d5d3"></audio>
+          </div>
+          <aside class="ip-shot-rail">
+            <div class="ip-rail-head"><strong>分镜跳转</strong><span id="railHint">点击缩略切换场景</span></div>
+            <div class="ip-thumbs" id="shotThumbs"><button type="button" class="ip-thumb is-active" data-shot="0" aria-label="跳转分镜 01：回声邮局 · 外景 · 夜" aria-current="true"><img src="media/scenes/shot-01.svg" alt="分镜 01 场景缩略图" loading="lazy"><span class="ip-thumb-meta"><b>SHOT 01</b><strong>回声邮局 · 外景 · 夜</strong><span>3.2s</span></span></button><button type="button" class="ip-thumb" data-shot="1" aria-label="跳转分镜 02：石阶 · 雾中"><img src="media/scenes/shot-02.svg" alt="分镜 02 场景缩略图" loading="lazy"><span class="ip-thumb-meta"><b>SHOT 02</b><strong>石阶 · 雾中</strong><span>3.0s</span></span></button><button type="button" class="ip-thumb" data-shot="2" aria-label="跳转分镜 03：邮局窗前"><img src="media/scenes/shot-03.svg" alt="分镜 03 场景缩略图" loading="lazy"><span class="ip-thumb-meta"><b>SHOT 03</b><strong>邮局窗前</strong><span>3.4s</span></span></button><button type="button" class="ip-thumb" data-shot="3" aria-label="跳转分镜 04：石中旧声"><img src="media/scenes/shot-04.svg" alt="分镜 04 场景缩略图" loading="lazy"><span class="ip-thumb-meta"><b>SHOT 04</b><strong>石中旧声</strong><span>3.2s</span></span></button><button type="button" class="ip-thumb" data-shot="4" aria-label="跳转分镜 05：旧旋律 · 纸带"><img src="media/scenes/shot-05.svg" alt="分镜 05 场景缩略图" loading="lazy"><span class="ip-thumb-meta"><b>SHOT 05</b><strong>旧旋律 · 纸带</strong><span>3.6s</span></span></button><button type="button" class="ip-thumb" data-shot="5" aria-label="跳转分镜 06：折光"><img src="media/scenes/shot-06.svg" alt="分镜 06 场景缩略图" loading="lazy"><span class="ip-thumb-meta"><b>SHOT 06</b><strong>折光</strong><span>3.4s</span></span></button><button type="button" class="ip-thumb" data-shot="6" aria-label="跳转分镜 07：灯芯复燃"><img src="media/scenes/shot-07.svg" alt="分镜 07 场景缩略图" loading="lazy"><span class="ip-thumb-meta"><b>SHOT 07</b><strong>灯芯复燃</strong><span>3.0s</span></span></button><button type="button" class="ip-thumb" data-shot="7" aria-label="跳转分镜 08：纸鸟振翅"><img src="media/scenes/shot-08.svg" alt="分镜 08 场景缩略图" loading="lazy"><span class="ip-thumb-meta"><b>SHOT 08</b><strong>纸鸟振翅</strong><span>3.6s</span></span></button><button type="button" class="ip-thumb" data-shot="8" aria-label="跳转分镜 09：山谷亮灯"><img src="media/scenes/shot-09.svg" alt="分镜 09 场景缩略图" loading="lazy"><span class="ip-thumb-meta"><b>SHOT 09</b><strong>山谷亮灯</strong><span>3.2s</span></span></button><button type="button" class="ip-thumb" data-shot="9" aria-label="跳转分镜 10：屋顶 · 并肩"><img src="media/scenes/shot-10.svg" alt="分镜 10 场景缩略图" loading="lazy"><span class="ip-thumb-meta"><b>SHOT 10</b><strong>屋顶 · 并肩</strong><span>3.6s</span></span></button><button type="button" class="ip-thumb" data-shot="10" aria-label="跳转分镜 11：远视的答案"><img src="media/scenes/shot-11.svg" alt="分镜 11 场景缩略图" loading="lazy"><span class="ip-thumb-meta"><b>SHOT 11</b><strong>远视的答案</strong><span>3.2s</span></span></button><button type="button" class="ip-thumb" data-shot="11" aria-label="跳转分镜 12：片尾 · 山谷回声"><img src="media/scenes/shot-12.svg" alt="分镜 12 场景缩略图" loading="lazy"><span class="ip-thumb-meta"><b>SHOT 12</b><strong>片尾 · 山谷回声</strong><span>4.0s</span></span></button></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="panel" id="scenario">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">一键验收 · 可复跑</div>
+            <h2>16 步全链路自检</h2>
+            <p class="panel-copy">服务端直接调用与页面相同的业务函数，运行前重置本模块演示数据。最后两步故意制造失败：工坊角色越权审核、注入缺失 WAV，用来证明权限与素材校验真的会拦截。</p>
+          </div>
+          <span class="server-chip" id="scenarioChip">未运行</span>
+        </div>
+        <div id="scenarioBody" class="scenario-body">
+          <p class="empty-copy">点击右上角「一键跑通 16 步自检」，或直接调用 <code>POST /api/ip/scenario</code>。</p>
+        </div>
+      </section>
+
+      <section class="panel" id="story">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">剧本 · 分镜 · 时长校验</div>
+            <h2>6 场剧本，12 格分镜，总时长受代码约束</h2>
+            <p class="panel-copy">分镜总时长由服务端逐格累加并校验必须在 30–45 秒内；页面徽标展示同一份校验结果。每格字幕台词同时写入独立 SRT，并作为播放器字幕叠加层的数据来源。</p>
+          </div>
+          <span class="server-chip" id="durationBadge"><span class="tag tag-green">区间通过</span> 总时长 40.4 秒 · 12 格</span>
+        </div>
+        <div class="ip-beats" id="beatsGrid"><article class="ip-beat"><div class="ip-beat-no">BEAT 01</div><h3>灯将熄</h3><p>夜雾漫过山谷，远听听见细弱回音，远视看见邮局窗口只剩一线灯。</p><div class="ip-beat-shots"><span>01</span><span>02</span></div></article><article class="ip-beat"><div class="ip-beat-no">BEAT 02</div><h3>失声的纸鸟</h3><p>两人循声找到窗台，一只纸鸟胸口的小灯灭了，最后一句话被咽进石头。</p><div class="ip-beat-shots"><span>03</span><span>04</span></div></article><article class="ip-beat"><div class="ip-beat-no">BEAT 03</div><h3>折光点灯</h3><p>远听从石头里听出没唱完的摇篮曲，远视用镜片把月光折进灯芯。</p><div class="ip-beat-shots"><span>05</span><span>06</span></div></article><article class="ip-beat"><div class="ip-beat-no">BEAT 04</div><h3>回声归位</h3><p>灯芯复燃，纸鸟振翅，声波从喙尖一圈圈荡开。</p><div class="ip-beat-shots"><span>07</span><span>08</span></div></article><article class="ip-beat"><div class="ip-beat-no">BEAT 05</div><h3>山谷亮灯</h3><p>俯瞰山谷，熄灭的窗一盏接一盏亮起，像一张被点亮的星图。</p><div class="ip-beat-shots"><span>09</span><span>10</span></div></article><article class="ip-beat"><div class="ip-beat-no">BEAT 06</div><h3>守夜人</h3><p>两人坐在屋顶，远听问明天是否还有新的回声，远视答：那我就把灯留着。</p><div class="ip-beat-shots"><span>11</span><span>12</span></div></article></div>
+        <div class="table-wrap ip-shot-table">
+          <table class="data-table">
+            <thead><tr><th>镜号</th><th>场景</th><th>时长</th><th>画面 / 镜头</th><th>角色</th><th>字幕台词 / 音效</th></tr></thead>
+            <tbody id="shotTableBody"><tr><td class="ip-td-shot"><span class="ip-shot-no">01</span><span class="ip-shot-scene">shot-01</span></td><td><div class="ip-cell-main">回声邮局 · 外景 · 夜</div><div class="ip-cell-sub">场景类型：valley</div></td><td><div class="ip-duration"><b>3.2s</b><span class="ip-duration-track"><i style="width:80%"></i></span></div></td><td><div class="ip-cell-main">深青山脊与三层雾带，邮局窗口只剩一线暖光，远视的小剪影立在屋顶。</div><div class="ip-cell-sub">镜头：大全景 / 固定机位</div></td><td><div class="ip-cell-caption">旁白</div><div class="ip-cell-chars"><span class="tag">远视</span></div></td><td><div class="ip-cell-caption">「山谷尽头的灯，今晚只剩一线。」</div><div class="ip-cell-sfx">♪ 夜风、远处一声回音</div></td></tr><tr><td class="ip-td-shot"><span class="ip-shot-no">02</span><span class="ip-shot-scene">shot-02</span></td><td><div class="ip-cell-main">石阶 · 雾中</div><div class="ip-cell-sub">场景类型：stairs</div></td><td><div class="ip-duration"><b>3.0s</b><span class="ip-duration-track"><i style="width:75%"></i></span></div></td><td><div class="ip-cell-main">两枚纸影一前一后踏上石阶，同心声波在雾里扩散，远听回头。</div><div class="ip-cell-sub">镜头：侧移跟拍</div></td><td><div class="ip-cell-caption">远听</div><div class="ip-cell-chars"><span class="tag">远视</span><span class="tag">远听</span></div></td><td><div class="ip-cell-caption">「等等，我听见灯在抖。」</div><div class="ip-cell-sfx">♪ 脚步、细弱回声</div></td></tr><tr><td class="ip-td-shot"><span class="ip-shot-no">03</span><span class="ip-shot-scene">shot-03</span></td><td><div class="ip-cell-main">邮局窗前</div><div class="ip-cell-sub">场景类型：window</div></td><td><div class="ip-duration"><b>3.4s</b><span class="ip-duration-track"><i style="width:85%"></i></span></div></td><td><div class="ip-cell-main">窗台上一只折纸鸟，胸口灯灭；旁边一块发纹石，影子被拉长。</div><div class="ip-cell-sub">镜头：中景 / 缓慢推近</div></td><td><div class="ip-cell-caption">旁白</div><div class="ip-cell-chars"><span class="tag">远听</span><span class="tag">纸鸟</span></div></td><td><div class="ip-cell-caption">「纸鸟把最后一句话，咽进了石头。」</div><div class="ip-cell-sfx">♪ 纸翼摩擦、低频脉冲</div></td></tr><tr><td class="ip-td-shot"><span class="ip-shot-no">04</span><span class="ip-shot-scene">shot-04</span></td><td><div class="ip-cell-main">石中旧声</div><div class="ip-cell-sub">场景类型：stone</div></td><td><div class="ip-duration"><b>3.2s</b><span class="ip-duration-track"><i style="width:80%"></i></span></div></td><td><div class="ip-cell-main">远听俯身贴耳，石头扩散同心声波，声波里浮出旧的摇篮旋律线条。</div><div class="ip-cell-sub">镜头：特写 / 俯拍</div></td><td><div class="ip-cell-caption">远听</div><div class="ip-cell-chars"><span class="tag">远听</span></div></td><td><div class="ip-cell-caption">「石头里有一段摇篮曲，还没唱完。」</div><div class="ip-cell-sfx">♪ 石头共鸣、摇篮曲两小节</div></td></tr><tr><td class="ip-td-shot"><span class="ip-shot-no">05</span><span class="ip-shot-scene">shot-05</span></td><td><div class="ip-cell-main">旧旋律 · 纸带</div><div class="ip-cell-sub">场景类型：ribbon</div></td><td><div class="ip-duration"><b>3.6s</b><span class="ip-duration-track"><i style="width:90%"></i></span></div></td><td><div class="ip-cell-main">声波化作朱砂色纸带，绕住远视的单圆镜片，纸带边缘有手绘毛边。</div><div class="ip-cell-sub">镜头：空镜 / 环绕</div></td><td><div class="ip-cell-caption">旁白</div><div class="ip-cell-chars"><span class="tag">远视</span><span class="tag">远听</span></div></td><td><div class="ip-cell-caption">「旋律缠住镜片，光在纸上找到回家的路。」</div><div class="ip-cell-sfx">♪ 纸带沙沙、旋律继续</div></td></tr><tr><td class="ip-td-shot"><span class="ip-shot-no">06</span><span class="ip-shot-scene">shot-06</span></td><td><div class="ip-cell-main">折光</div><div class="ip-cell-sub">场景类型：mirror</div></td><td><div class="ip-duration"><b>3.4s</b><span class="ip-duration-track"><i style="width:85%"></i></span></div></td><td><div class="ip-cell-main">远视举镜，月光被折成一条细线落入灯芯；远听在旁轻轻打拍子。</div><div class="ip-cell-sub">镜头：仰拍 / 光效</div></td><td><div class="ip-cell-caption">远视</div><div class="ip-cell-chars"><span class="tag">远视</span><span class="tag">远听</span></div></td><td><div class="ip-cell-caption">「别出声，我把月光借过来。」</div><div class="ip-cell-sfx">♪ 镜面轻响、光粒上升</div></td></tr><tr><td class="ip-td-shot"><span class="ip-shot-no">07</span><span class="ip-shot-scene">shot-07</span></td><td><div class="ip-cell-main">灯芯复燃</div><div class="ip-cell-sub">场景类型：lamp</div></td><td><div class="ip-duration"><b>3.0s</b><span class="ip-duration-track"><i style="width:75%"></i></span></div></td><td><div class="ip-cell-main">灯芯火星放大，暖光染亮窗棂，米白纸面浮出细密纹理。</div><div class="ip-cell-sub">镜头：微距 / 固定</div></td><td><div class="ip-cell-caption">旁白</div><div class="ip-cell-chars"></div></td><td><div class="ip-cell-caption">「一线光，够点亮一整个窗口。」</div><div class="ip-cell-sfx">♪ 轻响、暖光铺开</div></td></tr><tr><td class="ip-td-shot"><span class="ip-shot-no">08</span><span class="ip-shot-scene">shot-08</span></td><td><div class="ip-cell-main">纸鸟振翅</div><div class="ip-cell-sub">场景类型：bird</div></td><td><div class="ip-duration"><b>3.6s</b><span class="ip-duration-track"><i style="width:90%"></i></span></div></td><td><div class="ip-cell-main">纸鸟展开折纸翅膀，胸口灯亮，声波从喙尖一圈圈荡开。</div><div class="ip-cell-sub">镜头：中景 / 升格</div></td><td><div class="ip-cell-caption">远听</div><div class="ip-cell-chars"><span class="tag">纸鸟</span></div></td><td><div class="ip-cell-caption">「它想起来了——它叫「回声」。」</div><div class="ip-cell-sfx">♪ 纸翼展开、清脆鸟鸣</div></td></tr><tr><td class="ip-td-shot"><span class="ip-shot-no">09</span><span class="ip-shot-scene">shot-09</span></td><td><div class="ip-cell-main">山谷亮灯</div><div class="ip-cell-sub">场景类型：village</div></td><td><div class="ip-duration"><b>3.2s</b><span class="ip-duration-track"><i style="width:80%"></i></span></div></td><td><div class="ip-cell-main">大俯拍山谷，一扇扇窗依次亮起，连成一张星图，雾被暖光推开。</div><div class="ip-cell-sub">镜头：大俯拍 / 拉远</div></td><td><div class="ip-cell-caption">旁白</div><div class="ip-cell-chars"></div></td><td><div class="ip-cell-caption">「山谷的窗，一盏接一盏醒来。」</div><div class="ip-cell-sfx">♪ 多声部回声、灯亮</div></td></tr><tr><td class="ip-td-shot"><span class="ip-shot-no">10</span><span class="ip-shot-scene">shot-10</span></td><td><div class="ip-cell-main">屋顶 · 并肩</div><div class="ip-cell-sub">场景类型：roof</div></td><td><div class="ip-duration"><b>3.6s</b><span class="ip-duration-track"><i style="width:90%"></i></span></div></td><td><div class="ip-cell-main">两人坐在屋顶，脚下是灯海，头顶是星群；远听晃着腿，远视抱着灯罩。</div><div class="ip-cell-sub">镜头：背影 / 全景</div></td><td><div class="ip-cell-caption">远听</div><div class="ip-cell-chars"><span class="tag">远视</span><span class="tag">远听</span></div></td><td><div class="ip-cell-caption">「明天，还会有新的回声吗？」</div><div class="ip-cell-sfx">♪ 夜风、虫鸣</div></td></tr><tr><td class="ip-td-shot"><span class="ip-shot-no">11</span><span class="ip-shot-scene">shot-11</span></td><td><div class="ip-cell-main">远视的答案</div><div class="ip-cell-sub">场景类型：closeup</div></td><td><div class="ip-duration"><b>3.2s</b><span class="ip-duration-track"><i style="width:80%"></i></span></div></td><td><div class="ip-cell-main">远视侧脸特写，镜片里映出一条星河；她把手轻轻放在灯罩上。</div><div class="ip-cell-sub">镜头：近景 / 固定</div></td><td><div class="ip-cell-caption">远视</div><div class="ip-cell-chars"><span class="tag">远视</span></div></td><td><div class="ip-cell-caption">「那我就把灯留着。」</div><div class="ip-cell-sfx">♪ 灯芯轻响、音乐收束</div></td></tr><tr><td class="ip-td-shot"><span class="ip-shot-no">12</span><span class="ip-shot-scene">shot-12</span></td><td><div class="ip-cell-main">片尾 · 山谷回声</div><div class="ip-cell-sub">场景类型：end</div></td><td><div class="ip-duration"><b>4.0s</b><span class="ip-duration-track"><i style="width:100%"></i></span></div></td><td><div class="ip-cell-main">片名字卡与制作清单，纸影边框，两枚角色符号一左一右，朱砂印章收尾。</div><div class="ip-cell-sub">镜头：字幕卡</div></td><td><div class="ip-cell-caption">旁白</div><div class="ip-cell-chars"></div></td><td><div class="ip-cell-caption">「《山谷回声》· 原创纸影短剧样片。」</div><div class="ip-cell-sfx">♪ 主题旋律尾音</div></td></tr></tbody>
+          </table>
+        </div>
+        <p class="table-note" id="storyNotes">全片无真人出镜；角色均由自制 SVG 纸影剪影呈现。 故事发生在虚构山谷「回声邮局」，不指涉任何真实村镇、真实非遗项目或真实传承人。 旁白与对白均为原创文案；配音由本机语音合成离线生成，不调用外部模型。 剧本、角色与台词均为原创合成样例；山谷为虚构地点，不对应真实非遗项目或真实人物。</p>
+      </section>
+
+      <section class="panel" id="assets">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">素材清单 · 存在性与时长校验</div>
+            <h2>41 项自制素材，全部可逐项核验</h2>
+            <p class="panel-copy">12 张场景 SVG、12 段分镜 WAV、12 段分镜 SRT、2 张角色设定 SVG、总配音、总字幕与主视觉，全部由仓库内脚本生成。校验会读取 wav 头与 SRT 条数，不只检查文件是否存在。</p>
+          </div>
+          <div class="ip-head-chips">
+            <span class="server-chip" id="assetChip">41 / 41 存在 · 0 缺失</span>
+            <button class="btn btn-small" data-action="validate-assets" id="btnValidateAssets">重新校验素材</button>
+          </div>
+        </div>
+        <div class="split-panel">
+          <div>
+            <div class="ip-asset-summary" id="assetSummary"><div class="ip-asset-stat"><span>素材总数</span><strong>41</strong><em>清单读取</em></div><div class="ip-asset-stat"><span>存在 / 缺失</span><strong>41 / 0</strong><em>全部可读</em></div><div class="ip-asset-stat"><span>场景 SVG</span><strong>12</strong><em>12 格分镜</em></div><div class="ip-asset-stat"><span>分镜配音 WAV</span><strong>12</strong><em>逐格入槽</em></div><div class="ip-asset-stat"><span>字幕 SRT</span><strong>12</strong><em>逐格 + 总字幕</em></div><div class="ip-asset-stat"><span>角色 / 主视觉</span><strong>2 + 1</strong><em>自制 SVG</em></div><div class="ip-asset-stat is-wide"><span>主音轨 / 分镜时间轴</span><strong>40.4 秒 主音轨 / 40.4 秒 时间轴 · 误差 ≤ 120ms</strong><em>配音合计 35.8 秒 · 采样率 22050 Hz · 单声道</em></div></div>
+            <div id="assetResult"><div class="ip-pass-note"><strong>✓</strong><span>素材清单读取完成：41 / 41 项存在。　点击「重新校验素材」会由服务端重新读取 WAV 头、SRT 条数并核对主音轨时长。</span></div></div>
+          </div>
+          <div>
+            <div class="subhead"><h3>六项硬校验</h3><span class="mono muted">读取文件头 / 字幕条数</span></div>
+            <div class="check-list" id="assetChecks"><div class="check-row is-ok"><span class="check-mark">✓</span><span><strong>12 张场景 SVG 存在</strong><span class="ip-check-detail">12 张</span></span></div><div class="check-row is-ok"><span class="check-mark">✓</span><span><strong>12 段配音 WAV 存在且可读</strong><span class="ip-check-detail">12 / 12</span></span></div><div class="check-row is-ok"><span class="check-mark">✓</span><span><strong>每段配音不超出分镜时长</strong><span class="ip-check-detail">逐镜校验</span></span></div><div class="check-row is-ok"><span class="check-mark">✓</span><span><strong>12 段 SRT + 总字幕存在</strong><span class="ip-check-detail">总字幕 12 条</span></span></div><div class="check-row is-ok"><span class="check-mark">✓</span><span><strong>双角色设定卡存在</strong><span class="ip-check-detail">2 张</span></span></div><div class="check-row is-ok"><span class="check-mark">✓</span><span><strong>总配音时长等于分镜时间轴</strong><span class="ip-check-detail">40400ms / 40400ms</span></span></div></div>
+          </div>
+        </div>
+        <details class="ip-asset-details">
+          <summary>展开查看 41 项素材清单（路径 / 大小 / 时长）</summary>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>类别</th><th>素材</th><th>路径</th><th>大小</th><th>时长 / 条数</th></tr></thead>
+              <tbody id="assetTableBody"><tr><td><span class="tag ip-asset-kind">场景 SVG</span></td><td><div class="ip-cell-main">分镜 01 场景卡 <span class="muted">· 镜 01</span></div></td><td><div class="ip-asset-path">media/scenes/shot-01.svg</div></td><td><span class="mono">9.4 KB</span></td><td><span class="mono">矢量 SVG</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜配音</span></td><td><div class="ip-cell-main">分镜 01 配音 <span class="muted">· 镜 01</span></div></td><td><div class="ip-asset-path">media/voice/shot-01.wav</div></td><td><span class="mono">135.9 KB</span></td><td><span class="mono">3.2s · 22.05 kHz</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜字幕</span></td><td><div class="ip-cell-main">分镜 01 字幕 <span class="muted">· 镜 01</span></div></td><td><div class="ip-asset-path">media/subtitles/shot-01.srt</div></td><td><span class="mono">78 B</span></td><td><span class="mono">1 条字幕</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">场景 SVG</span></td><td><div class="ip-cell-main">分镜 02 场景卡 <span class="muted">· 镜 02</span></div></td><td><div class="ip-asset-path">media/scenes/shot-02.svg</div></td><td><span class="mono">9.4 KB</span></td><td><span class="mono">矢量 SVG</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜配音</span></td><td><div class="ip-cell-main">分镜 02 配音 <span class="muted">· 镜 02</span></div></td><td><div class="ip-asset-path">media/voice/shot-02.wav</div></td><td><span class="mono">110.6 KB</span></td><td><span class="mono">2.6s · 22.05 kHz</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜字幕</span></td><td><div class="ip-cell-main">分镜 02 字幕 <span class="muted">· 镜 02</span></div></td><td><div class="ip-asset-path">media/subtitles/shot-02.srt</div></td><td><span class="mono">66 B</span></td><td><span class="mono">1 条字幕</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">场景 SVG</span></td><td><div class="ip-cell-main">分镜 03 场景卡 <span class="muted">· 镜 03</span></div></td><td><div class="ip-asset-path">media/scenes/shot-03.svg</div></td><td><span class="mono">7.2 KB</span></td><td><span class="mono">矢量 SVG</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜配音</span></td><td><div class="ip-cell-main">分镜 03 配音 <span class="muted">· 镜 03</span></div></td><td><div class="ip-asset-path">media/voice/shot-03.wav</div></td><td><span class="mono">138.6 KB</span></td><td><span class="mono">3.2s · 22.05 kHz</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜字幕</span></td><td><div class="ip-cell-main">分镜 03 字幕 <span class="muted">· 镜 03</span></div></td><td><div class="ip-asset-path">media/subtitles/shot-03.srt</div></td><td><span class="mono">81 B</span></td><td><span class="mono">1 条字幕</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">场景 SVG</span></td><td><div class="ip-cell-main">分镜 04 场景卡 <span class="muted">· 镜 04</span></div></td><td><div class="ip-asset-path">media/scenes/shot-04.svg</div></td><td><span class="mono">5.9 KB</span></td><td><span class="mono">矢量 SVG</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜配音</span></td><td><div class="ip-cell-main">分镜 04 配音 <span class="muted">· 镜 04</span></div></td><td><div class="ip-asset-path">media/voice/shot-04.wav</div></td><td><span class="mono">127.9 KB</span></td><td><span class="mono">3.0s · 22.05 kHz</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜字幕</span></td><td><div class="ip-cell-main">分镜 04 字幕 <span class="muted">· 镜 04</span></div></td><td><div class="ip-asset-path">media/subtitles/shot-04.srt</div></td><td><span class="mono">81 B</span></td><td><span class="mono">1 条字幕</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">场景 SVG</span></td><td><div class="ip-cell-main">分镜 05 场景卡 <span class="muted">· 镜 05</span></div></td><td><div class="ip-asset-path">media/scenes/shot-05.svg</div></td><td><span class="mono">7.3 KB</span></td><td><span class="mono">矢量 SVG</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜配音</span></td><td><div class="ip-cell-main">分镜 05 配音 <span class="muted">· 镜 05</span></div></td><td><div class="ip-asset-path">media/voice/shot-05.wav</div></td><td><span class="mono">151.9 KB</span></td><td><span class="mono">3.5s · 22.05 kHz</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜字幕</span></td><td><div class="ip-cell-main">分镜 05 字幕 <span class="muted">· 镜 05</span></div></td><td><div class="ip-asset-path">media/subtitles/shot-05.srt</div></td><td><span class="mono">90 B</span></td><td><span class="mono">1 条字幕</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">场景 SVG</span></td><td><div class="ip-cell-main">分镜 06 场景卡 <span class="muted">· 镜 06</span></div></td><td><div class="ip-asset-path">media/scenes/shot-06.svg</div></td><td><span class="mono">9.2 KB</span></td><td><span class="mono">矢量 SVG</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜配音</span></td><td><div class="ip-cell-main">分镜 06 配音 <span class="muted">· 镜 06</span></div></td><td><div class="ip-asset-path">media/voice/shot-06.wav</div></td><td><span class="mono">136.3 KB</span></td><td><span class="mono">3.2s · 22.05 kHz</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜字幕</span></td><td><div class="ip-cell-main">分镜 06 字幕 <span class="muted">· 镜 06</span></div></td><td><div class="ip-asset-path">media/subtitles/shot-06.srt</div></td><td><span class="mono">72 B</span></td><td><span class="mono">1 条字幕</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">场景 SVG</span></td><td><div class="ip-cell-main">分镜 07 场景卡 <span class="muted">· 镜 07</span></div></td><td><div class="ip-asset-path">media/scenes/shot-07.svg</div></td><td><span class="mono">8.2 KB</span></td><td><span class="mono">矢量 SVG</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜配音</span></td><td><div class="ip-cell-main">分镜 07 配音 <span class="muted">· 镜 07</span></div></td><td><div class="ip-asset-path">media/voice/shot-07.wav</div></td><td><span class="mono">122.4 KB</span></td><td><span class="mono">2.8s · 22.05 kHz</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜字幕</span></td><td><div class="ip-cell-main">分镜 07 字幕 <span class="muted">· 镜 07</span></div></td><td><div class="ip-asset-path">media/subtitles/shot-07.srt</div></td><td><span class="mono">75 B</span></td><td><span class="mono">1 条字幕</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">场景 SVG</span></td><td><div class="ip-cell-main">分镜 08 场景卡 <span class="muted">· 镜 08</span></div></td><td><div class="ip-asset-path">media/scenes/shot-08.svg</div></td><td><span class="mono">8.8 KB</span></td><td><span class="mono">矢量 SVG</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜配音</span></td><td><div class="ip-cell-main">分镜 08 配音 <span class="muted">· 镜 08</span></div></td><td><div class="ip-asset-path">media/voice/shot-08.wav</div></td><td><span class="mono">116.5 KB</span></td><td><span class="mono">2.7s · 22.05 kHz</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜字幕</span></td><td><div class="ip-cell-main">分镜 08 字幕 <span class="muted">· 镜 08</span></div></td><td><div class="ip-asset-path">media/subtitles/shot-08.srt</div></td><td><span class="mono">78 B</span></td><td><span class="mono">1 条字幕</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">场景 SVG</span></td><td><div class="ip-cell-main">分镜 09 场景卡 <span class="muted">· 镜 09</span></div></td><td><div class="ip-asset-path">media/scenes/shot-09.svg</div></td><td><span class="mono">13.3 KB</span></td><td><span class="mono">矢量 SVG</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜配音</span></td><td><div class="ip-cell-main">分镜 09 配音 <span class="muted">· 镜 09</span></div></td><td><div class="ip-asset-path">media/voice/shot-09.wav</div></td><td><span class="mono">130.7 KB</span></td><td><span class="mono">3.0s · 22.05 kHz</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜字幕</span></td><td><div class="ip-cell-main">分镜 09 字幕 <span class="muted">· 镜 09</span></div></td><td><div class="ip-asset-path">media/subtitles/shot-09.srt</div></td><td><span class="mono">75 B</span></td><td><span class="mono">1 条字幕</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">场景 SVG</span></td><td><div class="ip-cell-main">分镜 10 场景卡 <span class="muted">· 镜 10</span></div></td><td><div class="ip-asset-path">media/scenes/shot-10.svg</div></td><td><span class="mono">10.6 KB</span></td><td><span class="mono">矢量 SVG</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜配音</span></td><td><div class="ip-cell-main">分镜 10 配音 <span class="muted">· 镜 10</span></div></td><td><div class="ip-asset-path">media/voice/shot-10.wav</div></td><td><span class="mono">110.0 KB</span></td><td><span class="mono">2.6s · 22.05 kHz</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜字幕</span></td><td><div class="ip-cell-main">分镜 10 字幕 <span class="muted">· 镜 10</span></div></td><td><div class="ip-asset-path">media/subtitles/shot-10.srt</div></td><td><span class="mono">72 B</span></td><td><span class="mono">1 条字幕</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">场景 SVG</span></td><td><div class="ip-cell-main">分镜 11 场景卡 <span class="muted">· 镜 11</span></div></td><td><div class="ip-asset-path">media/scenes/shot-11.svg</div></td><td><span class="mono">8.6 KB</span></td><td><span class="mono">矢量 SVG</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜配音</span></td><td><div class="ip-cell-main">分镜 11 配音 <span class="muted">· 镜 11</span></div></td><td><div class="ip-asset-path">media/voice/shot-11.wav</div></td><td><span class="mono">100.5 KB</span></td><td><span class="mono">2.3s · 22.05 kHz</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜字幕</span></td><td><div class="ip-cell-main">分镜 11 字幕 <span class="muted">· 镜 11</span></div></td><td><div class="ip-asset-path">media/subtitles/shot-11.srt</div></td><td><span class="mono">60 B</span></td><td><span class="mono">1 条字幕</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">场景 SVG</span></td><td><div class="ip-cell-main">分镜 12 场景卡 <span class="muted">· 镜 12</span></div></td><td><div class="ip-asset-path">media/scenes/shot-12.svg</div></td><td><span class="mono">8.3 KB</span></td><td><span class="mono">矢量 SVG</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜配音</span></td><td><div class="ip-cell-main">分镜 12 配音 <span class="muted">· 镜 12</span></div></td><td><div class="ip-asset-path">media/voice/shot-12.wav</div></td><td><span class="mono">160.4 KB</span></td><td><span class="mono">3.7s · 22.05 kHz</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">分镜字幕</span></td><td><div class="ip-cell-main">分镜 12 字幕 <span class="muted">· 镜 12</span></div></td><td><div class="ip-asset-path">media/subtitles/shot-12.srt</div></td><td><span class="mono">84 B</span></td><td><span class="mono">1 条字幕</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">角色设定</span></td><td><div class="ip-cell-main">远视 · 角色设定卡</div></td><td><div class="ip-asset-path">media/characters/yuanshi.svg</div></td><td><span class="mono">4.3 KB</span></td><td><span class="mono">矢量 SVG</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">角色设定</span></td><td><div class="ip-cell-main">远听 · 角色设定卡</div></td><td><div class="ip-asset-path">media/characters/yuanting.svg</div></td><td><span class="mono">4.4 KB</span></td><td><span class="mono">矢量 SVG</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">主视觉</span></td><td><div class="ip-cell-main">《山谷回声》主视觉</div></td><td><div class="ip-asset-path">media/ip-poster.svg</div></td><td><span class="mono">9.8 KB</span></td><td><span class="mono">矢量 SVG</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">总配音</span></td><td><div class="ip-cell-main">时间轴总配音</div></td><td><div class="ip-asset-path">media/voice/ip_sample.wav</div></td><td><span class="mono">1.70 MB</span></td><td><span class="mono">40.4s · 22.05 kHz</span> <span class="tag tag-green">在</span></td></tr><tr><td><span class="tag ip-asset-kind">总字幕</span></td><td><div class="ip-cell-main">总字幕 SRT</div></td><td><div class="ip-asset-path">media/subtitles/ip_sample.srt</div></td><td><span class="mono">937 B</span></td><td><span class="mono">12 条字幕</span> <span class="tag tag-green">在</span></td></tr></tbody>
+            </table>
+          </div>
+        </details>
+      </section>
+
+      <section class="panel" id="review">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">内容审核台 · 规则 + 留痕</div>
+            <h2>9 条规则，逐条命中并给出修改建议</h2>
+            <p class="panel-copy">审核由本地关键词 / 否定词 / 豁免词规则完成，覆盖真人形象、医疗功效、暴力惊吓、未成年人、传统技艺真实性、改编授权、原创声明、隐私与商业夸大。每次审核写入 SQLite 留痕，可在下方历史中查询。</p>
+          </div>
+          <span class="server-chip" id="reviewCountChip">—</span>
+        </div>
+        <div class="split-panel">
+          <div>
+            <form id="reviewForm" class="ip-review-form" data-action="submit-review">
+              <div class="field">
+                <div class="field-label">待审文案 <span id="reviewChars">54 / 1000</span></div>
+                <textarea id="reviewText" name="text" rows="7" maxlength="1000" placeholder="粘贴一条短剧宣传文案，至少 4 个字">《山谷回声》为原创纸影短剧，角色、画面与配音均为自制；无真人扮演，无外部版权素材；已获授权用于合成样例演示。</textarea>
+              </div>
+              <div class="form-grid">
+                <label class="field"><span>审核对象（可选）</span><input id="reviewTarget" name="target" value="样片宣传文案" maxlength="60"></label>
+                <div class="field"><span>当前角色权限</span><div class="ip-form-static" id="reviewRoleHint">管理员 · 可提交审核</div></div>
+              </div>
+              <div class="action-row">
+                <button class="btn btn-small" type="button" data-action="fill-review-pass">填入合规示例</button>
+                <button class="btn btn-small" type="button" data-action="fill-review-reject">填入违规示例</button>
+                <button class="btn btn-primary btn-small" type="submit">提交审核</button>
+              </div>
+              <p class="form-hint">需要角色：<span id="reviewNeeded">内容审核 / 制片 / 管理员</span>。越权提交会返回 403，并显示服务端的中文拒绝原因。</p>
+            </form>
+          </div>
+          <div>
+            <div class="ip-review-result" id="reviewResult">
+              <div class="ip-result-empty">
+                <span class="ip-result-icon">审</span>
+                <strong>等待审核</strong>
+                <p>提交一条文案后，这里显示 verdict、命中规则、严重级别与服务端给出的修改建议。</p>
+              </div>
+            </div>
+            <p class="mini-note">规则数据位于 <code>config/ip_story.json → review.rules</code>；可增加关键词、严重级别、否定词、豁免词与修复建议，无需改代码。审核结果不构成法律意见。</p>
+          </div>
+        </div>
+        <div class="subhead ip-history-head"><h3>审核留痕</h3><span class="server-chip" id="reviewHistoryChip">2 条留痕</span></div>
+        <div id="reviewHistory"><div class="ip-history"><div class="ip-history-item"><span class="ip-history-time">10-31 21:23<br>内容审核 / 制片</span><div class="ip-history-text">违规示例文案<small>本片由真人扮演远视，并引用网络热曲；角色包治百病，能治失眠，保证收益。 · 命中：真人形象与肖像、医疗与功效宣称、商业夸大与收益承诺、改编与版权授权、原创 / 授权声明</small></div><span><span class="tag tag-red">拒绝</span></span></div><div class="ip-history-item"><span class="ip-history-time">10-31 21:23<br>内容审核 / 制片</span><div class="ip-history-text">合规样片宣传文案<small>《山谷回声》为原创纸影短剧，角色、画面与配音均为自制；无真人扮演，无外部版权素材；已获授权用于合成样例演示。</small></div><span><span class="tag tag-green">通过</span></span></div></div></div>
+      </section>
+
+      <section class="panel" id="license">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">授权 · 衍生品 · 合同模板</div>
+            <h2>授权草稿与 6 个衍生品 SKU</h2>
+            <p class="panel-copy">填写被许可方、用途、区域与期限后，服务端从模板条款生成 12 条合同草稿并写入本地留痕。草稿明确标注「模板样例，不构成法律意见」，不产生真实授权效力。</p>
+          </div>
+          <span class="server-chip" id="licenseChip">1 份 · 模板</span>
+        </div>
+        <div class="split-panel">
+          <div>
+            <form id="licenseForm" class="mod-form ip-license-form" data-action="preview-license">
+              <div class="form-grid">
+                <label class="field"><span>被许可方（2–60 字）</span><input name="licensee" value="合成样例文化品牌（演示）" maxlength="60" required=""></label>
+                <label class="field"><span>用途</span><select name="purpose" id="licensePurpose"><option value="品牌短片">品牌短片</option><option value="线下展映">线下展映</option><option value="社交传播">社交传播</option><option value="衍生品开发">衍生品开发</option><option value="教育展示">教育展示</option></select></label>
+                <label class="field"><span>区域</span><select name="territory" id="licenseTerritory"><option value="中国大陆">中国大陆</option><option value="大中华区">大中华区</option><option value="全球（不含未授权地区）">全球（不含未授权地区）</option></select></label>
+                <label class="field"><span>期限</span><select name="term" id="licenseTerm"><option value="6">6 个月</option><option value="12">12 个月</option><option value="24">24 个月</option><option value="36">36 个月</option></select></label>
+              </div>
+              <div class="form-actions">
+                <button class="btn btn-primary btn-small" type="submit">生成授权草稿</button>
+                <span class="form-hint" id="licenseNeeded">需要 授权商务 / 财务 / 管理员；当前 管理员，越权生成将被拒绝。</span>
+              </div>
+            </form>
+            <div class="ip-license-notice"><strong>模板声明</strong>　本页合同仅为产品演示用模板样例，不构成法律意见，也不产生真实授权效力；正式签署前须由执业律师审核。</div>
+            <div class="subhead ip-history-head"><h3>最近草稿</h3><span class="server-chip" id="licenseHistoryChip">1 份草稿</span></div>
+            <div id="licenseHistory"><div class="ip-history"><div class="ip-history-item is-license"><span class="ip-history-time">10-31 21:23<br>IP-LIC-20261031-5895199C</span><div class="ip-history-text">合成样例文化品牌（演示）<small>品牌短片 · 中国大陆 · 12 个月 · 12 条</small></div><span><span class="tag tag-amber">模板草稿</span></span></div></div></div>
+          </div>
+          <div>
+            <div class="ip-license-draft" id="licenseResult">
+              <div class="ip-result-empty"><span class="ip-result-icon">约</span><strong>尚未生成</strong><p>填写左侧表单后，这里显示完整合同草稿、12 条条款与免责声明。</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="subhead ip-history-head"><h3>衍生品 SKU 规格</h3><span class="server-chip" id="skuChip">6 个 SKU · 全部待授权</span></div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>SKU</th><th>品类</th><th>规格</th><th>起订量</th><th>建议零售价</th><th>分成</th><th>状态</th></tr></thead>
+            <tbody id="skuTableBody"><tr><td><span class="mono">sku-01</span></td><td><div class="ip-sku-name">「远视」纸影亚克力立牌</div><div class="ip-sku-specs">桌面摆件</div></td><td><div class="ip-cell-main">15cm × 10cm / 3mm 透明亚克力 / 双面 UV 印刷 + 磨砂底座 / 牛皮纸卡 + 透明袋</div></td><td><span class="mono">100</span></td><td><span class="mono">¥39.00</span></td><td><span class="mono">8%</span></td><td><span class="tag tag-amber">待授权</span></td></tr><tr><td><span class="mono">sku-02</span></td><td><div class="ip-sku-name">「回声邮局」A5 线装笔记本</div><div class="ip-sku-specs">文具</div></td><td><div class="ip-cell-main">A5 / 96 页 / 100g 米白道林纸 + 棉线 / 锁线装订 + 单色烫压 / 腰封 + 硫酸纸</div></td><td><span class="mono">200</span></td><td><span class="mono">¥49.00</span></td><td><span class="mono">8%</span></td><td><span class="tag tag-amber">待授权</span></td></tr><tr><td><span class="mono">sku-03</span></td><td><div class="ip-sku-name">「山谷回声」帆布袋</div><div class="ip-sku-specs">服饰配件</div></td><td><div class="ip-cell-main">38cm × 42cm / 12oz 本白帆布 / 双色丝网印刷 / 可回收纸带</div></td><td><span class="mono">150</span></td><td><span class="mono">¥69.00</span></td><td><span class="mono">8%</span></td><td><span class="tag tag-amber">待授权</span></td></tr><tr><td><span class="mono">sku-04</span></td><td><div class="ip-sku-name">双角色徽章盲袋（6 款）</div><div class="ip-sku-specs">收藏周边</div></td><td><div class="ip-cell-main">直径 32mm / 马口铁 + 安全别针 / 四色印刷 + 哑膜 / 铝箔盲袋 + 展示盒</div></td><td><span class="mono">300</span></td><td><span class="mono">¥29.00</span></td><td><span class="mono">10%</span></td><td><span class="tag tag-amber">待授权</span></td></tr><tr><td><span class="mono">sku-05</span></td><td><div class="ip-sku-name">12 格场景明信片套装</div><div class="ip-sku-specs">纸品</div></td><td><div class="ip-cell-main">148mm × 100mm × 12 张 / 300g 米白卡纸 / 四色印刷 + 局部烫金 / 纸封套</div></td><td><span class="mono">100</span></td><td><span class="mono">¥32.00</span></td><td><span class="mono">8%</span></td><td><span class="tag tag-amber">待授权</span></td></tr><tr><td><span class="mono">sku-06</span></td><td><div class="ip-sku-name">「灯芯」纸影小夜灯</div><div class="ip-sku-specs">家居灯饰</div></td><td><div class="ip-cell-main">12cm × 18cm / 椴木薄片 + LED 暖光模组 / 激光切割 + 手工装裱 / 瓦楞礼盒</div></td><td><span class="mono">50</span></td><td><span class="mono">¥129.00</span></td><td><span class="mono">10%</span></td><td><span class="tag tag-amber">待授权</span></td></tr></tbody>
+          </table>
+        </div>
+        <p class="table-note" id="skuNote">以下 SKU 规格为合成样例，仅用于演示授权范围与送样流程，不代表任何真实供应商报价、产能或已上市商品。 SKU 规格为合成样例，不代表真实供应商、报价或已上市商品。</p>
+      </section>
+
+      <p class="table-note">本页所有角色、剧本、配音、合同、品牌、SKU 与金额均为合成 / 脱敏样例，不含真人形象，不引用真实客户、真实工厂、真实非遗项目或第三方版权素材；审核与授权内容不构成法律意见。</p>
+    </div>
+  </main>
+</div>
+
+
+
+
+
+</body></html>

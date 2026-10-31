@@ -1,0 +1,591 @@
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>CraftMesh · 工作台</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body><div id="static-demo-banner" style="position:sticky;top:0;z-index:9999;background:#9b4a30;color:#fffdf8;font:13px/1.7 'Segoe UI','Microsoft YaHei',sans-serif;padding:7px 14px;text-align:center"><b>静态演示快照</b> · 数据来自一次真实 API 运行，交互已冻结 · <a href="index.html" style="color:#ffd9a8">M1 工作台</a> · <a href="m2.html" style="color:#ffd9a8">M2 预售与派单</a> · <a href="ai.html" style="color:#ffd9a8">B 企业 AI</a> · <a href="ip.html" style="color:#ffd9a8">C 文化 IP</a> · <a href="evidence.html" style="color:#ffd9a8">验收驾驶舱</a> · <a href="https://github.com/Gupeat/craftmesh-m1" style="color:#ffd9a8">源码/测试</a></div>
+<svg xmlns="http://www.w3.org/2000/svg" class="svg-sprite" aria-hidden="true">
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></symbol>
+  <symbol id="i-orders" viewBox="0 0 24 24"><path d="M7 3h10l3 4v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7l3-4Z"></path><path d="M4 7h16M9 12h6M9 16h6"></path></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v6c0 4.6 3.2 8 7.5 9 4.3-1 7.5-4.4 7.5-9V6L12 3Z"></path><path d="m9 12 2 2 4-4"></path></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Z"></path><path d="m3 12 9 5 9-5M3 16l9 5 9-5"></path></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.5 2.5L16 9"></path></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 6.3M20 5v6h-6"></path></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></symbol>
+  <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"></ellipse><path d="M4.5 5.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6M4.5 11.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"></path></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13 4l-2 16"></path></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6V3Z"></path><path d="M14 3v5h5M9 13h7M9 17h7"></path></symbol>
+</svg>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">CM</div>
+      <div>
+        <div class="brand-name">CraftMesh</div>
+        <div class="brand-sub">工艺协同中台 · M1</div>
+      </div>
+    </div>
+
+    <div class="workspace-pill">
+      <span class="live-dot"></span>
+      <span>参考实现环境</span>
+      <span class="workspace-version">M1.0</span>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="主导航">
+      <button class="nav-item is-active" data-view="dashboard">
+        <svg class="icon"><use href="#i-grid"></use></svg>
+        <span>工作台</span>
+      </button>
+      <button class="nav-item" data-view="orders">
+        <svg class="icon"><use href="#i-orders"></use></svg>
+        <span>订单中心</span>
+        <span class="nav-count" id="navOrderCount">3</span>
+      </button>
+      <button class="nav-item" data-view="rules">
+        <svg class="icon"><use href="#i-shield"></use></svg>
+        <span>规则与授权</span>
+      </button>
+      <button class="nav-item" data-view="architecture">
+        <svg class="icon"><use href="#i-layers"></use></svg>
+        <span>架构与验收</span>
+      </button>
+      <button class="nav-item" data-view="tests">
+        <svg class="icon"><use href="#i-check"></use></svg>
+        <span>测试证据</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-section-label">扩展模块（同一仓库 / 同一服务）</div>
+    <nav class="sidebar-nav" aria-label="扩展模块导航">
+      <a class="nav-item" href="m2.html" style="text-decoration:none;color:inherit">
+        <svg class="icon"><use href="#i-orders"></use></svg>
+        <span>预售与工厂派单</span>
+        <span class="nav-kicker">M2</span>
+      </a>
+      <a class="nav-item" href="ai.html" style="text-decoration:none;color:inherit">
+        <svg class="icon"><use href="#i-layers"></use></svg>
+        <span>企业 AI 服务层</span>
+        <span class="nav-kicker">B</span>
+      </a>
+      <a class="nav-item" href="ip.html" style="text-decoration:none;color:inherit">
+        <svg class="icon"><use href="#i-doc"></use></svg>
+        <span>文化 IP 短剧管线</span>
+        <span class="nav-kicker">C</span>
+      </a>
+      <a class="nav-item" href="evidence.html" style="text-decoration:none;color:inherit">
+        <svg class="icon"><use href="#i-check"></use></svg>
+        <span>验收驾驶舱</span>
+        <span class="nav-kicker">A01-A10</span>
+      </a>
+      <a class="nav-item" href="https://github.com/Gupeat/craftmesh-m1" style="text-decoration:none;color:inherit">
+        <svg class="icon"><use href="#i-doc"></use></svg>
+        <span>下载完整源码包</span>
+        <span class="nav-kicker">ZIP</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-section-label">交付说明</div>
+    <div class="sidebar-meta">
+      <div><span>数据</span><strong>全部合成 / 脱敏</strong></div>
+      <div><span>服务</span><strong>Python HTTP API</strong></div>
+      <div><span>存储</span><strong>SQLite · 本地</strong></div>
+      <div><span>规则</span><strong>10 条 / 3 条硬约束</strong></div>
+    </div>
+
+    <div class="sidebar-note">
+      <div class="note-kicker">这不是静态原型</div>
+      <p>页面上的判定、授权、报价、订单状态与审计记录，均由本地 API 与 SQLite 生成。</p>
+    </div>
+
+    <div class="sidebar-foot">
+      <span class="live-dot"></span>
+      <span id="apiVersion">API M1.0</span>
+      <span class="dot-sep">·</span>
+      <span id="apiState">在线</span>
+    </div>
+  </aside>
+
+  <div class="main-column">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-button menu-button" id="menuButton" aria-label="打开导航">
+          <svg class="icon"><use href="#i-grid"></use></svg>
+        </button>
+        <div class="crumb">
+          <span class="crumb-root">CraftMesh</span>
+          <span class="crumb-sep">/</span>
+          <strong id="crumbCurrent">工作台</strong>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <span class="api-badge" id="apiBadge"><span class="live-dot"></span><span>API 在线</span></span>
+        <label class="role-switcher">
+          <span>当前角色</span>
+          <select id="roleSelect" aria-label="切换演示角色"><option value="designer">林工 · 设计 / 工艺</option><option value="reviewer">周审 · 评审</option><option value="ops">陈厂 · 生产运营</option><option value="qc">质检组 · 质检</option><option value="finance">财务组 · 结算</option><option value="admin">管理员 · 平台管理</option></select>
+        </label>
+        <button class="btn btn-ghost btn-small" id="refreshButton">
+          <svg class="icon"><use href="#i-refresh"></use></svg>
+          刷新
+        </button>
+        <button class="btn btn-ghost btn-small" id="resetButton" disabled="" title="仅管理员可重置数据">
+          <svg class="icon"><use href="#i-refresh"></use></svg>
+          重置数据
+        </button>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="view is-active" id="view-dashboard" data-title="工作台">
+        <header class="page-head">
+          <div class="page-head-copy">
+            <div class="eyebrow">WORKBENCH / 01</div>
+            <h1>把非标工艺，做成可交付的订单</h1>
+            <p class="lede">纹样授权、可制造性判定、报价与订单状态在同一条链路上完成。页面不是静态稿——每一次判定都来自服务端规则引擎。</p>
+          </div>
+          <div class="page-actions">
+            <span class="tag tag-muted">M1 垂直切片</span>
+            <button class="btn btn-ghost" data-action="load-unmanufacturable">载入不可制造样例</button>
+          </div>
+        </header>
+
+        <div class="kpi-grid" id="kpiGrid"><div class="kpi-card"><div class="kpi-top"><span>订单总数</span><span class="kpi-icon"><svg class="icon"><use href="#i-orders"></use></svg></span></div><div class="kpi-value">3</div><div class="kpi-foot">SQLite 持久化</div></div><div class="kpi-card"><div class="kpi-top"><span>在途订单</span><span class="kpi-icon"><svg class="icon"><use href="#i-layers"></use></svg></span></div><div class="kpi-value">2</div><div class="kpi-foot">草稿 / 评审 / 生产 / 质检</div></div><div class="kpi-card"><div class="kpi-top"><span>判定通过率</span><span class="kpi-icon"><svg class="icon"><use href="#i-check"></use></svg></span></div><div class="kpi-value">100%</div><div class="kpi-foot">3 张订单判定通过</div></div><div class="kpi-card"><div class="kpi-top"><span>审计事件</span><span class="kpi-icon"><svg class="icon"><use href="#i-db"></use></svg></span></div><div class="kpi-value">14</div><div class="kpi-foot">创建与状态迁移全量记录</div></div></div>
+
+        <div class="work-grid">
+          <section class="panel composer-panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-kicker">01 / ORDER COMPOSER</div>
+                <h2>新建共创单</h2>
+              </div>
+              <span class="server-chip"><span class="chip-dot"></span>服务端判定</span>
+            </div>
+
+            <div class="flow-steps">
+              <div class="flow-step is-current"><span>01</span>选纹样</div>
+              <div class="flow-line"></div>
+              <div class="flow-step"><span>02</span>定工艺</div>
+              <div class="flow-line"></div>
+              <div class="flow-step"><span>03</span>看判定</div>
+            </div>
+
+            <div class="field-label">纹样库 <span>3 个合成纹样 · 授权状态随单快照</span></div>
+            <div class="pattern-grid" id="patternGrid"><button type="button" class="pattern-card is-selected" data-pattern="moon-gate" aria-pressed="true"><div class="pattern-preview" style="background:#2a2118"><svg viewBox="0 0 120 46" preserveAspectRatio="none" aria-hidden="true"><rect width="120" height="46" fill="#2a2118"></rect><path d="M35 43V27a25 25 0 0 1 50 0v16" fill="none" stroke="#d8b36a" stroke-width="2"></path><path d="M44 43V28a16 16 0 0 1 32 0v15" fill="none" stroke="#f0d39a" stroke-width="1" opacity=".7"></path><circle cx="60" cy="15" r="4" fill="#f0d39a"></circle><path d="M0 41h120" stroke="#d8b36a" stroke-width=".7" opacity=".5"></path></svg></div><div class="pattern-name"><span>月洞门</span><span class="pattern-source">原创</span></div><div class="mini-license">ORIG-SYN-001 · commercial / derivative</div></button><button type="button" class="pattern-card " data-pattern="wave-lattice" aria-pressed="false"><div class="pattern-preview" style="background:#12232b"><svg viewBox="0 0 120 46" preserveAspectRatio="none" aria-hidden="true"><rect width="120" height="46" fill="#12232b"></rect><path d="M-8 32 Q 0 19 8 32 T 24 32 T 40 32 T 56 32 T 72 32 T 88 32 T 104 32 T 120 32 T 136 32" fill="none" stroke="#6fb6d8" stroke-width="2"></path><path d="M-8 38 Q 0 25 8 38 T 24 38 T 40 38 T 56 38 T 72 38 T 88 38 T 104 38 T 120 38 T 136 38" fill="none" stroke="#b9e2f2" stroke-width="1" opacity=".65"></path><circle cx="91" cy="14" r="5" fill="none" stroke="#b9e2f2" stroke-width="1" opacity=".6"></circle></svg></div><div class="pattern-name"><span>海浪格</span><span class="pattern-source">授权</span></div><div class="mini-license">LIC-SYN-2026-001 · commercial</div></button><button type="button" class="pattern-card " data-pattern="cloud-scroll" aria-pressed="false"><div class="pattern-preview" style="background:#2a1512"><svg viewBox="0 0 120 46" preserveAspectRatio="none" aria-hidden="true"><rect width="120" height="46" fill="#2a1512"></rect><path d="M12 34c0-9 9-13 15-8 5 4 2 11-4 10-5-1-5-8 1-10 9-3 17 3 17 12" fill="none" stroke="#d97757" stroke-width="2"></path><path d="M69 15c8-4 15 2 13 9-1 5-8 7-11 2-2-4 2-7 5-6 7 2 8 13 1 17-6 3-12-2-11-7" fill="none" stroke="#f2c3a8" stroke-width="1.5" opacity=".8"></path><path d="M0 37h120" stroke="#d97757" stroke-width=".7" opacity=".45"></path></svg></div><div class="pattern-name"><span>云纹</span><span class="pattern-source">公版</span></div><div class="mini-license">PD-SYN-009 · commercial / derivative</div></button></div>
+
+            <div class="form-grid">
+              <label class="field">
+                <span>工艺</span>
+                <select id="processSelect"><option value="casting">铸造</option><option value="inlay">镶嵌</option><option value="engraving">雕刻</option><option value="joinery">榫卯</option><option value="carving">木雕</option></select>
+              </label>
+              <label class="field">
+                <span>材料</span>
+                <select id="materialSelect"><option value="brass">黄铜</option><option value="silver">银</option><option value="wood">木</option></select>
+              </label>
+              <label class="field">
+                <span>表面处理</span>
+                <select id="finishSelect"><option value="polished">抛光</option><option value="matte">哑光</option><option value="oil">木油</option><option value="wax">木蜡</option></select>
+              </label>
+              <label class="field">
+                <span>共创模式</span>
+                <select id="modeSelect"><option value="copy">复刻</option><option value="recombine">重组</option><option value="original">原创</option></select>
+              </label>
+              <label class="field">
+                <span>授权用途</span>
+                <select id="useSelect"><option value="commercial">商业使用</option><option value="internal">内部使用</option><option value="personal">个人非商业</option></select>
+              </label>
+              <label class="field field-quantity">
+                <span>数量</span>
+                <input id="quantityInput" type="number" min="1" max="10000" step="1" value="10">
+              </label>
+            </div>
+
+            <div class="param-head">
+              <div>
+                <span class="field-label">工艺参数</span>
+                <span class="param-help">输入会发送到 <code>/api/check</code>，由规则引擎判定</span>
+              </div>
+              <button class="text-button" id="resetParamsButton" type="button">恢复默认</button>
+            </div>
+            <div class="param-grid" id="paramGrid"><div class="param-field"><label for="param-wallThickness"><span>铸件壁厚</span><em>mm</em></label><input id="param-wallThickness" data-param="wallThickness" type="number" step="0.1" value="1.5"></div><div class="param-field"><label for="param-undercutAngle"><span>脱模角</span><em>°</em></label><input id="param-undercutAngle" data-param="undercutAngle" type="number" step="0.5" value="3"></div><div class="param-field"><label for="param-inlayGap"><span>镶嵌间隙</span><em>mm</em></label><input id="param-inlayGap" data-param="inlayGap" type="number" step="0.01" value="0.2"></div><div class="param-field"><label for="param-stoneHardness"><span>宝石硬度</span><em>—</em></label><input id="param-stoneHardness" data-param="stoneHardness" type="number" step="0.1" value="6"></div><div class="param-field"><label for="param-engraveWidth"><span>刻线宽度</span><em>mm</em></label><input id="param-engraveWidth" data-param="engraveWidth" type="number" step="0.05" value="0.3"></div><div class="param-field"><label for="param-jointDepth"><span>榫头深度</span><em>mm</em></label><input id="param-jointDepth" data-param="jointDepth" type="number" step="0.5" value="8"></div><div class="param-field"><label for="param-thickness"><span>木料厚度</span><em>mm</em></label><input id="param-thickness" data-param="thickness" type="number" step="1" value="20"></div><div class="param-field"><label for="param-grainAngle"><span>逆纹角度</span><em>°</em></label><input id="param-grainAngle" data-param="grainAngle" type="number" step="1" value="0"></div><div class="param-field"><label for="param-carveDepth"><span>雕刻深度</span><em>mm</em></label><input id="param-carveDepth" data-param="carveDepth" type="number" step="0.5" value="1"></div><div class="param-field"><label for="param-moisture"><span>木材含水率</span><em>%</em></label><input id="param-moisture" data-param="moisture" type="number" step="0.5" value="8"></div><div class="param-field"><label for="param-stoneDiameter"><span>宝石直径</span><em>mm</em></label><input id="param-stoneDiameter" data-param="stoneDiameter" type="number" step="0.5" value="2"></div><div class="param-field"><label for="param-prongs"><span>爪数</span><em>—</em></label><input id="param-prongs" data-param="prongs" type="number" step="1" value="4"></div></div>
+
+            <div class="composer-actions">
+              <button class="btn btn-primary" id="checkButton">
+                <svg class="icon"><use href="#i-check"></use></svg>
+                运行可制造性检查
+              </button>
+              <button class="btn btn-ghost" id="createButton">
+                <svg class="icon"><use href="#i-plus"></use></svg>
+                创建订单草稿
+              </button>
+              <span class="action-hint" id="createHint">将保存授权 / 参数 / 报价快照</span>
+            </div>
+            <div class="check-state" id="checkState" aria-live="polite">检查完成 · 可制造 · 可创建订单草稿</div>
+          </section>
+
+          <aside class="side-stack">
+            <section class="panel verdict-panel" id="verdictPanel">
+              <div class="panel-head compact">
+                <div>
+                  <div class="panel-kicker">02 / VERDICT</div>
+                  <h2>判定摘要</h2>
+                </div>
+                <span class="tag tag-green" id="verdictTag">通过</span>
+              </div>
+              <div class="verdict-body" id="verdictBody"><div class="verdict-hero"><div><div class="verdict-label pass">可制造</div><div class="verdict-sub">铸造 · 黄铜 · 复刻 · 10 件</div></div><div class="verdict-count">4 pass<br>0 fail</div></div><div class="rule-result-list"><div class="rule-result pass"><span class="rule-status"></span><span class="rule-result-name">铸件最小壁厚<span class="hard-mark">HARD</span></span><span class="rule-result-value">通过 · 1.50 mm</span></div><div class="rule-result pass"><span class="rule-status"></span><span class="rule-result-name">铸造脱模角</span><span class="rule-result-value">通过 · 3.0°</span></div><div class="rule-result na"><span class="rule-status"></span><span class="rule-result-name">镶嵌最小间隙<span class="hard-mark">HARD</span></span><span class="rule-result-value">不适用 · 本工艺不适用</span></div><div class="rule-result na"><span class="rule-status"></span><span class="rule-result-name">宝石硬度上限</span><span class="rule-result-value">不适用 · 本工艺不适用</span></div><div class="rule-result na"><span class="rule-status"></span><span class="rule-result-name">刻线最小宽度</span><span class="rule-result-value">不适用 · 本工艺不适用</span></div><div class="rule-result na"><span class="rule-status"></span><span class="rule-result-name">榫卯深度上限</span><span class="rule-result-value">不适用 · 本工艺不适用</span></div><div class="rule-result na"><span class="rule-status"></span><span class="rule-result-name">逆纹雕刻限制<span class="hard-mark">HARD</span></span><span class="rule-result-value">不适用 · 本工艺不适用</span></div><div class="rule-result na"><span class="rule-status"></span><span class="rule-result-name">木材含水率</span><span class="rule-result-value">不适用 · 本工艺不适用</span></div><div class="rule-result pass"><span class="rule-status"></span><span class="rule-result-name">宝石爪数</span><span class="rule-result-value">通过 · 4 爪 / 2.0 mm</span></div><div class="rule-result pass"><span class="rule-status"></span><span class="rule-result-name">表面处理匹配</span><span class="rule-result-value">通过</span></div></div></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-head compact">
+                <div>
+                  <div class="panel-kicker">03 / LICENSE</div>
+                  <h2>授权快照</h2>
+                </div>
+                <span class="tag tag-muted">随单固化</span>
+              </div>
+              <div id="licensePanel" class="license-panel"><div class="license-row"><span>纹样</span><strong>月洞门</strong></div><div class="license-row"><span>来源</span><strong>原创</strong></div><div class="license-row"><span>授权编号</span><strong>ORIG-SYN-001</strong></div><div class="license-row"><span>来源编号</span><strong>—</strong></div><div class="license-row"><span>使用范围</span><strong>commercial / derivative</strong></div><div class="license-row"><span>本次用途</span><strong>商业使用</strong></div><div class="license-row"><span>二创</span><strong>允许</strong></div><div class="license-state ok"><span class="status-dot"></span>授权校验通过 · 快照 10/31 21:24</div></div>
+            </section>
+
+            <section class="panel quote-panel">
+              <div class="panel-head compact">
+                <div>
+                  <div class="panel-kicker">04 / QUOTE</div>
+                  <h2>报价</h2>
+                </div>
+                <span class="tag tag-muted">USD</span>
+              </div>
+              <div id="quotePanel" class="quote-body"><div class="quote-line"><span>工艺单价</span><strong>$42.00</strong></div><div class="quote-line"><span>数量</span><strong>10</strong></div><div class="quote-line"><span>小计</span><strong>$420.00</strong></div><div class="quote-line"><span>平台费（25%）</span><strong>-$105.00</strong></div><div class="quote-line is-total"><span>工艺方应收</span><strong>$315.00</strong></div><div class="quote-note">M1 参考报价，用于演示授权、判定和订单快照；不代表真实工厂结算价。</div></div>
+            </section>
+          </aside>
+        </div>
+
+        <div class="dashboard-lower">
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">LIVE DATA</div>
+                <h2>最近订单</h2>
+              </div>
+              <button class="text-button" data-view-jump="orders">全部订单 <span aria-hidden="true">→</span></button>
+            </div>
+            <div id="recentOrders" class="compact-list"><button type="button" class="compact-row" data-order-id="ORD-6DE37681"><div class="row-main"><div class="row-title"><span class="row-status settled">已结算</span><span>云纹</span></div><div class="row-meta">ORD-6DE37681 · 榫卯 · 10/30 21:26</div></div><div class="row-amount">$1,248.00</div><svg class="icon" style="width:13px;height:13px;color:var(--muted-2)"><use href="#i-arrow"></use></svg></button><button type="button" class="compact-row" data-order-id="ORD-AC97896D"><div class="row-main"><div class="row-title"><span class="row-status qc">质检中</span><span>海浪格</span></div><div class="row-meta">ORD-AC97896D · 镶嵌 · 10/30 21:26</div></div><div class="row-amount">$408.00</div><svg class="icon" style="width:13px;height:13px;color:var(--muted-2)"><use href="#i-arrow"></use></svg></button><button type="button" class="compact-row" data-order-id="ORD-F9984A95"><div class="row-main"><div class="row-title"><span class="row-status submitted">待评审</span><span>月洞门</span></div><div class="row-meta">ORD-F9984A95 · 铸造 · 10/30 21:26</div></div><div class="row-amount">$504.00</div><svg class="icon" style="width:13px;height:13px;color:var(--muted-2)"><use href="#i-arrow"></use></svg></button></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">AUDIT TRAIL</div>
+                <h2>审计动态</h2>
+              </div>
+              <span class="server-chip"><span class="chip-dot"></span>SQLite</span>
+            </div>
+            <div id="recentAudit" class="timeline compact"><div class="timeline-item settled" data-order-id="ORD-6DE37681"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>结算</span><span class="timeline-time">21:26</span></div><div class="timeline-note">财务组 · ORD-6DE37681</div></div></div><div class="timeline-item " data-order-id="ORD-6DE37681"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>质检通过</span><span class="timeline-time">21:26</span></div><div class="timeline-note">质检组 · ORD-6DE37681</div></div></div><div class="timeline-item " data-order-id="ORD-6DE37681"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>送质检</span><span class="timeline-time">21:26</span></div><div class="timeline-note">陈厂 · ORD-6DE37681</div></div></div><div class="timeline-item " data-order-id="ORD-6DE37681"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>开始生产</span><span class="timeline-time">21:26</span></div><div class="timeline-note">陈厂 · ORD-6DE37681</div></div></div><div class="timeline-item " data-order-id="ORD-6DE37681"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>评审通过</span><span class="timeline-time">21:26</span></div><div class="timeline-note">周审 · ORD-6DE37681</div></div></div><div class="timeline-item " data-order-id="ORD-6DE37681"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title"><span>提交评审</span><span class="timeline-time">21:26</span></div><div class="timeline-note">林工 · ORD-6DE37681</div></div></div></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="view-orders" data-title="订单中心">
+        <header class="page-head">
+          <div class="page-head-copy">
+            <div class="eyebrow">ORDERS / 02</div>
+            <h1>订单状态机与角色权限</h1>
+            <p class="lede">从草稿到结算，每一次状态迁移都有角色限制、版本号和审计记录。切换右上角角色，可以观察同一订单上不同角色的可执行动作。</p>
+          </div>
+          <div class="page-actions">
+            <span class="tag tag-muted" id="orderSummaryTag">3 单 · 2 在途</span>
+            <button class="btn btn-ghost" id="refreshOrdersButton">
+              <svg class="icon"><use href="#i-refresh"></use></svg>
+              刷新订单
+            </button>
+          </div>
+        </header>
+
+        <section class="panel">
+          <div class="table-toolbar">
+            <div class="filter-row">
+              <label class="filter-field">
+                <span>状态</span>
+                <select id="statusFilter"><option value="">全部状态</option><option value="draft">草稿</option><option value="submitted">待评审</option><option value="accepted">已接单</option><option value="rework">退回修改</option><option value="in_production">生产中</option><option value="qc">质检中</option><option value="shipped">已发货</option><option value="settled">已结算</option><option value="cancelled">已取消</option></select>
+              </label>
+              <label class="filter-field filter-search">
+                <span>搜索</span>
+                <input id="orderSearch" type="search" placeholder="订单号 / 纹样 / 工艺">
+              </label>
+            </div>
+            <span class="server-chip"><span class="chip-dot"></span>GET /api/orders</span>
+          </div>
+          <div class="table-wrap" id="ordersTable"><table class="data-table"><thead><tr><th>订单</th><th>纹样 / 工艺</th><th>数量</th><th>报价</th><th>状态</th><th>创建时间</th><th></th></tr></thead><tbody><tr><td><button class="row-button mono" data-order-id="ORD-6DE37681">ORD-6DE37681</button></td><td>云纹<span class="muted"> · 榫卯</span></td><td class="mono">24</td><td class="mono">$1,248.00</td><td><span class="row-status settled">已结算</span></td><td class="muted mono">10/30 21:26</td><td><button class="row-button" data-order-id="ORD-6DE37681">查看 →</button></td></tr><tr><td><button class="row-button mono" data-order-id="ORD-AC97896D">ORD-AC97896D</button></td><td>海浪格<span class="muted"> · 镶嵌</span></td><td class="mono">6</td><td class="mono">$408.00</td><td><span class="row-status qc">质检中</span></td><td class="muted mono">10/30 21:26</td><td><button class="row-button" data-order-id="ORD-AC97896D">查看 →</button></td></tr><tr><td><button class="row-button mono" data-order-id="ORD-F9984A95">ORD-F9984A95</button></td><td>月洞门<span class="muted"> · 铸造</span></td><td class="mono">12</td><td class="mono">$504.00</td><td><span class="row-status submitted">待评审</span></td><td class="muted mono">10/30 21:26</td><td><button class="row-button" data-order-id="ORD-F9984A95">查看 →</button></td></tr></tbody></table></div>
+        </section>
+
+        <section class="panel order-detail-panel" id="orderDetailPanel">
+          <div id="orderDetail"><div class="detail-placeholder">从上方订单列表选择一张订单，查看状态机、授权快照与审计记录。</div></div>
+        </section>
+      </section>
+
+      <section class="view" id="view-rules" data-title="规则与授权">
+        <header class="page-head">
+          <div class="page-head-copy">
+            <div class="eyebrow">RULES &amp; LICENSE / 03</div>
+            <h1>规则不是文案，是可执行代码</h1>
+            <p class="lede">10 条可制造性规则、3 条硬约束和一个显式授权校验器。规则以 Python 函数执行，返回逐条证据；授权字段随订单快照保存。</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-ghost" data-view-jump="tests">查看测试证据</button>
+          </div>
+        </header>
+
+        <div class="metric-strip">
+          <div class="metric-strip-item"><span>规则</span><strong>10</strong><small>全部可解释</small></div>
+          <div class="metric-strip-item"><span>硬约束</span><strong>3</strong><small>CAST-WALL / INLAY-GAP / CARVE-GRAIN</small></div>
+          <div class="metric-strip-item"><span>平台费率</span><strong>25%</strong><small>报价内显式拆分</small></div>
+          <div class="metric-strip-item"><span>授权字段</span><strong>6</strong><small>来源 / 编号 / 范围 / 用途 / 二创 / 校验时间</small></div>
+        </div>
+
+        <div class="two-column">
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">RULE ENGINE</div>
+                <h2>可制造性规则</h2>
+              </div>
+              <span class="server-chip"><span class="chip-dot"></span>core.py</span>
+            </div>
+            <div class="table-wrap" id="rulesTable"><table class="data-table"><thead><tr><th>规则</th><th>适用工艺</th><th>条件</th><th>类型</th><th>实现</th></tr></thead><tbody><tr><td><span class="rule-id">CAST-WALL</span><span class="rule-name">铸件最小壁厚</span></td><td class="muted">铸造</td><td>壁厚 &gt;= 1.2 mm</td><td><span class="hard-badge">HARD</span></td><td><span class="status-pill pass"><span class="status-dot"></span>可执行</span></td></tr><tr><td><span class="rule-id">CAST-UNDERCUT</span><span class="rule-name">铸造脱模角</span></td><td class="muted">铸造</td><td>脱模角 &gt;= 2°</td><td><span class="tag tag-muted">SOFT</span></td><td><span class="status-pill pass"><span class="status-dot"></span>可执行</span></td></tr><tr><td><span class="rule-id">INLAY-GAP</span><span class="rule-name">镶嵌最小间隙</span></td><td class="muted">镶嵌</td><td>间隙 &gt;= 0.15 mm</td><td><span class="hard-badge">HARD</span></td><td><span class="status-pill pass"><span class="status-dot"></span>可执行</span></td></tr><tr><td><span class="rule-id">INLAY-HARDNESS</span><span class="rule-name">宝石硬度上限</span></td><td class="muted">镶嵌</td><td>硬度 &lt;= 7.0</td><td><span class="tag tag-muted">SOFT</span></td><td><span class="status-pill pass"><span class="status-dot"></span>可执行</span></td></tr><tr><td><span class="rule-id">ENGRAVE-WIDTH</span><span class="rule-name">刻线最小宽度</span></td><td class="muted">雕刻</td><td>线宽 &gt;= 0.2 mm</td><td><span class="tag tag-muted">SOFT</span></td><td><span class="status-pill pass"><span class="status-dot"></span>可执行</span></td></tr><tr><td><span class="rule-id">JOINT-DEPTH</span><span class="rule-name">榫卯深度上限</span></td><td class="muted">榫卯</td><td>榫深 &lt;= 0.6 x 木料厚</td><td><span class="tag tag-muted">SOFT</span></td><td><span class="status-pill pass"><span class="status-dot"></span>可执行</span></td></tr><tr><td><span class="rule-id">CARVE-GRAIN</span><span class="rule-name">逆纹雕刻限制</span></td><td class="muted">木雕</td><td>逆纹角 &gt; 45° 时雕深 &lt;= 3 mm</td><td><span class="hard-badge">HARD</span></td><td><span class="status-pill pass"><span class="status-dot"></span>可执行</span></td></tr><tr><td><span class="rule-id">WOOD-MOISTURE</span><span class="rule-name">木材含水率</span></td><td class="muted">榫卯 / 木雕</td><td>含水率 &lt;= 12%</td><td><span class="tag tag-muted">SOFT</span></td><td><span class="status-pill pass"><span class="status-dot"></span>可执行</span></td></tr><tr><td><span class="rule-id">PRONG-COUNT</span><span class="rule-name">宝石爪数</span></td><td class="muted">铸造 / 镶嵌</td><td>石径 &gt; 3 mm 时爪数 &gt;= 4，否则 &gt;= 3</td><td><span class="tag tag-muted">SOFT</span></td><td><span class="status-pill pass"><span class="status-dot"></span>可执行</span></td></tr><tr><td><span class="rule-id">SURFACE-FINISH</span><span class="rule-name">表面处理匹配</span></td><td class="muted">铸造 / 镶嵌 / 雕刻 / 榫卯 / 木雕</td><td>金属抛光/哑光；木作木油/木蜡/哑光</td><td><span class="tag tag-muted">SOFT</span></td><td><span class="status-pill pass"><span class="status-dot"></span>可执行</span></td></tr></tbody></table></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">PATTERN REGISTRY</div>
+                <h2>纹样授权台账</h2>
+              </div>
+              <span class="tag tag-muted">合成数据</span>
+            </div>
+            <div id="licenseTable" class="license-ledger"><div class="ledger-card"><div class="ledger-title"><strong>月洞门</strong><span>原创</span></div><div class="ledger-fields"><div class="ledger-field"><span>授权编号</span><b>ORIG-SYN-001</b></div><div class="ledger-field"><span>来源编号</span><b>—</b></div><div class="ledger-field"><span>使用范围</span><b>commercial / derivative</b></div><div class="ledger-field"><span>二创</span><b>允许</b></div></div></div><div class="ledger-card"><div class="ledger-title"><strong>海浪格</strong><span>授权</span></div><div class="ledger-fields"><div class="ledger-field"><span>授权编号</span><b>LIC-SYN-2026-001</b></div><div class="ledger-field"><span>来源编号</span><b>SYN-LIC-001</b></div><div class="ledger-field"><span>使用范围</span><b>commercial</b></div><div class="ledger-field"><span>二创</span><b>允许</b></div></div></div><div class="ledger-card"><div class="ledger-title"><strong>云纹</strong><span>公版</span></div><div class="ledger-fields"><div class="ledger-field"><span>授权编号</span><b>PD-SYN-009</b></div><div class="ledger-field"><span>来源编号</span><b>PD-SYN-009</b></div><div class="ledger-field"><span>使用范围</span><b>commercial / derivative</b></div><div class="ledger-field"><span>二创</span><b>允许</b></div></div></div></div>
+            <div class="callout">
+              <strong>授权负例是显式的：</strong>
+              来源不在允许范围、商业范围不含用途、授权纹样缺编号、二创未授权，都会让检查返回失败，而不是只弹一个提示。
+            </div>
+          </section>
+        </div>
+
+        <section class="panel">
+          <div class="panel-head compact">
+            <div>
+              <div class="panel-kicker">HUMAN BASELINE</div>
+              <h2>10/10 人工规则对照</h2>
+            </div>
+            <span class="status-pill pass"><span class="status-dot"></span>10/10 一致</span>
+          </div>
+          <p class="panel-copy">每行是一张合成判断：先写人工结论，再跑同一条规则引擎，最后逐条比对。3 条硬约束失败即不可制造；其余为工艺复核。</p>
+          <div class="table-wrap" id="humanRulesTable"><table class="data-table"><thead><tr><th>样例</th><th>目标规则</th><th>人工结论</th><th>引擎结论</th><th>对齐</th></tr></thead><tbody><tr><td><span class="rule-id">H01</span><span class="rule-name">薄壁铸件</span></td><td>铸件最小壁厚</td><td class="muted">不可制造</td><td><span class="status-pill red"><span class="status-dot"></span>阻断</span></td><td><span class="status-pill pass"><span class="status-dot"></span>一致</span></td></tr><tr><td><span class="rule-id">H02</span><span class="rule-name">脱模角不足</span></td><td>铸造脱模角</td><td class="muted">需工艺复核</td><td><span class="status-pill amber"><span class="status-dot"></span>复核</span></td><td><span class="status-pill pass"><span class="status-dot"></span>一致</span></td></tr><tr><td><span class="rule-id">H03</span><span class="rule-name">镶口间隙过小</span></td><td>镶嵌最小间隙</td><td class="muted">不可制造</td><td><span class="status-pill red"><span class="status-dot"></span>阻断</span></td><td><span class="status-pill pass"><span class="status-dot"></span>一致</span></td></tr><tr><td><span class="rule-id">H04</span><span class="rule-name">宝石硬度过高</span></td><td>宝石硬度上限</td><td class="muted">需工艺复核</td><td><span class="status-pill amber"><span class="status-dot"></span>复核</span></td><td><span class="status-pill pass"><span class="status-dot"></span>一致</span></td></tr><tr><td><span class="rule-id">H05</span><span class="rule-name">刻线过窄</span></td><td>刻线最小宽度</td><td class="muted">需工艺复核</td><td><span class="status-pill amber"><span class="status-dot"></span>复核</span></td><td><span class="status-pill pass"><span class="status-dot"></span>一致</span></td></tr><tr><td><span class="rule-id">H06</span><span class="rule-name">榫卯过深</span></td><td>榫卯深度上限</td><td class="muted">需工艺复核</td><td><span class="status-pill amber"><span class="status-dot"></span>复核</span></td><td><span class="status-pill pass"><span class="status-dot"></span>一致</span></td></tr><tr><td><span class="rule-id">H07</span><span class="rule-name">逆纹深雕</span></td><td>逆纹雕刻限制</td><td class="muted">不可制造</td><td><span class="status-pill red"><span class="status-dot"></span>阻断</span></td><td><span class="status-pill pass"><span class="status-dot"></span>一致</span></td></tr><tr><td><span class="rule-id">H08</span><span class="rule-name">木材含水率偏高</span></td><td>木材含水率</td><td class="muted">需工艺复核</td><td><span class="status-pill amber"><span class="status-dot"></span>复核</span></td><td><span class="status-pill pass"><span class="status-dot"></span>一致</span></td></tr><tr><td><span class="rule-id">H09</span><span class="rule-name">大石爪数不足</span></td><td>宝石爪数</td><td class="muted">需工艺复核</td><td><span class="status-pill amber"><span class="status-dot"></span>复核</span></td><td><span class="status-pill pass"><span class="status-dot"></span>一致</span></td></tr><tr><td><span class="rule-id">H10</span><span class="rule-name">金属表面用木油</span></td><td>表面处理匹配</td><td class="muted">需工艺复核</td><td><span class="status-pill amber"><span class="status-dot"></span>复核</span></td><td><span class="status-pill pass"><span class="status-dot"></span>一致</span></td></tr></tbody></table></div>
+          <p class="table-note">人工结论是项目验收前写死的基线，不是看到引擎结果后补的说明；不一致会直接让测试失败。</p>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head compact">
+            <div>
+              <div class="panel-kicker">BOUNDARIES</div>
+              <h2>M1 能证明什么，不能证明什么</h2>
+            </div>
+            <span class="tag tag-muted">范围诚实</span>
+          </div>
+          <div class="boundary-grid">
+            <div class="boundary-item is-in">
+              <div class="boundary-mark">✓</div>
+              <div><strong>已实现</strong><p>纹样授权校验（来源 / 范围 / 用途 / 编号 / 二创）、10 条规则、3 条硬约束、10/10 人工对照、订单状态机、角色权限、审计、SQLite 持久化、HTTP API、静态资源白名单、30 个自动化测试。</p></div>
+            </div>
+            <div class="boundary-item is-out">
+              <div class="boundary-mark">—</div>
+              <div><strong>不在 M1</strong><p>真实工厂排产、支付通道、C2M 预售、跨境物流、多语言站点、文化 IP 短片。它们是 M2–M4 的范围。</p></div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="view-architecture" data-title="架构与验收">
+        <header class="page-head">
+          <div class="page-head-copy">
+            <div class="eyebrow">ARCHITECTURE / 04</div>
+            <h1>一条可追踪的请求链路</h1>
+            <p class="lede">浏览器不计算业务结果，只呈现 API 返回的证据。授权、规则、报价与状态迁移都在同一条 Python 服务端链路里完成。</p>
+          </div>
+          <div class="page-actions">
+            <span class="tag tag-muted">M1 参考实现</span>
+          </div>
+        </header>
+
+        <div class="arch-flow panel">
+          <div class="arch-node">
+            <div class="arch-icon"><svg class="icon"><use href="#i-grid"></use></svg></div>
+            <div class="arch-node-label">01 / BROWSER</div>
+            <strong>工作台 UI</strong>
+            <p>表单、状态、时间线</p>
+            <code>index.html + app.js</code>
+          </div>
+          <div class="arch-arrow"><span>JSON</span><svg class="icon"><use href="#i-arrow"></use></svg></div>
+          <div class="arch-node is-accent">
+            <div class="arch-icon"><svg class="icon"><use href="#i-orders"></use></svg></div>
+            <div class="arch-node-label">02 / HTTP API</div>
+            <strong>ThreadingHTTPServer</strong>
+            <p>8 个端点、输入校验</p>
+            <code>/api/check · /api/orders</code>
+          </div>
+          <div class="arch-arrow"><span>调用</span><svg class="icon"><use href="#i-arrow"></use></svg></div>
+          <div class="arch-node">
+            <div class="arch-icon"><svg class="icon"><use href="#i-shield"></use></svg></div>
+            <div class="arch-node-label">03 / DOMAIN CORE</div>
+            <strong>规则 / 授权 / 状态机</strong>
+            <p>纯 Python，可单测</p>
+            <code>core.py</code>
+          </div>
+          <div class="arch-arrow"><span>持久化</span><svg class="icon"><use href="#i-arrow"></use></svg></div>
+          <div class="arch-node">
+            <div class="arch-icon"><svg class="icon"><use href="#i-db"></use></svg></div>
+            <div class="arch-node-label">04 / STORAGE</div>
+            <strong>SQLite</strong>
+            <p>订单快照 + 审计</p>
+            <code>orders · audit</code>
+          </div>
+        </div>
+
+        <div class="two-column arch-lower">
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">REQUEST LIFECYCLE</div>
+                <h2>一次判定的完整路径</h2>
+              </div>
+            </div>
+            <ol class="numbered-list">
+              <li><span>01</span><div><strong>选择纹样与参数</strong><p>UI 只收集输入，不伪造结果。</p></div></li>
+              <li><span>02</span><div><strong>POST /api/check</strong><p>服务端校验工艺、材料、表面、数量、授权和 10 条规则。</p></div></li>
+              <li><span>03</span><div><strong>返回逐条证据</strong><p>每条规则 pass / fail / 不适用，附条件与实测值；硬约束失败即阻断。</p></div></li>
+              <li><span>04</span><div><strong>创建订单快照</strong><p>授权、参数、报价、判定写入订单；创建动作写入审计。</p></div></li>
+              <li><span>05</span><div><strong>角色迁移状态</strong><p>每次迁移检查角色与前置状态，版本号递增，事件追加。</p></div></li>
+            </ol>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">RESPONSIBILITY</div>
+                <h2>责任边界</h2>
+              </div>
+            </div>
+            <div class="responsibility-list">
+              <div><span class="resp-dot gold"></span><div><strong>AI 初审</strong><p>只做规则初筛和证据生成，不替代工艺师签核。</p></div></div>
+              <div><span class="resp-dot green"></span><div><strong>服务端事实</strong><p>授权字段与状态由服务端保存，页面刷新不丢失。</p></div></div>
+              <div><span class="resp-dot red"></span><div><strong>不越界承诺</strong><p>不声称已接入真实工厂、真实支付或真实版权库。</p></div></div>
+            </div>
+            <div class="callout warm">
+              <strong>演示数据声明：</strong>纹样、工厂、角色与订单均为合成样本，不含真实客户或工厂数据；真实项目开始前需替换为获授权或脱敏资料。
+            </div>
+          </section>
+        </div>
+
+        <section class="panel">
+          <div class="panel-head compact">
+            <div>
+              <div class="panel-kicker">ACCEPTANCE MAP</div>
+              <h2>验收项对照 · 不虚标</h2>
+            </div>
+            <span class="tag tag-muted">A01–A10</span>
+          </div>
+          <div class="table-wrap" id="acceptanceTable"><table class="data-table"><thead><tr><th>编号</th><th>验收项</th><th>阶段</th><th>当前状态</th></tr></thead><tbody><tr><td class="mono">A01</td><td>洁净机 README / 一条命令启动 / 至少四条可点流程</td><td class="muted">Demo / M1</td><td><span class="status-pill pass"><span class="status-dot"></span>已演示</span></td></tr><tr><td class="mono">A02</td><td>授权来源、使用范围与用途校验 + 正反例</td><td class="muted">Demo / M1</td><td><span class="status-pill pass"><span class="status-dot"></span>正反例已演示</span></td></tr><tr><td class="mono">A03</td><td>10 条可制造性规则，其中 3 条不可制造</td><td class="muted">Demo / M1</td><td><span class="status-pill pass"><span class="status-dot"></span>10/10 人工对照</span></td></tr><tr><td class="mono">A04</td><td>C2M 订单生命周期、退款与争议状态</td><td class="muted">M2</td><td><span class="status-pill na"><span class="status-dot"></span>未开始</span></td></tr><tr><td class="mono">A05</td><td>两个行业组件按配置接入 + FDE 手册</td><td class="muted">M3</td><td><span class="status-pill na"><span class="status-dot"></span>未开始</span></td></tr><tr><td class="mono">A06</td><td>多语言站点 / SEO / 询盘进入 CRM 的 E2E</td><td class="muted">M3</td><td><span class="status-pill na"><span class="status-dot"></span>未开始</span></td></tr><tr><td class="mono">A07</td><td>文化 IP 管线、1 支样片与授权模板</td><td class="muted">M4</td><td><span class="status-pill na"><span class="status-dot"></span>未开始</span></td></tr><tr><td class="mono">A08</td><td>授权、规则、状态机、分账的单元测试，一条命令全绿</td><td class="muted">Demo / M1</td><td><span class="status-pill pass"><span class="status-dot"></span>30/30</span></td></tr><tr><td class="mono">A09</td><td>文档、命令、界面真实对应，不靠 PPT 演示</td><td class="muted">Demo / M1</td><td><span class="status-pill pass"><span class="status-dot"></span>已交付</span></td></tr><tr><td class="mono">A10</td><td>合成数据；不接真实客户 / 工厂；不主张独占传统文化</td><td class="muted">Demo / M1</td><td><span class="status-pill pass"><span class="status-dot"></span>已声明</span></td></tr></tbody></table></div>
+          <p class="table-note">“Demo / M1”表示本文档可点验；“M2–M4”表示后续阶段交付，不在本页冒充完成。</p>
+        </section>
+      </section>
+
+      <section class="view" id="view-tests" data-title="测试证据">
+        <header class="page-head">
+          <div class="page-head-copy">
+            <div class="eyebrow">EVIDENCE / 05</div>
+            <h1>能跑的代码，才叫交付</h1>
+            <p class="lede">核心逻辑与 HTTP API 分开测试：21 个核心单测 + 9 个 API 集成测试。下面是本轮实际运行结果与可复现命令。</p>
+          </div>
+          <div class="page-actions">
+            <a class="btn btn-ghost" href="https://github.com/Gupeat/craftmesh-m1/blob/main/TEST-REPORT.md" target="_blank" rel="noreferrer">
+              <svg class="icon"><use href="#i-doc"></use></svg>
+              原始测试报告
+            </a>
+          </div>
+        </header>
+
+        <div class="test-metrics">
+          <div class="test-metric is-primary"><span>自动化测试</span><strong>30 / 30</strong><small>全部通过</small></div>
+          <div class="test-metric"><span>核心单测</span><strong>21</strong><small>规则 / 授权 / 状态机</small></div>
+          <div class="test-metric"><span>API 集成</span><strong>9</strong><small>真实 HTTP 请求</small></div>
+          <div class="test-metric"><span>本轮耗时</span><strong>0.99s</strong><small>Windows · CPython 3.12</small></div>
+        </div>
+
+        <div class="two-column">
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">RUN</div>
+                <h2>复现命令</h2>
+              </div>
+              <span class="server-chip"><span class="chip-dot"></span>unittest</span>
+            </div>
+            <pre class="code-block">cd 1724-demo
+python -m unittest discover -s tests -v</pre>
+            <p class="panel-copy">测试使用临时 SQLite 数据库，结束后自动清理；API 测试真实启动 HTTP 服务并发出请求，不 mock 传输层。</p>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head compact">
+              <div>
+                <div class="panel-kicker">LATEST OUTPUT</div>
+                <h2>本轮结果</h2>
+              </div>
+              <span class="status-pill pass"><span class="status-dot"></span>OK</span>
+            </div>
+            <pre class="code-block code-log">Ran 30 tests in 0.987s
+
+OK
+
+覆盖：
+  规则引擎：10 条规则 + 3 条硬约束
+  授权校验：来源 / 范围 / 用途 / 编号 / 二创
+  人工对照：10 条人工判定与引擎 10/10 一致
+  状态机：角色权限 / 非法迁移 / 备注必填
+  API：health / bootstrap / check / 订单生命周期 / reset
+  静态白名单：页面可访问，源码与数据库 404</pre>
+          </section>
+        </div>
+
+        <section class="panel">
+          <div class="panel-head compact">
+            <div>
+              <div class="panel-kicker">TEST MATRIX</div>
+              <h2>测试清单</h2>
+            </div>
+            <span class="tag tag-muted">21 + 9</span>
+          </div>
+          <div class="table-wrap" id="testCasesTable"><table class="data-table"><thead><tr><th>测试组</th><th>覆盖</th><th>用例</th><th>结果</th></tr></thead><tbody><tr><td>规则引擎</td><td class="muted">硬约束阻断、软约束复核、非法输入</td><td class="mono">10 条 + 3 硬约束</td><td><span class="status-pill pass"><span class="status-dot"></span>PASS</span></td></tr><tr><td>授权校验</td><td class="muted">来源、范围、用途、编号、二创</td><td class="mono">5 条</td><td><span class="status-pill pass"><span class="status-dot"></span>PASS</span></td></tr><tr><td>人工规则对照</td><td class="muted">10 条人工判定与引擎结论一致，3 条硬约束阻断</td><td class="mono">10/10</td><td><span class="status-pill pass"><span class="status-dot"></span>PASS</span></td></tr><tr><td>订单快照</td><td class="muted">授权与报价固化、硬约束拒绝</td><td class="mono">2 条</td><td><span class="status-pill pass"><span class="status-dot"></span>PASS</span></td></tr><tr><td>状态机</td><td class="muted">全链路、越权、非法迁移、备注必填</td><td class="mono">4 条</td><td><span class="status-pill pass"><span class="status-dot"></span>PASS</span></td></tr><tr><td>HTTP API</td><td class="muted">health / bootstrap / check / 生命周期</td><td class="mono">6 条</td><td><span class="status-pill pass"><span class="status-dot"></span>PASS</span></td></tr><tr><td>权限与重置</td><td class="muted">角色 403、管理员 reset</td><td class="mono">2 条</td><td><span class="status-pill pass"><span class="status-dot"></span>PASS</span></td></tr><tr><td>静态白名单</td><td class="muted">页面/JS 可访问，源码与 DB 返回 404</td><td class="mono">1 条</td><td><span class="status-pill pass"><span class="status-dot"></span>PASS</span></td></tr><tr><td>持久化</td><td class="muted">临时 SQLite 关闭与清理</td><td class="mono">1 条</td><td><span class="status-pill pass"><span class="status-dot"></span>PASS</span></td></tr></tbody></table></div>
+        </section>
+
+        <div class="callout">
+          <strong>测试不是装饰：</strong>如果把硬约束改软，或允许越权迁移，测试会失败。当前实现把“不可制造”和“越权操作”当作阻断路径，而不是提示文案。
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>CraftMesh M1 · 工艺协同中台参考实现</span>
+      <span class="footer-sep">/</span>
+      <span>合成数据 · 非生产环境</span>
+      <span class="footer-sep">/</span>
+      <span>API v1 · Built for 区域特色产业 AI 赋能一期</span>
+    </footer>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+
+
+</body></html>
