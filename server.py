@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import gzip
 import json
 import mimetypes
 import re
@@ -50,14 +51,34 @@ class ApiHandler(BaseHTTPRequestHandler):
         sys.stdout.write("[%s] %s\n" % (utcnow(), fmt % args))
         sys.stdout.flush()
 
-    def _send_json(self, status: int, payload: dict) -> None:
-        data = _json_bytes(payload)
+    def _send_body(self, status: int, content_type: str, body: bytes, cache_control: str = "no-store") -> None:
+        # 对文本资源做 gzip：公网隧道带宽有限，压缩后首屏明显更快。
+        accept = self.headers.get("Accept-Encoding") or ""
+        if len(body) >= 1024 and "gzip" in accept.lower() and (
+            content_type.startswith("text/")
+            or content_type.startswith("application/json")
+            or content_type.startswith("application/javascript")
+            or content_type.startswith("image/svg")
+        ):
+            body = gzip.compress(body, compresslevel=6, mtime=0)
+            self.send_response(status)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Content-Encoding", "gzip")
+            self.send_header("Vary", "Accept-Encoding")
+            self.send_header("Cache-Control", cache_control)
+            self.end_headers()
+            self.wfile.write(body)
+            return
         self.send_response(status)
-        self.send_header("Content-Type", "application/json; charset=utf-8")
-        self.send_header("Content-Length", str(len(data)))
-        self.send_header("Cache-Control", "no-store")
+        self.send_header("Content-Type", content_type)
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", cache_control)
         self.end_headers()
-        self.wfile.write(data)
+        self.wfile.write(body)
+
+    def _send_json(self, status: int, payload: dict) -> None:
+        self._send_body(status, "application/json; charset=utf-8", _json_bytes(payload))
 
     def _read_json(self) -> dict:
         length = int(self.headers.get("Content-Length") or 0)
@@ -91,12 +112,8 @@ class ApiHandler(BaseHTTPRequestHandler):
         if content_type.startswith("text/") or content_type in {"application/javascript", "application/json"}:
             content_type += "; charset=utf-8"
         body = target.read_bytes()
-        self.send_response(200)
-        self.send_header("Content-Type", content_type)
-        self.send_header("Content-Length", str(len(body)))
-        self.send_header("Cache-Control", "no-store")
-        self.end_headers()
-        self.wfile.write(body)
+        cache_control = "public, max-age=300" if clean not in {"/", "/index.html"} and not clean.endswith(".html") else "no-store"
+        self._send_body(200, content_type, body, cache_control)
 
     def _not_found(self) -> None:
         self._send_json(404, {"ok": False, "error": "not_found"})

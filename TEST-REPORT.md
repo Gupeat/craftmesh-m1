@@ -1,6 +1,6 @@
 # CraftMesh 测试与验证记录（ClawHunt #1724 · M1 + M2 + B + C）
 
-最近一次全量实测：2026-10-31 03:20（Asia/Shanghai，UTC+8）
+最近一次全量实测：2026-10-31 13:45（Asia/Shanghai，UTC+8）
 环境：Windows 11 / CPython 3.12.14 / 仅标准库 / SQLite 本地文件
 范围：同一仓库、同一 HTTP 服务的四个模块 + 验收驾驶舱
 数据：全部为合成、自制或脱敏样例
@@ -16,6 +16,7 @@
 | 平台验收映射 0)~10) | 11/11 项通过（48/48 检查） |
 | 证据包 | data/evidence/packs/ 下最新生成的 evidence-pack-*.md（约 18.3 KB） |
 | 浏览器 | Edge 156 headless / CDP，1680 宽，0 未捕获 JS 异常；390 宽移动视口复验五页，scrollWidth=375、无横向溢出 |
+| 公网演示 | 固定域名 https://51d4df3c774ad4.lhr.life/ ，隧道断线重连保持同一 URL；gzip 后首屏静态资源由 42KB/52KB 降至约 8KB/14KB |
 
 复跑命令：
 

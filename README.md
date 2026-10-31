@@ -26,6 +26,15 @@
 
 五个页面均做了窄屏适配：390px 视口下侧栏折叠为顶部图标导航，宽表格在卡片内横向滚动，实测无横向溢出（验证记录见 [TEST-REPORT.md](TEST-REPORT.md)）。
 
+## 在线演示（固定域名 + 自动重连）
+
+- 入口：**https://51d4df3c774ad4.lhr.life/**
+- 验收驾驶舱：https://51d4df3c774ad4.lhr.life/pages/evidence.html
+- 完整源码包：https://51d4df3c774ad4.lhr.life/downloads/craftmesh-1724-source.zip
+- 公网域名与已注册的 SSH key 绑定，隧道断开后重连仍是同一 URL；`scripts/keep_public_tunnel.ps1` 负责断线自动重连。演示依赖托管主机保持在线，不承诺与托管主机无关的 SLA；所有数据仍为合成/脱敏。
+
+本机也可完全离线启动：
+
 Docker 方式（可选）：
 
     docker build -t craftmesh .
@@ -130,6 +139,7 @@ M1 另有 10 条人工规则基线：`core.human_rule_results()` 返回 10/10 �
     docs/                B/C 验证记录
     index.html / app.js / styles.css   M1 页面
     Dockerfile / render.yaml          部署
+    scripts/keep_public_tunnel.ps1    公网隧道断线自动重连守护
 
 ## 验证记录
 
@@ -141,7 +151,8 @@ M1 另有 10 条人工规则基线：`core.human_rule_results()` 返回 10/10 �
 
 - 完整源码包（无需 Git 账号）：服务启动后访问 `/downloads/craftmesh-1724-source.zip`，同目录 `.sha256` 提供校验值；包内 `SOURCE-MANIFEST.json` 列出每个文件的字节数与 SHA-256。重新打包：`python make_source_bundle.py`。
 - Docker：见上；`render.yaml` 提供 Render Blueprint（免费计划，`python server.py --host 0.0.0.0 --port $PORT`，健康检查 `/api/health`）。
-- 公网临时演示：本机 `cloudflared tunnel --url http://127.0.0.1:8787` 生成的 trycloudflare 地址（重启会变化）；固定地址需自有域名与 Cloudflare 账号，本交付不虚构长期在线承诺。
+- 固定公网演示：已注册 localhost.run 免费账号并把 SSH key 绑定到账号，公网域名固定为 https://51d4df3c774ad4.lhr.life/ ，断线重连不变；`scripts/keep_public_tunnel.ps1` 每 5 秒重试保持隧道。私有 key 只保存在托管主机，不进入仓库。
+- 备选：`cloudflared tunnel --url http://127.0.0.1:8787` 生成临时 trycloudflare 地址（重启会变化，只作应急）。
 - 无外网依赖：全部素材与规则在仓库内，离线可跑。
 
 ## 排障

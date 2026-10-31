@@ -27,7 +27,7 @@ OUT_SHA = OUT_DIR / "craftmesh-1724-source.zip.sha256"
 INCLUDE_DIRS = ("pages", "config", "tests", "docs", "media", "scripts")
 INCLUDE_SUFFIX = {
     ".py", ".js", ".css", ".html", ".json", ".md", ".svg", ".wav", ".srt",
-    ".txt", ".yaml", ".yml", ".png",
+    ".txt", ".yaml", ".yml", ".png", ".ps1",
 }
 ROOT_FILES = (
     "README.md", "TEST-REPORT.md", "Dockerfile", ".dockerignore", ".gitignore",

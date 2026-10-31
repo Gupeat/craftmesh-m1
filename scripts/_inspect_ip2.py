@@ -1,0 +1,17 @@
+import sys, json
+sys.path.insert(0, ".")
+import mod_ip
+cfg = mod_ip.config()
+print("PERMS", json.dumps(cfg["permissions"], ensure_ascii=False))
+print("ACTORS", json.dumps(cfg["actors"], ensure_ascii=False))
+print("CAPS", json.dumps(cfg["capabilities"], ensure_ascii=False))
+print("DASH", json.dumps(mod_ip.dashboard(), ensure_ascii=False))
+r = mod_ip.review_text(cfg["review"]["samples"]["pass"], "合规文案", "ops")
+print("REVIEW PASS", json.dumps({k:r[k] for k in ("verdict","verdictLabel","findings","reviewedAt","reviewId","counts")}, ensure_ascii=False))
+r = mod_ip.review_text(cfg["review"]["samples"]["reject"], "违规文案", "ops")
+print("REVIEW REJECT", json.dumps({k:r[k] for k in ("verdict","verdictLabel","findings","reviewedAt","reviewId","counts")}, ensure_ascii=False)[:2000])
+print("REVIEWS", json.dumps(mod_ip.reviews_payload(5), ensure_ascii=False)[:1500])
+print("SHOT FIELDS", json.dumps(mod_ip.story_payload()["shotFields"], ensure_ascii=False))
+print("CHECKS", json.dumps(mod_ip.story_payload()["checks"], ensure_ascii=False))
+print("BEATS", json.dumps(mod_ip.story_payload()["beats"], ensure_ascii=False)[:1000])
+print("ASSETS checks", json.dumps(mod_ip.asset_catalog()["checks"], ensure_ascii=False))
