@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 import tempfile
@@ -70,6 +71,9 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertEqual(len(body["patterns"]), 3)
         self.assertEqual(len(body["rules"]), 10)
+        self.assertEqual(len(body["uses"]), 3)
+        self.assertEqual(len(body["humanRules"]), 10)
+        self.assertTrue(all(row["matched"] for row in body["humanRules"]))
         self.assertIn("quote", body["orders"][0]) if body["orders"] else None
 
     def test_check_returns_pass_and_fail(self):
@@ -89,6 +93,21 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertFalse(body["result"]["ok"])
         self.assertTrue(body["result"]["checks"]["unmanufacturable"])
+
+    def test_non_commercial_use_blocks_check_and_order(self):
+        status, body = self.request("POST", "/api/check", {
+            "patternId": "moon-gate", "process": "casting", "material": "brass",
+            "finish": "polished", "quantity": 1, "params": BASE_PARAMS,
+            "mode": "copy", "use": "internal",
+        })
+        self.assertEqual(status, 200)
+        self.assertFalse(body["result"]["ok"])
+        self.assertFalse(body["result"]["license"]["ok"])
+        self.assertEqual(body["result"]["license"]["snapshot"]["use"], "internal")
+
+        status, body = self.create_order(use="internal")
+        self.assertEqual(status, 422, body)
+        self.assertEqual(body["error"], "validation_failed")
 
     def test_create_and_lifecycle(self):
         status, body = self.create_order()
@@ -133,6 +152,22 @@ class ApiTests(unittest.TestCase):
                 return response.status, response.read()
         except urllib.error.HTTPError as exc:
             return exc.code, exc.read()
+
+    def test_source_bundle_download(self):
+        root = Path(__file__).resolve().parents[1]
+        zip_path = root / "downloads" / "craftmesh-1724-source.zip"
+        if not zip_path.is_file():
+            self.skipTest("source bundle not built (run make_source_bundle.py)")
+        status, body = self.raw("/downloads/craftmesh-1724-source.zip")
+        self.assertEqual(status, 200)
+        self.assertEqual(body[:2], b"PK")
+        self.assertGreater(len(body), 100000)
+        status, sha = self.raw("/downloads/craftmesh-1724-source.zip.sha256")
+        self.assertEqual(status, 200)
+        self.assertIn(hashlib.sha256(zip_path.read_bytes()).hexdigest().encode("ascii"), sha)
+        for path in ("/downloads/../server.py", "/downloads/nope.zip"):
+            status, body = self.raw(path)
+            self.assertEqual(status, 404, path)
 
     def test_reset_requires_admin(self):
         status, body = self.request("POST", "/api/demo/reset", {"role": "designer"})

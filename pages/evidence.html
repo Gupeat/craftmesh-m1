@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>CraftMesh · 验收驾驶舱</title>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/pages/pages.css">
+</head>
+<body data-page="evidence">
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main-column">
+    <header class="topbar" id="topbar"></header>
+    <div class="content">
+      <section class="page-head">
+        <div class="page-head-copy">
+          <div class="eyebrow">验收驾驶舱 · 平台验收 0)~10)</div>
+          <h1>把 11 条验收标准，变成一页可复跑的真相</h1>
+          <p class="lede">每条验收标准都绑定到具体检查：文件是否真实存在、源码里是否有对应逻辑、单元测试是否全绿、模块全链路是否真的跑通。能跑通的标通过，跑不通的如实标未通过——没有「已完成」的口头承诺。点「一键全量自检」会依次执行静态检查、模块探测、三套全链路场景，并把结果写成一份可下载的证据包。</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-primary" id="btnRunAll">
+            <svg class="icon"><use href="#i-refresh"></use></svg><span>一键全量自检</span>
+          </button>
+          <button class="btn" id="btnStatic">仅静态检查</button>
+          <button class="btn" id="btnExport" disabled>导出证据包</button>
+          <button class="btn btn-ghost" id="btnReset">重置本页数据</button>
+        </div>
+      </section>
+
+      <div class="role-strip" id="acceptanceMeta"></div>
+
+      <section class="panel" id="progressPanel" hidden>
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">正在执行</div>
+            <h2 id="progressTitle">准备中…</h2>
+          </div>
+          <span class="server-chip" id="progressChip">运行中</span>
+        </div>
+        <ol class="trace" id="progressTrace"></ol>
+      </section>
+
+      <section class="kpi-grid" id="kpis" aria-label="验收概览"></section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">同一仓库 · 同一服务</div>
+            <h2>模块在线探测</h2>
+            <p class="panel-copy">四个模块挂在同一个 HTTP 服务上，各自有独立数据文件；探测直接从浏览器发请求，证明页面看到的不是写死的静态文案。</p>
+          </div>
+          <span class="server-chip" id="moduleChip">未探测</span>
+        </div>
+        <div class="mod-grid two" id="modules"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">逐条验收 · 证据可点开</div>
+            <h2>验收项与检查明细</h2>
+            <p class="panel-copy">编号对应任务书原文 0)~10)；每项下列出检查项、执行方式与当次证据。点击「展开证据」可看人工规则基线、测试输出与场景步骤。</p>
+          </div>
+          <span class="server-chip" id="itemsChip">0 项</span>
+        </div>
+        <div id="items" class="scenario-body">
+          <p class="empty-copy">加载验收映射中…</p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">运行历史 · 证据包</div>
+            <h2>自检记录与交付物</h2>
+            <p class="panel-copy">每次自检都落库并保留时间与结论；证据包是 Markdown，写在服务器的 data/evidence/packs/ 下，可直接随交付物提交。</p>
+          </div>
+          <span class="server-chip" id="runsChip">0 次</span>
+        </div>
+        <div class="split-panel aside-left">
+          <div>
+            <div class="table-wrap">
+              <table class="data-table" id="runsTable">
+                <thead><tr><th>运行</th><th>结论</th><th>时间</th></tr></thead>
+                <tbody><tr><td colspan="3" class="table-empty">尚未运行</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div id="packsPanel">
+            <div class="subhead"><span>证据包</span><span class="tag" id="packCount">0 个</span></div>
+            <div id="packs"><p class="empty-copy">还没有导出过证据包。</p></div>
+            <details class="doc-block" id="packPreview" hidden>
+              <summary>预览当前证据包 Markdown</summary>
+              <pre id="packMarkdown"></pre>
+            </details>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+<script src="/pages/ui.js"></script>
+<script src="/pages/shell.js"></script>
+<script src="/pages/evidence.js"></script>
+</body>
+</html>

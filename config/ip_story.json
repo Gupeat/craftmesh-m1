@@ -1,0 +1,824 @@
+{
+  "_note": "模块 C ·《山谷回声》原创纸影短剧管线配置。全部角色、剧本、画面、声音、审核规则、合同模板与衍生品规格均为原创/合成样例；改本文件后刷新页面即生效（按 mtime 热加载）。",
+  "sampleData": true,
+  "module": {
+    "key": "C",
+    "id": "ip",
+    "name": "文化 IP 短剧管线",
+    "version": "1.0.0",
+    "title": "山谷回声",
+    "subtitle": "原创纸影短剧 · 从角色手册到可播放样片",
+    "logline": "在一间收寄「没说出口的话」的回声邮局里，守灯人远视与听潮人远听，用一缕月光点亮一只失声纸鸟，也点亮整座山谷。",
+    "synopsis": "夜雾漫过虚构的山谷。远听听见一声细弱的回音，远视看见邮局窗口只剩一线灯。两人循声找到一只失声的纸鸟：它把最后一句话咽进了石头。远听从石头里听出一段没唱完的摇篮曲，远视用镜片把月光折进灯芯。灯亮之后，纸鸟重新振翅，山谷里所有熄灭的窗一盏接一盏醒来。",
+    "disclaimer": "本模块为合成演示：角色、剧本、画面、声音、审核规则、合同模板与衍生品规格均为原创或合成样例，不含真人形象，不引用真实客户、真实工厂、真实非遗项目或任何第三方版权素材。授权合同仅为模板样例，不构成法律意见。",
+    "engineNote": "所有「智能」判断均由本地确定性规则引擎完成，非外部大模型；配音使用 Windows 本机 Microsoft Huihui 语音离线生成。"
+  },
+  "characters": [
+    {
+      "id": "yuanshi",
+      "name": "远视",
+      "roman": "YUANSHI",
+      "role": "守灯人",
+      "tagline": "看见还没被说出口的光",
+      "setting": "回声邮局的守灯人，纸影精灵。她能看见远处极细的光线，也能把月光折成一根可以点灯的线。她寡言，习惯先观察再行动，嘴上说怕黑，却总在夜里最后一个离开屋顶。",
+      "motifs": [
+        "单圆镜片",
+        "折光纸棱",
+        "深青披风",
+        "四十五度光束"
+      ],
+      "palette": [
+        "#0f3b3a",
+        "#f3ead7",
+        "#d9a441"
+      ],
+      "personality": "寡言、克制、先观察后行动；对光有近乎固执的珍惜，对告别反应慢半拍。",
+      "voice": {
+        "speaker": "远视",
+        "profile": "低而稳，句尾收得快；本机 Huihui 音色，语速偏慢",
+        "sapiVoice": "Microsoft Huihui Desktop",
+        "rate": 0,
+        "sampleLine": "别出声，我把月光借过来。"
+      },
+      "can": [
+        "看见远处微光与完整光路",
+        "用单圆镜片折光点火",
+        "记住一座山谷里亮过的每一扇窗"
+      ],
+      "cannot": [
+        "听见石头里的回声",
+        "替别人做决定",
+        "改变已经发生的事"
+      ],
+      "portrait": "/media/characters/yuanshi.svg",
+      "symbol": "圆镜 + 斜向光束"
+    },
+    {
+      "id": "yuanting",
+      "name": "远听",
+      "roman": "YUANTING",
+      "role": "听潮人",
+      "tagline": "听见旧物里没说完的话",
+      "setting": "回声邮局的听潮人，纸影精灵。她把贝壳形的耳廓借给风，能从石头、纸页和旧灯罩里听见残留的声音。她话多、好奇，常用玩笑掩饰认真；她相信每一句没说完的话都值得再听一遍。",
+      "motifs": [
+        "贝壳耳廓",
+        "同心声波",
+        "朱砂披带",
+        "纸鹤折角"
+      ],
+      "palette": [
+        "#0f3b3a",
+        "#f3ead7",
+        "#b8452f"
+      ],
+      "personality": "话多、好奇、行动快；用玩笑掩饰认真，听到旧旋律时会突然安静。",
+      "voice": {
+        "speaker": "远听",
+        "profile": "节奏快、尾音上扬；本机 Huihui 音色，语速偏快",
+        "sapiVoice": "Microsoft Huihui Desktop",
+        "rate": 2,
+        "sampleLine": "等等，我听见灯在抖。"
+      },
+      "can": [
+        "分辨回声方向与距离",
+        "听见旧物里残留的声音",
+        "模仿一段只听过一次的旋律"
+      ],
+      "cannot": [
+        "看见光路",
+        "读心或预知未来",
+        "让已经消失的声音永久留下"
+      ],
+      "portrait": "/media/characters/yuanting.svg",
+      "symbol": "贝壳耳 + 同心声波"
+    }
+  ],
+  "story": {
+    "title": "山谷回声",
+    "format": "12 格分镜 · 约 40 秒 · 原创纸影幻想",
+    "beats": [
+      {
+        "id": "b1",
+        "no": 1,
+        "title": "灯将熄",
+        "summary": "夜雾漫过山谷，远听听见细弱回音，远视看见邮局窗口只剩一线灯。",
+        "shots": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": "b2",
+        "no": 2,
+        "title": "失声的纸鸟",
+        "summary": "两人循声找到窗台，一只纸鸟胸口的小灯灭了，最后一句话被咽进石头。",
+        "shots": [
+          3,
+          4
+        ]
+      },
+      {
+        "id": "b3",
+        "no": 3,
+        "title": "折光点灯",
+        "summary": "远听从石头里听出没唱完的摇篮曲，远视用镜片把月光折进灯芯。",
+        "shots": [
+          5,
+          6
+        ]
+      },
+      {
+        "id": "b4",
+        "no": 4,
+        "title": "回声归位",
+        "summary": "灯芯复燃，纸鸟振翅，声波从喙尖一圈圈荡开。",
+        "shots": [
+          7,
+          8
+        ]
+      },
+      {
+        "id": "b5",
+        "no": 5,
+        "title": "山谷亮灯",
+        "summary": "俯瞰山谷，熄灭的窗一盏接一盏亮起，像一张被点亮的星图。",
+        "shots": [
+          9,
+          10
+        ]
+      },
+      {
+        "id": "b6",
+        "no": 6,
+        "title": "守夜人",
+        "summary": "两人坐在屋顶，远听问明天是否还有新的回声，远视答：那我就把灯留着。",
+        "shots": [
+          11,
+          12
+        ]
+      }
+    ],
+    "scriptNotes": [
+      "全片无真人出镜；角色均由自制 SVG 纸影剪影呈现。",
+      "故事发生在虚构山谷「回声邮局」，不指涉任何真实村镇、真实非遗项目或真实传承人。",
+      "旁白与对白均为原创文案；配音由本机语音合成离线生成，不调用外部模型。"
+    ]
+  },
+  "shots": [
+    {
+      "no": 1,
+      "id": "shot-01",
+      "scene": "回声邮局 · 外景 · 夜",
+      "durationMs": 3200,
+      "visual": "深青山脊与三层雾带，邮局窗口只剩一线暖光，远视的小剪影立在屋顶。",
+      "camera": "大全景 / 固定机位",
+      "characters": [
+        "远视"
+      ],
+      "speaker": "旁白",
+      "caption": "山谷尽头的灯，今晚只剩一线。",
+      "sfx": "夜风、远处一声回音",
+      "sceneType": "valley",
+      "svg": "/media/scenes/shot-01.svg",
+      "audio": "/media/voice/shot-01.wav",
+      "srt": "/media/subtitles/shot-01.srt",
+      "voiceRate": 2
+    },
+    {
+      "no": 2,
+      "id": "shot-02",
+      "scene": "石阶 · 雾中",
+      "durationMs": 3000,
+      "visual": "两枚纸影一前一后踏上石阶，同心声波在雾里扩散，远听回头。",
+      "camera": "侧移跟拍",
+      "characters": [
+        "远视",
+        "远听"
+      ],
+      "speaker": "远听",
+      "caption": "等等，我听见灯在抖。",
+      "sfx": "脚步、细弱回声",
+      "sceneType": "stairs",
+      "svg": "/media/scenes/shot-02.svg",
+      "audio": "/media/voice/shot-02.wav",
+      "srt": "/media/subtitles/shot-02.srt",
+      "voiceRate": 2
+    },
+    {
+      "no": 3,
+      "id": "shot-03",
+      "scene": "邮局窗前",
+      "durationMs": 3400,
+      "visual": "窗台上一只折纸鸟，胸口灯灭；旁边一块发纹石，影子被拉长。",
+      "camera": "中景 / 缓慢推近",
+      "characters": [
+        "远听",
+        "纸鸟"
+      ],
+      "speaker": "旁白",
+      "caption": "纸鸟把最后一句话，咽进了石头。",
+      "sfx": "纸翼摩擦、低频脉冲",
+      "sceneType": "window",
+      "svg": "/media/scenes/shot-03.svg",
+      "audio": "/media/voice/shot-03.wav",
+      "srt": "/media/subtitles/shot-03.srt",
+      "voiceRate": 2
+    },
+    {
+      "no": 4,
+      "id": "shot-04",
+      "scene": "石中旧声",
+      "durationMs": 3200,
+      "visual": "远听俯身贴耳，石头扩散同心声波，声波里浮出旧的摇篮旋律线条。",
+      "camera": "特写 / 俯拍",
+      "characters": [
+        "远听"
+      ],
+      "speaker": "远听",
+      "caption": "石头里有一段摇篮曲，还没唱完。",
+      "sfx": "石头共鸣、摇篮曲两小节",
+      "sceneType": "stone",
+      "svg": "/media/scenes/shot-04.svg",
+      "audio": "/media/voice/shot-04.wav",
+      "srt": "/media/subtitles/shot-04.srt",
+      "voiceRate": 3
+    },
+    {
+      "no": 5,
+      "id": "shot-05",
+      "scene": "旧旋律 · 纸带",
+      "durationMs": 3600,
+      "visual": "声波化作朱砂色纸带，绕住远视的单圆镜片，纸带边缘有手绘毛边。",
+      "camera": "空镜 / 环绕",
+      "characters": [
+        "远视",
+        "远听"
+      ],
+      "speaker": "旁白",
+      "caption": "旋律缠住镜片，光在纸上找到回家的路。",
+      "sfx": "纸带沙沙、旋律继续",
+      "sceneType": "ribbon",
+      "svg": "/media/scenes/shot-05.svg",
+      "audio": "/media/voice/shot-05.wav",
+      "srt": "/media/subtitles/shot-05.srt",
+      "voiceRate": 3
+    },
+    {
+      "no": 6,
+      "id": "shot-06",
+      "scene": "折光",
+      "durationMs": 3400,
+      "visual": "远视举镜，月光被折成一条细线落入灯芯；远听在旁轻轻打拍子。",
+      "camera": "仰拍 / 光效",
+      "characters": [
+        "远视",
+        "远听"
+      ],
+      "speaker": "远视",
+      "caption": "别出声，我把月光借过来。",
+      "sfx": "镜面轻响、光粒上升",
+      "sceneType": "mirror",
+      "svg": "/media/scenes/shot-06.svg",
+      "audio": "/media/voice/shot-06.wav",
+      "srt": "/media/subtitles/shot-06.srt",
+      "voiceRate": 1
+    },
+    {
+      "no": 7,
+      "id": "shot-07",
+      "scene": "灯芯复燃",
+      "durationMs": 3000,
+      "visual": "灯芯火星放大，暖光染亮窗棂，米白纸面浮出细密纹理。",
+      "camera": "微距 / 固定",
+      "characters": [],
+      "speaker": "旁白",
+      "caption": "一线光，够点亮一整个窗口。",
+      "sfx": "轻响、暖光铺开",
+      "sceneType": "lamp",
+      "svg": "/media/scenes/shot-07.svg",
+      "audio": "/media/voice/shot-07.wav",
+      "srt": "/media/subtitles/shot-07.srt",
+      "voiceRate": 3
+    },
+    {
+      "no": 8,
+      "id": "shot-08",
+      "scene": "纸鸟振翅",
+      "durationMs": 3600,
+      "visual": "纸鸟展开折纸翅膀，胸口灯亮，声波从喙尖一圈圈荡开。",
+      "camera": "中景 / 升格",
+      "characters": [
+        "纸鸟"
+      ],
+      "speaker": "远听",
+      "caption": "它想起来了——它叫「回声」。",
+      "sfx": "纸翼展开、清脆鸟鸣",
+      "sceneType": "bird",
+      "svg": "/media/scenes/shot-08.svg",
+      "audio": "/media/voice/shot-08.wav",
+      "srt": "/media/subtitles/shot-08.srt",
+      "voiceRate": 2
+    },
+    {
+      "no": 9,
+      "id": "shot-09",
+      "scene": "山谷亮灯",
+      "durationMs": 3200,
+      "visual": "大俯拍山谷，一扇扇窗依次亮起，连成一张星图，雾被暖光推开。",
+      "camera": "大俯拍 / 拉远",
+      "characters": [],
+      "speaker": "旁白",
+      "caption": "山谷的窗，一盏接一盏醒来。",
+      "sfx": "多声部回声、灯亮",
+      "sceneType": "village",
+      "svg": "/media/scenes/shot-09.svg",
+      "audio": "/media/voice/shot-09.wav",
+      "srt": "/media/subtitles/shot-09.srt",
+      "voiceRate": 2
+    },
+    {
+      "no": 10,
+      "id": "shot-10",
+      "scene": "屋顶 · 并肩",
+      "durationMs": 3600,
+      "visual": "两人坐在屋顶，脚下是灯海，头顶是星群；远听晃着腿，远视抱着灯罩。",
+      "camera": "背影 / 全景",
+      "characters": [
+        "远视",
+        "远听"
+      ],
+      "speaker": "远听",
+      "caption": "明天，还会有新的回声吗？",
+      "sfx": "夜风、虫鸣",
+      "sceneType": "roof",
+      "svg": "/media/scenes/shot-10.svg",
+      "audio": "/media/voice/shot-10.wav",
+      "srt": "/media/subtitles/shot-10.srt",
+      "voiceRate": 3
+    },
+    {
+      "no": 11,
+      "id": "shot-11",
+      "scene": "远视的答案",
+      "durationMs": 3200,
+      "visual": "远视侧脸特写，镜片里映出一条星河；她把手轻轻放在灯罩上。",
+      "camera": "近景 / 固定",
+      "characters": [
+        "远视"
+      ],
+      "speaker": "远视",
+      "caption": "那我就把灯留着。",
+      "sfx": "灯芯轻响、音乐收束",
+      "sceneType": "closeup",
+      "svg": "/media/scenes/shot-11.svg",
+      "audio": "/media/voice/shot-11.wav",
+      "srt": "/media/subtitles/shot-11.srt",
+      "voiceRate": 0
+    },
+    {
+      "no": 12,
+      "id": "shot-12",
+      "scene": "片尾 · 山谷回声",
+      "durationMs": 4000,
+      "visual": "片名字卡与制作清单，纸影边框，两枚角色符号一左一右，朱砂印章收尾。",
+      "camera": "字幕卡",
+      "characters": [],
+      "speaker": "旁白",
+      "caption": "《山谷回声》· 原创纸影短剧样片。",
+      "sfx": "主题旋律尾音",
+      "sceneType": "end",
+      "svg": "/media/scenes/shot-12.svg",
+      "audio": "/media/voice/shot-12.wav",
+      "srt": "/media/subtitles/shot-12.srt",
+      "voiceRate": 0
+    }
+  ],
+  "media": {
+    "minMs": 30000,
+    "maxMs": 45000,
+    "sceneWidth": 960,
+    "sceneHeight": 540,
+    "masterAudio": "/media/voice/ip_sample.wav",
+    "masterSrt": "/media/subtitles/ip_sample.srt",
+    "voiceName": "Microsoft Huihui Desktop",
+    "voiceFormat": "SAPI SpFileStream · 22kHz · 16-bit · mono",
+    "speechPaddingMs": 250,
+    "durationToleranceMs": 120,
+    "style": "深青 #0f3b3a + 米白 #f3ead7 + 朱砂 #b8452f；几何纸影、无真人、无外部素材。"
+  },
+  "review": {
+    "minTextLength": 4,
+    "maxTextLength": 1000,
+    "verdicts": {
+      "pass": "通过",
+      "revise": "需修改",
+      "reject": "拒绝"
+    },
+    "samples": {
+      "pass": "《山谷回声》为原创纸影短剧，角色、画面与配音均为自制；无真人扮演，无外部版权素材；已获授权用于合成样例演示。",
+      "reject": "本片由真人扮演远视，并引用网络热曲；角色包治百病，能治失眠，保证收益。"
+    },
+    "rules": [
+      {
+        "id": "real_person",
+        "label": "真人形象与肖像",
+        "severity": "blocker",
+        "type": "keyword",
+        "keywords": [
+          "真人扮演",
+          "真人演员",
+          "真人出镜",
+          "明星出演",
+          "素人出镜",
+          "演员本人",
+          "真人肖像"
+        ],
+        "negations": [
+          "无真人",
+          "不含真人",
+          "没有真人",
+          "禁止真人",
+          "拒绝真人",
+          "无任何真人"
+        ],
+        "fix": "删除真人出镜/扮演描述，改用自制 SVG 纸影角色；如确需真人素材，须另附肖像授权与监护人同意。"
+      },
+      {
+        "id": "medical_claim",
+        "label": "医疗与功效宣称",
+        "severity": "blocker",
+        "type": "keyword",
+        "keywords": [
+          "包治百病",
+          "治疗",
+          "疗效",
+          "治愈",
+          "药到病除",
+          "抗癌",
+          "养生功效",
+          "根治",
+          "治好"
+        ],
+        "negations": [],
+        "fix": "删除医疗、疗效与治愈表述；剧情需要时应由专业顾问审核并明确标注「虚构情节，不构成医疗建议」。"
+      },
+      {
+        "id": "violence",
+        "label": "暴力惊吓与心理风险",
+        "severity": "blocker",
+        "type": "keyword",
+        "keywords": [
+          "血腥",
+          "暴力",
+          "恐怖",
+          "惊吓",
+          "自杀",
+          "虐待",
+          "尸体",
+          "灵异"
+        ],
+        "negations": [
+          "不包含",
+          "不含",
+          "避免"
+        ],
+        "fix": "删除血腥、暴力、惊吓或灵异画面描述；如剧情必须，请加年龄提示并改为画外暗示。"
+      },
+      {
+        "id": "minor",
+        "label": "未成年人出镜与隐私",
+        "severity": "major",
+        "type": "keyword",
+        "keywords": [
+          "未成年",
+          "童星",
+          "儿童出镜",
+          "小学生",
+          "幼儿园"
+        ],
+        "negations": [
+          "无未成年",
+          "不含未成年",
+          "成年角色"
+        ],
+        "fix": "涉及未成年人须取得监护人书面同意、缩短出镜时长并做隐私处理；本样片默认不使用未成年人形象。"
+      },
+      {
+        "id": "heritage_claim",
+        "label": "传统技艺真实性表述",
+        "severity": "major",
+        "type": "keyword",
+        "keywords": [
+          "非遗",
+          "非物质文化遗产",
+          "传承人",
+          "官方认证",
+          "正宗",
+          "祖传",
+          "国家级"
+        ],
+        "negations": [
+          "虚构",
+          "合成样例",
+          "非真实",
+          "演绎"
+        ],
+        "fix": "如涉及传统技艺，必须标注「虚构演绎，非真实非遗项目」并提供可核验来源；不得使用官方认证、传承人亲授等表述。"
+      },
+      {
+        "id": "adaptation",
+        "label": "改编与版权授权",
+        "severity": "major",
+        "type": "keyword",
+        "keywords": [
+          "改编自",
+          "翻拍",
+          "同人",
+          "引用",
+          "取材于",
+          "改编"
+        ],
+        "negations": [],
+        "exemptIfPresent": [
+          "授权",
+          "许可",
+          "已获授权"
+        ],
+        "fix": "说明改编/引用来源并附授权编号与授权链；未获授权不得使用第三方角色、音乐或画面。"
+      },
+      {
+        "id": "copyright_statement",
+        "label": "原创 / 授权声明",
+        "severity": "minor",
+        "type": "missing",
+        "keywords": [
+          "原创",
+          "授权",
+          "版权",
+          "许可",
+          "自制"
+        ],
+        "minLength": 12,
+        "fix": "补充「原创 / 已获授权」声明与版权归属；涉及第三方素材须列明授权编号。"
+      },
+      {
+        "id": "privacy_contact",
+        "label": "隐私与私下交易",
+        "severity": "major",
+        "type": "keyword",
+        "keywords": [
+          "身份证",
+          "手机号",
+          "家庭住址",
+          "加微信",
+          "扫码转账",
+          "私下交易"
+        ],
+        "negations": [],
+        "fix": "删除个人隐私信息与私下交易引导；商业转化请使用官方渠道并做脱敏。"
+      },
+      {
+        "id": "commercial_overclaim",
+        "label": "商业夸大与收益承诺",
+        "severity": "blocker",
+        "type": "keyword",
+        "keywords": [
+          "稳赚",
+          "保证收益",
+          "投资回报",
+          "第一品牌",
+          "国家级金奖",
+          "百分百"
+        ],
+        "negations": [],
+        "fix": "删除收益保证与绝对化用语；商业合作数据须可核验并标注口径。"
+      }
+    ]
+  },
+  "license": {
+    "templateVersion": "IP-LIC-TPL-1.0",
+    "disclaimer": "本授权合同为产品演示用模板样例，不构成法律意见，也不产生真实授权效力；正式签署前须由执业律师审核并补充主体信息、对价与争议解决条款。",
+    "exclusivity": "非独占授权（non-exclusive）：同一授权标的可另行许可给第三方；本模板不授予排他或独占权利。" ,
+    "baseFeeCents": 800000,
+    "derivativeRoyaltyBps": 800,
+    "purposes": [
+      "品牌短片",
+      "线下展映",
+      "社交传播",
+      "衍生品开发",
+      "教育展示"
+    ],
+    "territories": [
+      "中国大陆",
+      "大中华区",
+      "全球（不含未授权地区）"
+    ],
+    "termOptions": [
+      6,
+      12,
+      24,
+      36
+    ],
+    "clauses": [
+      {
+        "no": 1,
+        "title": "合同主体",
+        "text": "许可方：CraftMesh 文化 IP 实验室（合成样例主体，下称「许可方」）；被许可方：{licensee}（下称「被许可方」）。双方确认本模板仅用于演示。"
+      },
+      {
+        "no": 2,
+        "title": "授权标的",
+        "text": "原创纸影短剧《山谷回声》及其角色「远视」「远听」的形象、剧本、分镜与自制视觉资产；不含任何第三方素材或真人肖像。"
+      },
+      {
+        "no": 3,
+        "title": "授权用途",
+        "text": "被许可方仅可在「{purpose}」范围内使用授权标的；超出用途、转授权或用于训练生成式模型须另行书面许可。"
+      },
+      {
+        "no": 4,
+        "title": "授权区域",
+        "text": "授权区域为「{territory}」；在区域外传播、投放或销售衍生品视为超范围使用。"
+      },
+      {
+        "no": 5,
+        "title": "授权期限",
+        "text": "自双方签署之日起 {termMonths} 个月。到期前 30 日可书面申请续期，未续期应立即停止使用并下架物料。"
+      },
+      {
+        "no": 6,
+        "title": "授权费用",
+        "text": "基础授权金为人民币 {baseFee}（合成样例金额），衍生品按销售额的 {royalty} 分成；具体结算周期、发票与税费由双方另行约定。"
+      },
+      {
+        "no": 7,
+        "title": "署名与宣传",
+        "text": "公开传播须保留「《山谷回声》原创纸影短剧」署名，不得暗示许可方为被许可方背书，不得修改角色核心设定与价值取向。"
+      },
+      {
+        "no": 8,
+        "title": "内容审核",
+        "text": "每一条对外文案、海报、视频与衍生品详情页须先经许可方内容审核台留痕；真人形象、医疗宣称、传统技艺真实性、版权授权、暴力惊吓与未成年人相关规则为一票否决项。"
+      },
+      {
+        "no": 9,
+        "title": "衍生品规范",
+        "text": "仅限已批准 SKU 规格生产，色差、材质、尺寸与包装须送样确认；不得生产武器、医疗用品、食品接触类或其他高风险品类。"
+      },
+      {
+        "no": 10,
+        "title": "知识产权归属",
+        "text": "授权标的所有知识产权归许可方所有；被许可方在授权期内新创作的衍生设计，其归属与后续许可由双方另行书面约定。"
+      },
+      {
+        "no": 11,
+        "title": "违约与终止",
+        "text": "超范围使用、未送审、拖欠分成或损害角色形象的，许可方有权书面通知后立即终止授权，并保留追偿权利。"
+      },
+      {
+        "no": 12,
+        "title": "争议解决与声明",
+        "text": "本模板不构成法律意见；争议解决方式、适用法律与管辖法院须由双方在正式合同中约定。本合同为合成演示文本，不产生真实法律效力。"
+      }
+    ]
+  },
+  "derivatives": {
+    "notes": "以下 SKU 规格为合成样例，仅用于演示授权范围与送样流程，不代表任何真实供应商报价、产能或已上市商品。",
+    "skus": [
+      {
+        "id": "sku-01",
+        "name": "「远视」纸影亚克力立牌",
+        "category": "桌面摆件",
+        "specs": {
+          "size": "15cm × 10cm",
+          "material": "3mm 透明亚克力",
+          "process": "双面 UV 印刷 + 磨砂底座",
+          "packaging": "牛皮纸卡 + 透明袋"
+        },
+        "moq": 100,
+        "retailCents": 3900,
+        "royaltyBps": 800,
+        "status": "draft",
+        "statusLabel": "待授权"
+      },
+      {
+        "id": "sku-02",
+        "name": "「回声邮局」A5 线装笔记本",
+        "category": "文具",
+        "specs": {
+          "size": "A5 / 96 页",
+          "material": "100g 米白道林纸 + 棉线",
+          "process": "锁线装订 + 单色烫压",
+          "packaging": "腰封 + 硫酸纸"
+        },
+        "moq": 200,
+        "retailCents": 4900,
+        "royaltyBps": 800,
+        "status": "draft",
+        "statusLabel": "待授权"
+      },
+      {
+        "id": "sku-03",
+        "name": "「山谷回声」帆布袋",
+        "category": "服饰配件",
+        "specs": {
+          "size": "38cm × 42cm",
+          "material": "12oz 本白帆布",
+          "process": "双色丝网印刷",
+          "packaging": "可回收纸带"
+        },
+        "moq": 150,
+        "retailCents": 6900,
+        "royaltyBps": 800,
+        "status": "draft",
+        "statusLabel": "待授权"
+      },
+      {
+        "id": "sku-04",
+        "name": "双角色徽章盲袋（6 款）",
+        "category": "收藏周边",
+        "specs": {
+          "size": "直径 32mm",
+          "material": "马口铁 + 安全别针",
+          "process": "四色印刷 + 哑膜",
+          "packaging": "铝箔盲袋 + 展示盒"
+        },
+        "moq": 300,
+        "retailCents": 2900,
+        "royaltyBps": 1000,
+        "status": "draft",
+        "statusLabel": "待授权"
+      },
+      {
+        "id": "sku-05",
+        "name": "12 格场景明信片套装",
+        "category": "纸品",
+        "specs": {
+          "size": "148mm × 100mm × 12 张",
+          "material": "300g 米白卡纸",
+          "process": "四色印刷 + 局部烫金",
+          "packaging": "纸封套"
+        },
+        "moq": 100,
+        "retailCents": 3200,
+        "royaltyBps": 800,
+        "status": "draft",
+        "statusLabel": "待授权"
+      },
+      {
+        "id": "sku-06",
+        "name": "「灯芯」纸影小夜灯",
+        "category": "家居灯饰",
+        "specs": {
+          "size": "12cm × 18cm",
+          "material": "椴木薄片 + LED 暖光模组",
+          "process": "激光切割 + 手工装裱",
+          "packaging": "瓦楞礼盒"
+        },
+        "moq": 50,
+        "retailCents": 12900,
+        "royaltyBps": 1000,
+        "status": "draft",
+        "statusLabel": "待授权"
+      }
+    ]
+  },
+  "permissions": {
+    "content.review": [
+      "ops",
+      "admin"
+    ],
+    "license.preview": [
+      "finance",
+      "admin"
+    ],
+    "derivative.publish": [
+      "designer",
+      "finance",
+      "admin"
+    ],
+    "asset.validate": [
+      "ops",
+      "designer",
+      "admin"
+    ],
+    "demo.reset": [
+      "admin"
+    ]
+  },
+  "actors": {
+    "designer": "IP 创作 / 美术",
+    "ops": "内容审核 / 制片",
+    "workshop": "外包制作（演示）",
+    "finance": "授权商务 / 财务",
+    "buyer": "观众 / 被许可方",
+    "admin": "管理员"
+  },
+  "capabilities": {
+    "content.review": "内容审核",
+    "license.preview": "生成授权草稿",
+    "derivative.publish": "发布衍生品",
+    "asset.validate": "素材校验",
+    "demo.reset": "重置演示数据"
+  }
+}

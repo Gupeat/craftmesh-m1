@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-label="纸鸟展开折纸翅膀，胸口灯亮，声波从喙尖荡开。">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#061a19"/><stop offset=".55" stop-color="#0c302e"/><stop offset="1" stop-color="#15504b"/>
+</linearGradient>
+<radialGradient id="warm" cx=".5" cy=".5" r=".5">
+  <stop offset="0" stop-color="#ffe7b8" stop-opacity=".95"/><stop offset=".4" stop-color="#d9a441" stop-opacity=".38"/><stop offset="1" stop-color="#d9a441" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="cool" cx=".5" cy=".5" r=".5">
+  <stop offset="0" stop-color="#f3ead7" stop-opacity=".30"/><stop offset="1" stop-color="#f3ead7" stop-opacity="0"/>
+</radialGradient>
+<filter id="blur18"><feGaussianBlur stdDeviation="18"/></filter>
+<filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="grain">
+  <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="11" stitchTiles="stitch"/>
+  <feColorMatrix type="saturate" values="0"/>
+</filter>
+<pattern id="fiber" width="28" height="28" patternUnits="userSpaceOnUse">
+  <path d="M0 28 L28 0" stroke="#f3ead7" stroke-opacity=".05" stroke-width="1"/>
+</pattern>
+</defs>
+<rect width="960" height="540" fill="url(#sky)"/>
+<circle cx="228.6" cy="270.3" r="1.0" fill="#f3ead7" opacity="0.37"/><circle cx="60.3" cy="59.0" r="1.0" fill="#f3ead7" opacity="0.49"/><circle cx="47.9" cy="148.8" r="1.7" fill="#f3ead7" opacity="0.55"/><circle cx="196.9" cy="236.6" r="0.8" fill="#f3ead7" opacity="0.54"/><circle cx="718.3" cy="203.5" r="1.7" fill="#f3ead7" opacity="0.53"/><circle cx="858.3" cy="209.9" r="1.3" fill="#f3ead7" opacity="0.31"/><circle cx="769.1" cy="122.9" r="1.7" fill="#f3ead7" opacity="0.31"/><circle cx="73.4" cy="84.0" r="0.8" fill="#f3ead7" opacity="0.55"/><circle cx="617.7" cy="254.8" r="1.0" fill="#f3ead7" opacity="0.61"/><circle cx="516.5" cy="33.6" r="1.0" fill="#f3ead7" opacity="0.34"/><circle cx="811.5" cy="140.8" r="1.7" fill="#f3ead7" opacity="0.42"/><circle cx="348.2" cy="248.8" r="1.0" fill="#f3ead7" opacity="0.34"/><circle cx="573.2" cy="160.1" r="1.3" fill="#f3ead7" opacity="0.67"/><circle cx="894.0" cy="239.9" r="1.0" fill="#f3ead7" opacity="0.44"/><circle cx="347.3" cy="96.8" r="0.8" fill="#f3ead7" opacity="0.73"/><circle cx="808.2" cy="257.7" r="1.0" fill="#f3ead7" opacity="0.46"/><circle cx="855.3" cy="99.7" r="1.0" fill="#f3ead7" opacity="0.41"/><circle cx="409.5" cy="120.5" r="1.7" fill="#f3ead7" opacity="0.36"/><circle cx="384.6" cy="66.5" r="0.8" fill="#f3ead7" opacity="0.37"/><circle cx="725.2" cy="100.8" r="0.8" fill="#f3ead7" opacity="0.73"/><circle cx="370.0" cy="238.1" r="1.7" fill="#f3ead7" opacity="0.79"/><circle cx="147.9" cy="168.4" r="1.7" fill="#f3ead7" opacity="0.50"/><circle cx="561.4" cy="97.9" r="0.8" fill="#f3ead7" opacity="0.27"/><circle cx="630.2" cy="219.7" r="1.3" fill="#f3ead7" opacity="0.34"/><circle cx="881.5" cy="149.0" r="1.0" fill="#f3ead7" opacity="0.84"/><circle cx="77.9" cy="28.3" r="1.0" fill="#f3ead7" opacity="0.45"/><circle cx="625.6" cy="54.9" r="1.3" fill="#f3ead7" opacity="0.46"/><circle cx="907.8" cy="24.8" r="1.7" fill="#f3ead7" opacity="0.38"/><circle cx="825.2" cy="32.5" r="1.0" fill="#f3ead7" opacity="0.36"/><circle cx="912.3" cy="137.0" r="0.8" fill="#f3ead7" opacity="0.37"/><circle cx="226.1" cy="231.7" r="1.0" fill="#f3ead7" opacity="0.48"/><circle cx="119.8" cy="208.6" r="1.0" fill="#f3ead7" opacity="0.68"/><circle cx="800" cy="95" r="128.0" fill="url(#cool)"/><circle cx="800" cy="95" r="40" fill="#f3ead7" fill-opacity=".92"/><circle cx="790.4" cy="87.8" r="4.4" fill="#0f3b3a" opacity=".10"/><circle cx="808.0" cy="103.8" r="6.4" fill="#0f3b3a" opacity=".08"/><ellipse cx="480" cy="430" rx="440" ry="54" fill="#f3ead7" opacity="0.1" filter="url(#blur18)"/><circle cx="480" cy="270" r="210" fill="url(#warm)" opacity=".5"/><g transform="translate(480 270) scale(2.3)">
+<path d="M0 -6 L-70 -42 L-38 2 L-12 0 L-30 34 L0 14 L30 34 L12 0 L38 2 L70 -42 Z"
+      fill="#f3ead7" stroke="#0f3b3a" stroke-width="1.4" stroke-linejoin="round"/>
+<path d="M0 -6 L-38 2 L-30 34 Z" fill="#e8dcc3" opacity=".85"/>
+<path d="M0 -6 L38 2 L30 34 Z" fill="#dccdae" opacity=".8"/>
+<path d="M0 -6 L0 14" stroke="#0f3b3a" stroke-width="1.1" opacity=".55"/>
+<path d="M0 14 L22 20 L10 28 Z" fill="#b8452f" opacity=".85"/>
+<circle cx="480" cy="279.2" r="105.8" fill="url(#warm)"/><circle cx="480" cy="279.2" r="18.4" fill="#d9a441"/>
+</g><path d="M671.4 214.8 A74.0 74.0 0 0 1 671.4 321.2" fill="none" stroke="#d9a441" stroke-width="2" stroke-opacity="0.55" stroke-linecap="round"/><path d="M683.2 202.5 A91.0 91.0 0 0 1 683.2 333.5" fill="none" stroke="#d9a441" stroke-width="2" stroke-opacity="0.45" stroke-linecap="round"/><path d="M695.0 190.3 A108.0 108.0 0 0 1 695.0 345.7" fill="none" stroke="#d9a441" stroke-width="2" stroke-opacity="0.35" stroke-linecap="round"/><path d="M706.8 178.1 A125.0 125.0 0 0 1 706.8 357.9" fill="none" stroke="#d9a441" stroke-width="2" stroke-opacity="0.25" stroke-linecap="round"/><g transform="translate(235 510) scale(1.0 1.0)">
+<path d="M-39 0 C-45 -30 -32 -58 -27 -82 Q0 -101 27 -82 C32 -58 45 -30 39 0 Z" fill="#07211f"/>
+<path d="M-24 -78 Q-4 -62 24 -72" stroke="#b8452f" stroke-width="5" fill="none" stroke-linecap="round"/>
+<circle cx="0" cy="-105" r="16" fill="#07211f"/>
+<circle cx="-11" cy="-120" r="7" fill="#07211f"/><circle cx="11" cy="-121" r="7" fill="#07211f"/>
+<path d="M-17 -109 q-13 5 -11 15 q2 10 13 7 q-8 -7 0 -13" fill="none" stroke="#b8452f" stroke-width="2.3"/>
+<path d="M18 -104 q7 -2 9 4" stroke="#b8452f" stroke-width="2" fill="none"/>
+<path d="M-24 -30 q24 9 48 -2" stroke="#b8452f" stroke-width="2" fill="none" stroke-opacity=".45"/>
+</g><path d="M690 200 q40 -30 80 -12 q-38 4 -60 30" fill="#f3ead7" opacity=".35"/><circle cx="513.7" cy="269.6" r="2.2" fill="#d9a441" opacity="0.46"/><circle cx="717.4" cy="172.6" r="2.0" fill="#d9a441" opacity="0.67"/><circle cx="575.8" cy="418.9" r="1.6" fill="#d9a441" opacity="0.45"/><circle cx="388.9" cy="163.6" r="1.2" fill="#d9a441" opacity="0.53"/><circle cx="384.7" cy="311.4" r="3.1" fill="#d9a441" opacity="0.80"/><circle cx="682.7" cy="229.2" r="1.8" fill="#d9a441" opacity="0.74"/><circle cx="345.0" cy="391.9" r="1.5" fill="#d9a441" opacity="0.50"/><circle cx="545.6" cy="436.7" r="2.6" fill="#d9a441" opacity="0.71"/><circle cx="416.6" cy="235.3" r="2.9" fill="#d9a441" opacity="0.57"/><circle cx="646.1" cy="152.4" r="1.1" fill="#d9a441" opacity="0.49"/><circle cx="390.4" cy="207.8" r="2.8" fill="#d9a441" opacity="0.76"/><circle cx="339.1" cy="153.1" r="1.4" fill="#d9a441" opacity="0.35"/><circle cx="648.8" cy="246.0" r="3.2" fill="#d9a441" opacity="0.26"/><circle cx="531.9" cy="163.9" r="2.9" fill="#d9a441" opacity="0.46"/><circle cx="349.2" cy="312.4" r="2.9" fill="#d9a441" opacity="0.26"/><circle cx="342.9" cy="418.0" r="1.9" fill="#d9a441" opacity="0.30"/><circle cx="777.4" cy="432.5" r="1.9" fill="#d9a441" opacity="0.36"/><circle cx="216.5" cy="365.1" r="2.7" fill="#d9a441" opacity="0.66"/><circle cx="628.6" cy="236.6" r="1.6" fill="#d9a441" opacity="0.57"/><circle cx="692.0" cy="275.3" r="2.1" fill="#d9a441" opacity="0.46"/><circle cx="709.9" cy="435.6" r="1.6" fill="#d9a441" opacity="0.78"/><circle cx="704.0" cy="253.4" r="1.6" fill="#d9a441" opacity="0.63"/><circle cx="536.4" cy="315.0" r="3.2" fill="#d9a441" opacity="0.79"/><circle cx="636.1" cy="291.1" r="1.4" fill="#d9a441" opacity="0.29"/><circle cx="708.7" cy="204.3" r="2.5" fill="#d9a441" opacity="0.42"/><circle cx="333.0" cy="345.7" r="1.4" fill="#d9a441" opacity="0.29"/><circle cx="817.3" cy="251.7" r="1.8" fill="#d9a441" opacity="0.68"/><circle cx="330.9" cy="382.0" r="1.5" fill="#d9a441" opacity="0.65"/><circle cx="666.1" cy="155.8" r="1.8" fill="#d9a441" opacity="0.72"/><circle cx="504.6" cy="262.6" r="1.1" fill="#d9a441" opacity="0.34"/>
+<rect width="960" height="540" fill="url(#fiber)"/>
+<rect width="960" height="540" filter="url(#grain)" opacity=".045"/>
+<rect x="18" y="18" width="924" height="504" fill="none" stroke="#f3ead7" stroke-opacity=".18"/>
+<path d="M18 44 V18 H44 M916 18 H942 V44 M942 496 V522 H916 M44 522 H18 V496" fill="none" stroke="#f3ead7" stroke-opacity=".4" stroke-width="1.4"/>
+<text x="40" y="46" font-family="'Cascadia Mono','Consolas','Courier New',monospace" font-size="12" fill="#f3ead7" fill-opacity="0.62" text-anchor="start" font-weight="400" letter-spacing="1.6">SHOT 08 / 12</text>
+<text x="920" y="46" font-family="'Noto Serif SC','Songti SC','SimSun',serif" font-size="12" fill="#f3ead7" fill-opacity="0.55" text-anchor="end" font-weight="400" letter-spacing="1.2">纸鸟振翅</text>
+<text x="920" y="510" font-family="'Cascadia Mono','Consolas','Courier New',monospace" font-size="11" fill="#f3ead7" fill-opacity="0.4" text-anchor="end" font-weight="400" letter-spacing="0">原创纸影 · 合成样例</text>
+</svg>

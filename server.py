@@ -16,8 +16,10 @@ from core import (
     public_transition, utcnow,
 )
 from store import Store
+import extensions
 
 ROOT = Path(__file__).resolve().parent
+ROOT_RESOLVED = ROOT.resolve()
 MAX_BODY = 1024 * 1024
 ORDER_ROUTE = re.compile(r"^/api/orders/([^/]+)$")
 TRANSITION_ROUTE = re.compile(r"^/api/orders/([^/]+)/transition$")
@@ -25,6 +27,14 @@ PUBLIC_FILES = {
     "/index.html", "/app.js", "/styles.css", "/README.md", "/TEST-REPORT.md",
     "/dashboard.png", "/tests.png", "/architecture.png",
 }
+# M2 / B / C / 验收驾驶舱的静态资源目录（只允许白名单后缀，且必须落在项目目录内）
+STATIC_DIR = re.compile(
+    r"^/(pages|ip_output|media|docs)/[A-Za-z0-9_./-]+\.(html|js|css|json|svg|wav|srt|png|txt|md)$"
+)
+# 验收证据包：只放行 data/evidence/packs/*.md，其余 data/ 不对外
+PACK_FILE = re.compile(r"^/data/evidence/packs/[A-Za-z0-9_.-]+\.md$")
+# 完整源码包：只放行 downloads/ 下的 zip 与 sha256 校验文件
+DOWNLOAD_FILE = re.compile(r"^/downloads/[A-Za-z0-9_.-]+\.(zip|sha256)$")
 
 
 def _json_bytes(payload: dict) -> bytes:
@@ -70,11 +80,11 @@ class ApiHandler(BaseHTTPRequestHandler):
             self.end_headers()
             return
         clean = unquote(path)
-        if clean not in PUBLIC_FILES:
+        if clean not in PUBLIC_FILES and not STATIC_DIR.match(clean) and not PACK_FILE.match(clean) and not DOWNLOAD_FILE.match(clean):
             self._not_found()
             return
-        target = ROOT / clean.lstrip("/")
-        if not target.is_file():
+        target = (ROOT / clean.lstrip("/")).resolve()
+        if ROOT_RESOLVED not in target.parents or not target.is_file():
             self._not_found()
             return
         content_type = mimetypes.guess_type(str(target))[0] or "application/octet-stream"
@@ -132,6 +142,8 @@ class ApiHandler(BaseHTTPRequestHandler):
                     return
                 self._send_json(200, {"ok": True, "order": order})
                 return
+            if path.startswith("/api/") and extensions.handle(self, "GET", path):
+                return
             if path.startswith("/api/"):
                 self._not_found()
                 return
@@ -143,6 +155,8 @@ class ApiHandler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:
         path = urlparse(self.path).path
         try:
+            if path.startswith("/api/") and extensions.handle(self, "POST", path):
+                return
             if path == "/api/check":
                 payload = self._read_json()
                 result = check_request(

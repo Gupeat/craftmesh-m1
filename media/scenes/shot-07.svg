@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-label="微距：灯芯复燃，暖光沿窗棂铺开。">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#061a19"/><stop offset=".55" stop-color="#0c302e"/><stop offset="1" stop-color="#15504b"/>
+</linearGradient>
+<radialGradient id="warm" cx=".5" cy=".5" r=".5">
+  <stop offset="0" stop-color="#ffe7b8" stop-opacity=".95"/><stop offset=".4" stop-color="#d9a441" stop-opacity=".38"/><stop offset="1" stop-color="#d9a441" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="cool" cx=".5" cy=".5" r=".5">
+  <stop offset="0" stop-color="#f3ead7" stop-opacity=".30"/><stop offset="1" stop-color="#f3ead7" stop-opacity="0"/>
+</radialGradient>
+<filter id="blur18"><feGaussianBlur stdDeviation="18"/></filter>
+<filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="grain">
+  <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="11" stitchTiles="stitch"/>
+  <feColorMatrix type="saturate" values="0"/>
+</filter>
+<pattern id="fiber" width="28" height="28" patternUnits="userSpaceOnUse">
+  <path d="M0 28 L28 0" stroke="#f3ead7" stroke-opacity=".05" stroke-width="1"/>
+</pattern>
+</defs>
+<rect width="960" height="540" fill="url(#sky)"/>
+<rect width="960" height="540" fill="#0b2927"/><path d="M120 0 V540" stroke="#f3ead7" stroke-opacity=".07" stroke-width="18"/><path d="M240 0 V540" stroke="#f3ead7" stroke-opacity=".07" stroke-width="18"/><path d="M360 0 V540" stroke="#f3ead7" stroke-opacity=".07" stroke-width="18"/><path d="M480 0 V540" stroke="#f3ead7" stroke-opacity=".07" stroke-width="18"/><path d="M600 0 V540" stroke="#f3ead7" stroke-opacity=".07" stroke-width="18"/><path d="M720 0 V540" stroke="#f3ead7" stroke-opacity=".07" stroke-width="18"/><path d="M840 0 V540" stroke="#f3ead7" stroke-opacity=".07" stroke-width="18"/><path d="M0 80 H960" stroke="#f3ead7" stroke-opacity=".06" stroke-width="12"/><path d="M0 190 H960" stroke="#f3ead7" stroke-opacity=".06" stroke-width="12"/><path d="M0 300 H960" stroke="#f3ead7" stroke-opacity=".06" stroke-width="12"/><path d="M0 410 H960" stroke="#f3ead7" stroke-opacity=".06" stroke-width="12"/><circle cx="480" cy="300" r="230" fill="url(#warm)" opacity=".8"/><path d="M410 470 h140 l-18 -54 h-104 Z" fill="#0f3b3a" stroke="#f3ead7" stroke-opacity=".16"/><path d="M430 416 q50 -18 100 0 v-96 q-50 -18 -100 0 Z" fill="#d9a441" opacity=".18" stroke="#d9a441" stroke-opacity=".6"/><path d="M480 352 q-26 -34 0 -76 q26 42 0 76" fill="#f3ead7"/><circle cx="480" cy="336" r="8" fill="#b8452f"/><path d="M480 276 q-26 -34 0 -76 q26 42 0 76" fill="#d9a441" opacity=".55"/><path d="M572.0 316.0 L618.0 316.0" stroke="#d9a441" stroke-width="1.3" opacity=".35"/><path d="M559.7 362.0 L618.6 396.0" stroke="#d9a441" stroke-width="1.3" opacity=".35"/><path d="M526.0 395.7 L571.0 473.6" stroke="#d9a441" stroke-width="1.3" opacity=".35"/><path d="M480.0 408.0 L480.0 454.0" stroke="#d9a441" stroke-width="1.3" opacity=".35"/><path d="M434.0 395.7 L400.0 454.6" stroke="#d9a441" stroke-width="1.3" opacity=".35"/><path d="M400.3 362.0 L322.4 407.0" stroke="#d9a441" stroke-width="1.3" opacity=".35"/><path d="M388.0 316.0 L342.0 316.0" stroke="#d9a441" stroke-width="1.3" opacity=".35"/><path d="M400.3 270.0 L341.4 236.0" stroke="#d9a441" stroke-width="1.3" opacity=".35"/><path d="M434.0 236.3 L389.0 158.4" stroke="#d9a441" stroke-width="1.3" opacity=".35"/><path d="M480.0 224.0 L480.0 178.0" stroke="#d9a441" stroke-width="1.3" opacity=".35"/><path d="M526.0 236.3 L560.0 177.4" stroke="#d9a441" stroke-width="1.3" opacity=".35"/><path d="M559.7 270.0 L637.6 225.0" stroke="#d9a441" stroke-width="1.3" opacity=".35"/><g transform="translate(180 520) scale(0.85 0.85)">
+<path d="M-35 0 C-41 -28 -30 -55 -25 -80 Q0 -99 25 -80 C30 -55 41 -28 35 0 Z" fill="#051817"/>
+<circle cx="0" cy="-104" r="16.5" fill="#051817"/>
+<path d="M-7 -118 Q-2 -135 13 -130" stroke="#051817" stroke-width="7" fill="none" stroke-linecap="round"/>
+<circle cx="8" cy="-103" r="10.5" fill="none" stroke="#d9a441" stroke-width="2.4"/>
+<path d="M18 -110 L43 -132" stroke="#d9a441" stroke-width="1.6" stroke-opacity=".85"/>
+<path d="M-25 -52 Q0 -42 25 -52" stroke="#d9a441" stroke-width="2" fill="none" stroke-opacity=".55"/>
+</g><g transform="translate(790 520) scale(0.85 0.85)">
+<path d="M-39 0 C-45 -30 -32 -58 -27 -82 Q0 -101 27 -82 C32 -58 45 -30 39 0 Z" fill="#051817"/>
+<path d="M-24 -78 Q-4 -62 24 -72" stroke="#b8452f" stroke-width="5" fill="none" stroke-linecap="round"/>
+<circle cx="0" cy="-105" r="16" fill="#051817"/>
+<circle cx="-11" cy="-120" r="7" fill="#051817"/><circle cx="11" cy="-121" r="7" fill="#051817"/>
+<path d="M-17 -109 q-13 5 -11 15 q2 10 13 7 q-8 -7 0 -13" fill="none" stroke="#b8452f" stroke-width="2.3"/>
+<path d="M18 -104 q7 -2 9 4" stroke="#b8452f" stroke-width="2" fill="none"/>
+<path d="M-24 -30 q24 9 48 -2" stroke="#b8452f" stroke-width="2" fill="none" stroke-opacity=".45"/>
+</g><circle cx="366.9" cy="330.8" r="1.0" fill="#d9a441" opacity="0.79"/><circle cx="700.8" cy="459.7" r="1.6" fill="#d9a441" opacity="0.36"/><circle cx="186.7" cy="185.9" r="1.1" fill="#d9a441" opacity="0.63"/><circle cx="395.0" cy="397.3" r="2.7" fill="#d9a441" opacity="0.44"/><circle cx="261.8" cy="238.2" r="1.1" fill="#d9a441" opacity="0.61"/><circle cx="277.2" cy="170.6" r="3.0" fill="#d9a441" opacity="0.49"/><circle cx="783.9" cy="453.3" r="2.5" fill="#d9a441" opacity="0.39"/><circle cx="249.0" cy="203.8" r="2.6" fill="#d9a441" opacity="0.53"/><circle cx="349.6" cy="125.9" r="1.8" fill="#d9a441" opacity="0.47"/><circle cx="196.4" cy="204.8" r="1.6" fill="#d9a441" opacity="0.48"/><circle cx="480.9" cy="312.3" r="2.9" fill="#d9a441" opacity="0.41"/><circle cx="213.6" cy="223.1" r="1.5" fill="#d9a441" opacity="0.57"/><circle cx="469.1" cy="229.2" r="1.2" fill="#d9a441" opacity="0.66"/><circle cx="568.1" cy="331.9" r="2.5" fill="#d9a441" opacity="0.72"/><circle cx="173.5" cy="184.2" r="2.0" fill="#d9a441" opacity="0.64"/><circle cx="487.8" cy="291.7" r="1.7" fill="#d9a441" opacity="0.38"/><circle cx="735.6" cy="454.2" r="2.1" fill="#d9a441" opacity="0.51"/><circle cx="236.0" cy="324.4" r="1.5" fill="#d9a441" opacity="0.59"/><circle cx="336.6" cy="278.9" r="2.9" fill="#d9a441" opacity="0.42"/><circle cx="508.4" cy="228.3" r="2.1" fill="#d9a441" opacity="0.73"/><circle cx="479.9" cy="448.0" r="1.9" fill="#d9a441" opacity="0.50"/><circle cx="582.1" cy="290.4" r="2.5" fill="#d9a441" opacity="0.41"/><circle cx="159.1" cy="263.7" r="1.1" fill="#d9a441" opacity="0.39"/><circle cx="550.6" cy="354.7" r="3.0" fill="#d9a441" opacity="0.62"/><circle cx="522.1" cy="237.1" r="2.0" fill="#d9a441" opacity="0.41"/><circle cx="218.7" cy="301.8" r="2.4" fill="#d9a441" opacity="0.42"/><circle cx="645.6" cy="300.2" r="1.7" fill="#d9a441" opacity="0.72"/><circle cx="164.8" cy="211.4" r="1.7" fill="#d9a441" opacity="0.62"/><circle cx="319.3" cy="454.0" r="1.2" fill="#d9a441" opacity="0.50"/><circle cx="464.7" cy="373.1" r="1.6" fill="#d9a441" opacity="0.34"/><circle cx="648.6" cy="387.6" r="2.3" fill="#d9a441" opacity="0.75"/><circle cx="414.6" cy="272.7" r="2.1" fill="#d9a441" opacity="0.32"/><circle cx="704.7" cy="141.0" r="1.2" fill="#d9a441" opacity="0.75"/><circle cx="452.8" cy="169.6" r="3.0" fill="#d9a441" opacity="0.35"/>
+<rect width="960" height="540" fill="url(#fiber)"/>
+<rect width="960" height="540" filter="url(#grain)" opacity=".045"/>
+<rect x="18" y="18" width="924" height="504" fill="none" stroke="#f3ead7" stroke-opacity=".18"/>
+<path d="M18 44 V18 H44 M916 18 H942 V44 M942 496 V522 H916 M44 522 H18 V496" fill="none" stroke="#f3ead7" stroke-opacity=".4" stroke-width="1.4"/>
+<text x="40" y="46" font-family="'Cascadia Mono','Consolas','Courier New',monospace" font-size="12" fill="#f3ead7" fill-opacity="0.62" text-anchor="start" font-weight="400" letter-spacing="1.6">SHOT 07 / 12</text>
+<text x="920" y="46" font-family="'Noto Serif SC','Songti SC','SimSun',serif" font-size="12" fill="#f3ead7" fill-opacity="0.55" text-anchor="end" font-weight="400" letter-spacing="1.2">灯芯复燃</text>
+<text x="920" y="510" font-family="'Cascadia Mono','Consolas','Courier New',monospace" font-size="11" fill="#f3ead7" fill-opacity="0.4" text-anchor="end" font-weight="400" letter-spacing="0">原创纸影 · 合成样例</text>
+</svg>

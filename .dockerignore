@@ -1,0 +1,7 @@
+data/*.db
+data/*.db-journal
+data/evidence/packs
+.scratch
+*.log
+__pycache__
+tests/__pycache__

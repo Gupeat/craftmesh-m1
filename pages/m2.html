@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>CraftMesh · M2 预售与工厂派单</title>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/pages/pages.css">
+</head>
+<body data-page="m2">
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main-column">
+    <header class="topbar" id="topbar"></header>
+    <div class="content">
+      <section class="page-head">
+        <div class="page-head-copy">
+          <div class="eyebrow">M2 · C2M 预售与制造协同</div>
+          <h1>从一张纹样，到预售成团、工坊派单与分账</h1>
+          <p class="lede">预售价复用 M1 的报价与授权规则；成团、派单、质检、返工、结算、争议全部由本地 API 与 SQLite 实时生成。派单前会按工坊公开能力（工艺 / 材料 / 尺寸 / 起订量 / 在制产能）做 5 项校验，不匹配就拒绝并说明原因。</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-primary" data-action="run-scenario" id="btnScenario">
+            <svg class="icon"><use href="#i-refresh"></use></svg><span>一键跑通全链路</span>
+          </button>
+          <button class="btn" data-action="reset-demo" id="btnReset">重置演示数据</button>
+          <a class="btn btn-ghost" href="/api/m2/config" target="_blank" rel="noreferrer">查看规则配置</a>
+        </div>
+      </section>
+
+      <div class="role-strip" id="roleStrip"></div>
+
+      <section class="kpi-grid" id="kpis" aria-label="M2 概览"></section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">一键验收 · 可复跑</div>
+            <h2>16 步全链路自检</h2>
+            <p class="panel-copy">服务端用与页面相同的业务函数跑完整条链路，其中第 ⑤ 步故意派给不做该工艺的工坊，用来证明能力校验真的会拒绝。运行前会重置 M2 演示数据。</p>
+          </div>
+          <span class="server-chip" id="scenarioChip">未运行</span>
+        </div>
+        <div id="scenarioBody" class="scenario-body">
+          <p class="empty-copy">点击右上角「一键跑通全链路」，或直接调用 <code>POST /api/m2/scenario</code>。</p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">A-03 预售下单 · 成团</div>
+            <h2>预售活动</h2>
+          </div>
+          <span class="server-chip" id="campaignChip">0 条</span>
+        </div>
+        <div class="split-panel aside-left">
+          <div>
+            <div class="table-wrap">
+              <table class="data-table" id="campaignTable">
+                <thead><tr><th>活动</th><th>进度</th><th>状态</th></tr></thead>
+                <tbody><tr><td colspan="3" class="table-empty">加载中…</td></tr></tbody>
+              </table>
+            </div>
+            <form class="mod-form" id="createCampaignForm" data-action="create-campaign">
+              <div>
+                <div class="field-label">新建预售 <span>价格由 M1 报价规则计算</span></div>
+                <div class="form-grid" id="campaignFormFields"></div>
+              </div>
+              <div class="form-actions">
+                <button class="btn btn-small" type="submit">创建草稿</button>
+                <p class="form-hint">创建者为设计师 / 管理员；草稿创建后需手动开放预售。</p>
+              </div>
+            </form>
+          </div>
+          <div id="campaignDetail">
+            <p class="empty-copy">选择或创建一条预售活动查看详情。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">A-04 工厂派单 · 生产协同</div>
+            <h2>工艺单、派单与质检</h2>
+            <p class="panel-copy">成团后自动生成工艺单。派单前先做能力预检，再按工坊公开能力派单；接单、开工、质检、返工、发货、结算都会写入审计轨迹。</p>
+          </div>
+          <span class="server-chip" id="orderChip">0 条</span>
+        </div>
+        <div class="split-panel aside-right">
+          <div id="orderDetail">
+            <p class="empty-copy">暂无工艺单。先在左侧让预售达到起订量，系统会自动成团并生成工艺单。</p>
+          </div>
+          <div id="capabilityPanel"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">分账 · 审计</div>
+            <h2>分账台账与审计轨迹</h2>
+            <p class="panel-copy">平台服务费、纹样授权分成、工坊结算款与争议退款逐笔入账；审计轨迹记录每次状态变化与操作角色。</p>
+          </div>
+          <span class="server-chip" id="ledgerChip">0 笔</span>
+        </div>
+        <div class="split-panel">
+          <div>
+            <div class="table-wrap">
+              <table class="data-table" id="ledgerTable">
+                <thead><tr><th>时间</th><th>类型</th><th>对象</th><th>金额</th></tr></thead>
+                <tbody><tr><td colspan="4" class="table-empty">加载中…</td></tr></tbody>
+              </table>
+            </div>
+            <p class="table-note">金额单位：元。分账规则来自 <code>config/m2_rules.json</code>（平台 25%、授权 10%），修改文件刷新即生效，无需改代码。</p>
+          </div>
+          <div>
+            <div class="subhead"><h3>审计轨迹</h3><span class="server-chip" id="eventChip">最近 20 条</span></div>
+            <div class="timeline compact" id="eventTimeline"></div>
+          </div>
+        </div>
+      </section>
+
+      <p class="table-note">本页所有工坊、买家、运单与金额均为合成样例，用于演示协同流程，不代表真实工厂产能或真实客户订单。</p>
+    </div>
+  </main>
+</div>
+<script src="/pages/ui.js"></script>
+<script src="/pages/shell.js"></script>
+<script src="/pages/m2.js"></script>
+</body>
+</html>

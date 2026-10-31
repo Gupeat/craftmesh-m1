@@ -1,0 +1,430 @@
+{
+  "version": "1.0",
+  "updatedAt": "2026-10-31",
+  "platformTask": "ClawHunt #1724 验收标准 0)-10)",
+  "items": [
+    {
+      "id": "P0",
+      "ref": "0)",
+      "title": "成果优先：可运行仓库 + 启动说明",
+      "milestone": "M1",
+      "module": "M1",
+      "requirement": "投标与交付都必须带可运行成果（源码仓库 + 启动说明），只有方案文档不受理。",
+      "checks": [
+        {
+          "type": "file",
+          "path": "README.md",
+          "minBytes": 1200,
+          "label": "README 存在且有实质内容"
+        },
+        {
+          "type": "file",
+          "path": "render.yaml",
+          "minBytes": 200,
+          "label": "部署描述文件存在"
+        },
+        {
+          "type": "file",
+          "path": "server.py",
+          "minBytes": 4000,
+          "label": "HTTP 服务入口存在"
+        },
+        {
+          "type": "http",
+          "path": "/api/health",
+          "label": "服务可启动并返回健康检查"
+        },
+        {
+          "type": "grep",
+          "path": "README.md",
+          "pattern": "server\\.py|python3? server",
+          "min": 1,
+          "label": "README 写明启动命令"
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "ref": "1)",
+      "title": "四条主流程可点通（工作站 / 纹样库 / 预售下单 / 工厂派单）",
+      "milestone": "M1+M2",
+      "module": "M2",
+      "requirement": "干净机器上按 README 可启动：AI 创意工作站、纹样资源库、预售下单、工厂派单四条主流程可点通。",
+      "checks": [
+        {
+          "type": "file",
+          "path": "index.html",
+          "minBytes": 8000,
+          "label": "工作站页面存在"
+        },
+        {
+          "type": "file",
+          "path": "pages/m2.html",
+          "minBytes": 3000,
+          "label": "预售与派单页面存在"
+        },
+        {
+          "type": "grep",
+          "path": "pages/m2.js",
+          "pattern": "open-campaign|pledge",
+          "min": 2,
+          "label": "预售下单交互已接线"
+        },
+        {
+          "type": "grep",
+          "path": "pages/m2.js",
+          "pattern": "/dispatch",
+          "min": 1,
+          "label": "工厂派单交互已接线"
+        },
+        {
+          "type": "scenario",
+          "module": "m2",
+          "endpoint": "/api/m2/scenario",
+          "minSteps": 16,
+          "label": "16 步全链路自检通过"
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "ref": "2)",
+      "title": "授权字段强制校验（正反例）",
+      "milestone": "M1+M2",
+      "module": "M2",
+      "requirement": "纹样/素材入库强制校验授权来源与使用范围字段：缺字段被拒绝入库，并有正反例用例证明。",
+      "checks": [
+        {
+          "type": "grep",
+          "path": "core.py",
+          "pattern": "validate_license",
+          "min": 2,
+          "label": "授权校验函数存在并被调用"
+        },
+        {
+          "type": "grep",
+          "path": "core.py",
+          "pattern": "useScope",
+          "min": 3,
+          "label": "使用范围字段进入校验"
+        },
+        {
+          "type": "grep",
+          "path": "tests/test_core.py",
+          "pattern": "license|授权",
+          "min": 2,
+          "label": "授权正反例有单元测试"
+        },
+        {
+          "type": "grep",
+          "path": "pages/m2.html",
+          "pattern": "license|授权",
+          "min": 1,
+          "label": "页面展示授权快照"
+        }
+      ]
+    },
+    {
+      "id": "P3",
+      "ref": "3)",
+      "title": "可制造性评估助手：10 个概念输入与人工规则一致",
+      "milestone": "M1",
+      "module": "M1",
+      "requirement": "给定至少 10 个概念输入（含 3 个明确不可制造的反例），返回结论、不可制造原因与可改方向；10/10 与仓库内人工规则预期一致。",
+      "checks": [
+        {
+          "type": "m1cases",
+          "minCases": 10,
+          "minBlocked": 3,
+          "label": "人工规则基线 10/10 一致（含 3 个 blocked）"
+        },
+        {
+          "type": "grep",
+          "path": "core.py",
+          "pattern": "reworkLimit|HARD_RULE_IDS|hard",
+          "min": 2,
+          "label": "规则分硬约束/软提示两层"
+        },
+        {
+          "type": "file",
+          "path": "TEST-REPORT.md",
+          "minBytes": 800,
+          "label": "可制造性验证记录存在"
+        }
+      ]
+    },
+    {
+      "id": "P4",
+      "ref": "4)",
+      "title": "C2M 订单链路与台账可追溯",
+      "milestone": "M2",
+      "module": "M2",
+      "requirement": "定制单走完下单→工艺单→派单→品控→发货→分成，状态与金额在台账可追溯；退款与争议路径有用例覆盖。",
+      "checks": [
+        {
+          "type": "scenario",
+          "module": "m2",
+          "endpoint": "/api/m2/scenario",
+          "minSteps": 16,
+          "label": "全链路（含争议退款）通过"
+        },
+        {
+          "type": "grep",
+          "path": "mod_m2.py",
+          "pattern": "refund_buyer|workshop_adjust",
+          "min": 2,
+          "label": "退款分账入台账"
+        },
+        {
+          "type": "grep",
+          "path": "pages/m2.js",
+          "pattern": "resolve-dispute",
+          "min": 1,
+          "label": "争议处理已接线"
+        },
+        {
+          "type": "http",
+          "path": "/api/m2/ledger",
+          "label": "台账接口可读"
+        }
+      ]
+    },
+    {
+      "id": "P5",
+      "ref": "5)",
+      "title": "企业 AI 服务层：双行业配置 + 知识库/智能体/工作流",
+      "milestone": "M3",
+      "module": "AI",
+      "requirement": "至少 2 个行业的可复用组件（知识库 + 智能体 + 一条自动化工作流），靠配置切换行业而非复制代码；附 FDE 手册与一企一档样例。",
+      "checks": [
+        {
+          "type": "file",
+          "path": "mod_ai.py",
+          "minBytes": 6000,
+          "label": "AI 服务层模块存在"
+        },
+        {
+          "type": "grep",
+          "path": "config/ai_industries.json",
+          "pattern": "woodcraft",
+          "min": 1,
+          "label": "第二行业（木作）配置存在"
+        },
+        {
+          "type": "grep",
+          "path": "config/ai_handbook.json",
+          "pattern": "fde|FDE",
+          "min": 1,
+          "label": "FDE 交付手册数据存在"
+        },
+        {
+          "type": "scenario",
+          "module": "ai",
+          "endpoint": "/api/ai/scenario",
+          "minSteps": 12,
+          "label": "AI 服务层全链路自检通过"
+        }
+      ]
+    },
+    {
+      "id": "P6",
+      "ref": "6)",
+      "title": "出海增长栈：多语言 + SEO + 询盘到 CRM",
+      "milestone": "M3",
+      "module": "AI",
+      "requirement": "多语言站点生成、SEO 元数据、询盘到 CRM 闭环，各有一条端到端用例通过。",
+      "checks": [
+        {
+          "type": "grep",
+          "path": "pages/ai.html",
+          "pattern": "English|日本語",
+          "min": 1,
+          "label": "页面含三语切换"
+        },
+        {
+          "type": "grep",
+          "path": "mod_ai.py",
+          "pattern": "inquir|lead",
+          "min": 2,
+          "label": "询盘写 CRM 逻辑存在"
+        },
+        {
+          "type": "http",
+          "path": "/api/ai/site/en",
+          "label": "英文站点接口可读"
+        },
+        {
+          "type": "http",
+          "path": "/api/ai/leads",
+          "label": "CRM 线索接口可读"
+        }
+      ]
+    },
+    {
+      "id": "P7",
+      "ref": "7)",
+      "title": "IP 管线：双角色 + 分镜 + 样片 + 审核",
+      "milestone": "M4",
+      "module": "IP",
+      "requirement": "双角色设定手册 + 视觉资产库 + 完整短剧工作流跑通并产出 1 条样片；授权合同模板与衍生品规范齐备。",
+      "checks": [
+        {
+          "type": "file",
+          "path": "mod_ip.py",
+          "minBytes": 6000,
+          "label": "IP 管线模块存在"
+        },
+        {
+          "type": "filecount",
+          "dir": "media/voice",
+          "ext": ".wav",
+          "min": 1,
+          "label": "真实配音 wav 已生成"
+        },
+        {
+          "type": "filecount",
+          "dir": "media/subtitles",
+          "ext": ".srt",
+          "min": 1,
+          "label": "字幕文件已生成"
+        },
+        {
+          "type": "filecount",
+          "dir": "media/scenes",
+          "ext": ".svg",
+          "min": 6,
+          "label": "自制分镜画面资产 ≥6"
+        },
+        {
+          "type": "scenario",
+          "module": "ip",
+          "endpoint": "/api/ip/scenario",
+          "minSteps": 12,
+          "label": "IP 全链路自检通过"
+        }
+      ]
+    },
+    {
+      "id": "P8",
+      "ref": "8)",
+      "title": "自动化测试：四类核心逻辑一条命令全绿",
+      "milestone": "M1-M4",
+      "module": "ALL",
+      "requirement": "授权字段校验、可制造性判定、订单状态机、分成计算四处核心逻辑有单元测试，一条命令全绿。",
+      "checks": [
+        {
+          "type": "tests",
+          "minTests": 40,
+          "label": "unittest 全绿且用例数 ≥40"
+        },
+        {
+          "type": "grep",
+          "path": "tests/test_core.py",
+          "pattern": "def test_",
+          "min": 20,
+          "label": "M1 核心测试存在"
+        },
+        {
+          "type": "grep",
+          "path": "README.md",
+          "pattern": "unittest",
+          "min": 1,
+          "label": "README 写明测试命令"
+        }
+      ]
+    },
+    {
+      "id": "P9",
+      "ref": "9)",
+      "title": "文档与实现一致（README/接口/页面真实存在）",
+      "milestone": "ALL",
+      "module": "ALL",
+      "requirement": "README／部署说明／接口文档里写到的每条命令与界面都真实存在。",
+      "checks": [
+        {
+          "type": "file",
+          "path": "README.md",
+          "minBytes": 1200,
+          "label": "README 存在"
+        },
+        {
+          "type": "grep",
+          "path": "README.md",
+          "pattern": "pages/m2\\.html",
+          "min": 1,
+          "label": "README 列出 M2 页面（真实存在）"
+        },
+        {
+          "type": "grep",
+          "path": "README.md",
+          "pattern": "pages/ai\\.html",
+          "min": 1,
+          "label": "README 列出 B 模块页面"
+        },
+        {
+          "type": "grep",
+          "path": "README.md",
+          "pattern": "pages/ip\\.html",
+          "min": 1,
+          "label": "README 列出 C 模块页面"
+        },
+        {
+          "type": "file",
+          "path": "docs/B-verification.md",
+          "minBytes": 800,
+          "label": "B 模块验证记录存在"
+        },
+        {
+          "type": "file",
+          "path": "docs/C-verification.md",
+          "minBytes": 800,
+          "label": "C 模块验证记录存在"
+        }
+      ]
+    },
+    {
+      "id": "P10",
+      "ref": "10)",
+      "title": "合规：合成数据 / 无独占声明 / 内容审核",
+      "milestone": "ALL",
+      "module": "ALL",
+      "requirement": "示例数据为合成或脱敏，无真实客户/患者/工厂机密；传统文化原型与宗教场所名称未被声明为独占权利。",
+      "checks": [
+        {
+          "type": "grep",
+          "path": "README.md",
+          "pattern": "合成|脱敏",
+          "min": 2,
+          "label": "README 声明合成数据"
+        },
+        {
+          "type": "grep",
+          "path": "pages/m2.html",
+          "pattern": "合成",
+          "min": 1,
+          "label": "M2 页面标注合成样例"
+        },
+        {
+          "type": "grep",
+          "path": "pages/ip.html",
+          "pattern": "自制|原创",
+          "min": 1,
+          "label": "IP 页面声明自制/原创"
+        },
+        {
+          "type": "grep",
+          "path": "config/ip_story.json",
+          "pattern": "独占|不声明",
+          "min": 1,
+          "label": "IP 配置含非独占声明"
+        },
+        {
+          "type": "file",
+          "path": "docs/C-verification.md",
+          "minBytes": 800,
+          "label": "内容审核验证记录存在"
+        }
+      ]
+    }
+  ]
+}

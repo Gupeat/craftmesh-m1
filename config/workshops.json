@@ -1,0 +1,54 @@
+{
+  "_note": "工坊产能与工艺能力：全部为合成样例，不代表任何真实工厂、设备清单或资质。字段可按企业实际口径替换。",
+  "sampleData": true,
+  "workshops": [
+    {
+      "id": "ws-jewel-01",
+      "name": "滨海珠宝精密工坊（合成样例）",
+      "region": "广东·汕尾",
+      "processes": ["casting", "inlay", "engraving"],
+      "materials": ["brass", "silver"],
+      "maxDimensionMm": 120,
+      "dailyCapacity": 40,
+      "leadDays": 7,
+      "minOrderQty": 10,
+      "note": "合成样例：仅用于演示派单能力匹配，未接真实设备。"
+    },
+    {
+      "id": "ws-jewel-02",
+      "name": "湾区镶嵌小工坊（合成样例）",
+      "region": "广东·深圳",
+      "processes": ["inlay", "engraving"],
+      "materials": ["brass", "silver"],
+      "maxDimensionMm": 80,
+      "dailyCapacity": 18,
+      "leadDays": 5,
+      "minOrderQty": 12,
+      "note": "合成样例：产能小、交期短，用于演示能力不匹配与产能不足的拒绝分支。"
+    },
+    {
+      "id": "ws-wood-01",
+      "name": "山门木作工坊（合成样例）",
+      "region": "广东·潮州",
+      "processes": ["joinery", "carving"],
+      "materials": ["wood"],
+      "maxDimensionMm": 400,
+      "dailyCapacity": 12,
+      "leadDays": 10,
+      "minOrderQty": 8,
+      "note": "合成样例：只做木作，用于演示行业切换后的派单候选变化。"
+    },
+    {
+      "id": "ws-wood-02",
+      "name": "木纹车旋小组（合成样例）",
+      "region": "福建·泉州",
+      "processes": ["carving"],
+      "materials": ["wood"],
+      "maxDimensionMm": 260,
+      "dailyCapacity": 9,
+      "leadDays": 12,
+      "minOrderQty": 12,
+      "note": "合成样例：只做雕刻，不含榫卯。"
+    }
+  ]
+}

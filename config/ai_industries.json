@@ -1,0 +1,1225 @@
+{
+  "_note": "B · 企服 AI 行业配置（珠宝 / 木作）。所有客户、工坊、价格与案例均为合成样例，仅用于演示；切块与工作流参数可被非程序员直接维护。",
+  "sampleData": true,
+  "version": "AI-B.1.0",
+  "defaultIndustry": "jewelry",
+  "industries": {
+    "jewelry": {
+      "id": "jewelry",
+      "name": "珠宝定制",
+      "nameEn": "Jewelry Customization",
+      "tagline": "小批量婚戒 · 18K 金与银饰镶嵌",
+      "summary": "面向独立设计师与小型品牌的定制珠宝：工期、报价与质检口径明确，适合演示“知识检索 → 询盘线索 → 工作流”的闭环。",
+      "productTerms": ["婚戒", "对戒", "戒指", "项链", "手链", "耳环", "吊坠", "胸针", "定制首饰"],
+      "glossary": [
+        {
+          "zh": "圈口",
+          "en": "ring size",
+          "ja": "リングサイズ",
+          "note": "港号 / 日号换算，成交前以实体测量为准"
+        },
+        {
+          "zh": "金重",
+          "en": "metal weight",
+          "ja": "地金重量",
+          "note": "交付前复核，质保单记录净金重"
+        },
+        {
+          "zh": "主石",
+          "en": "center stone",
+          "ja": "センターストーン",
+          "note": "4C 参数需与证书一致"
+        },
+        {
+          "zh": "执模",
+          "en": "pre-polish fitting",
+          "ja": "地金仕上げ",
+          "note": "镶嵌前检查爪位与石台"
+        },
+        {
+          "zh": "蜡模",
+          "en": "wax pattern",
+          "ja": "ワックス型",
+          "note": "3D 打印蜡模公差 0.05mm"
+        },
+        {
+          "zh": "起订量",
+          "en": "minimum order quantity",
+          "ja": "最小ロット",
+          "note": "单件起，批量 10 件进入档位价"
+        },
+        {
+          "zh": "损耗率",
+          "en": "metal loss rate",
+          "ja": "ロス率",
+          "note": "18K 金按 6% 计入金料成本"
+        }
+      ],
+      "knowledgeDocs": [
+        {
+          "id": "kb-jw-delivery",
+          "title": "珠宝定制交付流程与工期口径",
+          "version": "v1.3",
+          "status": "published",
+          "source": "珠宝工艺组内部作业手册（合成样例）",
+          "owner": "工艺运营组（合成）",
+          "updatedAt": "2026-10-18",
+          "chunks": [
+            {
+              "text": "标准定制订单依次经过需求确认、设计出图、蜡模制作、执模、镶嵌、质检与交付七个节点。单件婚戒常规工期为 18–25 个自然日，起算点是设计稿书面确认且定金到账的次日。",
+              "keywords": [
+                "定制流程",
+                "工期",
+                "婚戒",
+                "节点",
+                "定金"
+              ]
+            },
+            {
+              "text": "加急单必须在需求确认时标注，工期可压缩至 12–15 个自然日，加收订单金额 15% 的加急费；加急不改变质检标准，只调整排产优先级。",
+              "keywords": [
+                "加急",
+                "工期",
+                "加急费",
+                "排产"
+              ]
+            },
+            {
+              "text": "设计改款以两轮为限：第一轮免费，第二轮起每次收取设计工本费 300 元。已开蜡模后取消订单，按已发生工时结算，蜡模与执模费用不退。",
+              "keywords": [
+                "改款",
+                "设计费",
+                "取消订单",
+                "蜡模",
+                "执模"
+              ]
+            },
+            {
+              "text": "交付前必须完成金重、石重、圈口三项复核，并在质保单上记录净金重、主石证书编号、保养说明与售后期限。",
+              "keywords": [
+                "交付",
+                "复核",
+                "金重",
+                "石重",
+                "圈口",
+                "质保单"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "kb-jw-quote",
+          "title": "珠宝定制报价口径与损耗规则",
+          "version": "v2.0",
+          "status": "published",
+          "source": "珠宝报价评审纪要（合成样例）",
+          "owner": "报价审核组（合成）",
+          "updatedAt": "2026-10-21",
+          "chunks": [
+            {
+              "text": "报价由金料、主石、副石、工费、损耗与税费构成。18K 金按当日基础金价乘以 0.75 折算，损耗率按 6% 计入金料成本；报价单需分别列出各项，不得合并为一口价。",
+              "keywords": [
+                "报价",
+                "18K金",
+                "损耗率",
+                "金料",
+                "税费",
+                "工费"
+              ]
+            },
+            {
+              "text": "银饰与铜镀金产品按件报价，工费按工艺复杂度分三档：素圈 120 元起，镶嵌 280 元起，手工雕蜡 480 元起。批量订单 10 件起订，可按档位下调 8%–15%。",
+              "keywords": [
+                "银饰",
+                "起订量",
+                "工费",
+                "批量",
+                "10件"
+              ]
+            },
+            {
+              "text": "报价有效期为 7 个自然日，金价波动超过 3% 时可重新核价并书面告知客户。定金比例 30%，尾款在发货前结清。",
+              "keywords": [
+                "报价有效期",
+                "定金",
+                "尾款",
+                "金价波动"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "kb-jw-quality",
+          "title": "珠宝质检标准与售后边界",
+          "version": "v1.1",
+          "status": "published",
+          "source": "质检组作业指导书（合成样例）",
+          "owner": "质检组（合成）",
+          "updatedAt": "2026-10-12",
+          "chunks": [
+            {
+              "text": "镶嵌类产品逐件检查爪位对称度、石台水平度与牢固度：爪镶单爪间隙不大于 0.05mm，轻压主石不得有松动；包镶边缘不得高于石面 0.1mm。",
+              "keywords": [
+                "质检",
+                "爪镶",
+                "牢固度",
+                "包镶",
+                "公差"
+              ]
+            },
+            {
+              "text": "抛光表面在 10 倍放大镜下允许存在不超过 0.02mm 的细微砂痕，不得有肉眼可见的划伤、麻点或镀层脱落。",
+              "keywords": [
+                "抛光",
+                "砂痕",
+                "镀层",
+                "外观"
+              ]
+            },
+            {
+              "text": "售后提供 30 天内一次免费圈口调整（±2 号以内），非人为损坏提供 1 年保修；改色、改款、第三方维修过的产品不在保修范围。",
+              "keywords": [
+                "售后",
+                "圈口调整",
+                "保修",
+                "人为损坏"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "kb-jw-ring-size",
+          "title": "圈口测量与尺寸换算（演示口径）",
+          "version": "v1.0",
+          "status": "published",
+          "source": "门店测量培训材料（合成样例）",
+          "owner": "零售支持组（合成）",
+          "updatedAt": "2026-09-28",
+          "chunks": [
+            {
+              "text": "圈口以港号为主、日号为辅。港号 12 对应内径约 16.5mm，港号 14 对应约 17.3mm，港号 16 对应约 18.1mm；换算表仅作参考，下单前应以实体测量为准。",
+              "keywords": [
+                "圈口",
+                "港号",
+                "内径",
+                "换算",
+                "测量"
+              ]
+            },
+            {
+              "text": "宽版戒指（宽度大于 6mm）建议在原圈口基础上加 0.5 号，避免佩戴过紧；冬季测量偏小、夏季偏大，复测应间隔 2 小时以上。",
+              "keywords": [
+                "宽版戒指",
+                "圈口",
+                "佩戴",
+                "复测"
+              ]
+            }
+          ]
+        }
+      ],
+      "agents": [
+        {
+          "id": "agent-jw-advisor",
+          "name": "珠宝定制顾问",
+          "model": "local-rule-engine",
+          "modelLabel": "本地规则引擎",
+          "systemPrompt": "你是珠宝定制企业的交付顾问。只依据已发布的知识库回答，引用必须给出文档标题、版本与 docId#chunk；不承诺未写入文档的价格与工期；需要人工跟进时引导用户留下姓名、邮箱与需求，并创建 CRM 线索；被要求做自动化时生成工作流草稿，不虚构执行结果。",
+          "tools": [
+            "search_knowledge",
+            "create_lead",
+            "draft_workflow"
+          ],
+          "starterQuestions": [
+            "18K 金婚戒的常规工期和加急费是多少？",
+            "报价里的损耗率怎么算？",
+            "圈口 14 号对应内径多少？"
+          ],
+          "intentHints": {
+            "lead": [
+              "询盘",
+              "请登记",
+              "留个联系方式",
+              "联系我",
+              "采购",
+              "预算",
+              "contact me",
+              "get a quote",
+              "send a quote",
+              "inquiry"
+            ],
+            "workflow": [
+              "自动化",
+              "工作流",
+              "workflow",
+              "automation",
+              "帮我做一个流程"
+            ]
+          }
+        }
+      ],
+      "workflowTemplates": [
+        {
+          "id": "wf-jw-inquiry",
+          "name": "珠宝询盘分诊与首响应",
+          "version": "v1.2",
+          "status": "active",
+          "description": "官网询盘进入后：校验字段 → 检索工期与报价口径 → 线索分级 → 写 CRM → 生成报价草稿 → 通知运营。",
+          "trigger": {
+            "type": "inquiry.created",
+            "label": "官网询盘提交时"
+          },
+          "requiredInputs": [
+            "name",
+            "email",
+            "interest"
+          ],
+          "inputExample": {
+            "name": "周先生",
+            "email": "zhou@example.com",
+            "country": "CN",
+            "interest": "18K 金婚戒定制",
+            "budget": "80000",
+            "lang": "zh"
+          },
+          "steps": [
+            {
+              "name": "校验询盘必填字段",
+              "type": "validate_input",
+              "config": {
+                "required": [
+                  "name",
+                  "email",
+                  "interest"
+                ],
+                "emailField": "email"
+              }
+            },
+            {
+              "name": "检索工期与报价口径",
+              "type": "search_knowledge",
+              "config": {
+                "queryField": "interest",
+                "querySuffix": "工期 报价 起订量",
+                "topK": 2
+              }
+            },
+            {
+              "name": "线索分级",
+              "type": "score_lead",
+              "config": {
+                "aBudgetCents": 5000000,
+                "bBudgetCents": 1500000,
+                "priorityCountries": [
+                  "US",
+                  "JP",
+                  "DE",
+                  "GB",
+                  "AU",
+                  "CA"
+                ]
+              }
+            },
+            {
+              "name": "写入 CRM",
+              "type": "create_lead",
+              "config": {
+                "source": "工作流：珠宝询盘分诊"
+              }
+            },
+            {
+              "name": "生成报价草稿",
+              "type": "draft_quote",
+              "config": {
+                "currency": "CNY",
+                "baseRangeCents": [
+                  2800000,
+                  6800000
+                ],
+                "depositPct": 30,
+                "validityDays": 7,
+                "minQty": 10,
+                "note": "按金重与主石参数复核"
+              }
+            },
+            {
+              "name": "通知运营组",
+              "type": "notify",
+              "config": {
+                "to": "运营组",
+                "channel": "in_app",
+                "message": "新询盘 {leadId}：{name} / {interest} / 等级 {grade}"
+              }
+            },
+            {
+              "name": "A 级线索升级提醒",
+              "type": "notify",
+              "config": {
+                "to": "销售负责人",
+                "channel": "in_app",
+                "message": "A 级线索 {leadId} 预算 {budgetText}，建议 2 小时内跟进"
+              },
+              "condition": {
+                "field": "grade",
+                "op": "eq",
+                "value": "A"
+              }
+            }
+          ]
+        },
+        {
+          "id": "wf-jw-site-seo",
+          "name": "三语站点发布前 SEO 检查",
+          "version": "v1.0",
+          "status": "active",
+          "description": "站点发布前检查三语 SEO 元数据与关键词覆盖，覆盖不足则失败，修改后重试。",
+          "trigger": {
+            "type": "manual",
+            "label": "发布前手动触发"
+          },
+          "requiredInputs": [
+            "lang"
+          ],
+          "inputExample": {
+            "lang": "zh"
+          },
+          "steps": [
+            {
+              "name": "校验语言参数",
+              "type": "validate_input",
+              "config": {
+                "required": [
+                  "lang"
+                ],
+                "enumField": "lang",
+                "enum": [
+                  "zh",
+                  "en",
+                  "ja"
+                ]
+              }
+            },
+            {
+              "name": "检查 SEO 关键词覆盖",
+              "type": "seo_check",
+              "config": {
+                "minCoverageBps": 8000
+              }
+            },
+            {
+              "name": "通知内容负责人",
+              "type": "notify",
+              "config": {
+                "to": "内容负责人",
+                "channel": "in_app",
+                "message": "语言 {lang} 的 SEO 检查完成，覆盖率 {coverageBps} bps"
+              }
+            }
+          ]
+        }
+      ],
+      "site": {
+        "zh": {
+          "lang": "zh",
+          "label": "中文",
+          "path": "/pages/ai.html?lang=zh",
+          "title": "山雾珠宝 · 小批量婚戒定制（合成样例）",
+          "description": "为独立设计师与小型品牌提供小批量珠宝定制：18K 金与银饰镶嵌，起订量 10 件，交付周期 18–25 天，报价拆到金料、工费与损耗。",
+          "keywords": [
+            "珠宝定制",
+            "婚戒定制",
+            "18K金",
+            "小批量",
+            "起订量",
+            "交付周期"
+          ],
+          "hero": {
+            "headline": "把一枚戒指，做成可以交付的承诺",
+            "subline": "设计稿、报价、工期与质检口径，全部写在纸上。",
+            "cta": "提交定制需求"
+          },
+          "sections": [
+            {
+              "heading": "小批量，也能认真打样",
+              "body": "起订量 10 件，单件婚戒同样接；银饰与 18K 金均可先打样，设计改款两轮内完成。"
+            },
+            {
+              "heading": "报价拆到每一项",
+              "body": "金料、主石、副石、工费、损耗与税费分项列示；报价有效期 7 天，金价波动超过 3% 时书面复核。"
+            },
+            {
+              "heading": "交付周期与加急",
+              "body": "常规交付周期 18–25 个自然日，加急可压缩至 12–15 天并加收 15%；起算点是设计稿确认且定金到账。"
+            }
+          ],
+          "faq": [
+            {
+              "q": "婚戒定制需要多久？",
+              "a": "常规 18–25 个自然日；加急 12–15 天，加收 15% 加急费。"
+            },
+            {
+              "q": "可以只做一件吗？",
+              "a": "可以。单件按件报价；批量 10 件起进入档位价，工费可下调 8%–15%。"
+            },
+            {
+              "q": "圈口不合适怎么办？",
+              "a": "30 天内可免费调整一次，范围 ±2 号；宽版戒指建议加 0.5 号。"
+            }
+          ]
+        },
+        "en": {
+          "lang": "en",
+          "label": "English",
+          "path": "/pages/ai.html?lang=en",
+          "title": "Shanwu Jewelry · Small-batch Custom Rings (Synthetic Demo)",
+          "description": "Small-batch jewelry for independent designers and emerging brands: 18K gold and silver settings, minimum order 10 pieces, lead time 18–25 days, itemized quotes.",
+          "keywords": [
+            "custom jewelry",
+            "wedding rings",
+            "18K gold",
+            "small batch",
+            "minimum order",
+            "lead time"
+          ],
+          "hero": {
+            "headline": "A ring that is as deliverable as it is personal",
+            "subline": "Design, pricing, lead time and quality checks — all written down before we start.",
+            "cta": "Send a custom request"
+          },
+          "sections": [
+            {
+              "heading": "Sampling is part of the job",
+              "body": "Minimum order 10 pieces, single rings welcome. Silver and 18K gold samples are available; up to two design revisions."
+            },
+            {
+              "heading": "Quotes you can audit",
+              "body": "Metal, center stone, side stones, labor, loss and tax are listed separately. Quotes are valid for 7 days and rechecked if gold moves more than 3%."
+            },
+            {
+              "heading": "Lead time, stated plainly",
+              "body": "Standard lead time is 18–25 calendar days. Rush delivery takes 12–15 days with a 15% surcharge, counted from design sign-off and deposit."
+            }
+          ],
+          "faq": [
+            {
+              "q": "How long does a custom ring take?",
+              "a": "18–25 calendar days standard; 12–15 days rush with a 15% surcharge."
+            },
+            {
+              "q": "Can I order just one piece?",
+              "a": "Yes. Single pieces are quoted per piece; orders of 10+ unlock tiered labor pricing (8%–15% lower)."
+            },
+            {
+              "q": "What if the ring size is wrong?",
+              "a": "One free resize within 30 days, up to ±2 sizes. Wide bands are usually ordered half a size up."
+            }
+          ]
+        },
+        "ja": {
+          "lang": "ja",
+          "label": "日本語",
+          "path": "/pages/ai.html?lang=ja",
+          "title": "山霧ジュエリー · 小ロット婚約指輪の受注制作（合成サンプル）",
+          "description": "独立デザイナーと小規模ブランド向けの小ロットジュエリー。18Kゴールドとシルバーの石留め、最小ロット10点、納期18〜25日、内訳明細の見積もり。",
+          "keywords": [
+            "ジュエリー",
+            "婚約指輪",
+            "18Kゴールド",
+            "小ロット",
+            "最小ロット",
+            "納期"
+          ],
+          "hero": {
+            "headline": "想いを、納品できる約束に。",
+            "subline": "デザイン、価格、納期、品質基準を、着手前にすべて明文化します。",
+            "cta": "制作相談を送る"
+          },
+          "sections": [
+            {
+              "heading": "試作から丁寧に",
+              "body": "最小ロットは10点、1点からの受注も可能。シルバーと18Kゴールドの試作に対応し、デザイン修正は2回まで。"
+            },
+            {
+              "heading": "内訳が見える見積もり",
+              "body": "地金、センターストーン、脇石、工賃、ロス、税金を分けて表示。見積有効期間は7日、金価格が3%以上変動した場合は再計算します。"
+            },
+            {
+              "heading": "納期と特急対応",
+              "body": "通常納期は18〜25日。特急は12〜15日で15%の特急料金。デザイン確定と手付金入金の翌日から起算します。"
+            }
+          ],
+          "faq": [
+            {
+              "q": "婚約指輪の制作期間は？",
+              "a": "通常18〜25日、特急は12〜15日（15%加算）。"
+            },
+            {
+              "q": "1点だけでも注文できますか？",
+              "a": "可能です。1点は都度見積もり、10点以上で工賃が8%〜15%下がるロット価格を適用します。"
+            },
+            {
+              "q": "サイズが合わない場合は？",
+              "a": "30日以内に1回まで無料サイズ調整（±2号）。幅広リングは0.5号上をおすすめします。"
+            }
+          ]
+        }
+      },
+      "crmStages": [
+        {
+          "id": "new",
+          "label": "新询盘",
+          "labelEn": "New",
+          "labelJa": "新規",
+          "tone": "blue"
+        },
+        {
+          "id": "contacted",
+          "label": "已联系",
+          "labelEn": "Contacted",
+          "labelJa": "連絡済み",
+          "tone": "blue"
+        },
+        {
+          "id": "qualified",
+          "label": "已确认需求",
+          "labelEn": "Qualified",
+          "labelJa": "要件確認済み",
+          "tone": "amber"
+        },
+        {
+          "id": "quoted",
+          "label": "已报价",
+          "labelEn": "Quoted",
+          "labelJa": "見積提出済み",
+          "tone": "amber"
+        },
+        {
+          "id": "won",
+          "label": "已成交",
+          "labelEn": "Won",
+          "labelJa": "受注",
+          "tone": "green"
+        },
+        {
+          "id": "lost",
+          "label": "已流失",
+          "labelEn": "Lost",
+          "labelJa": "失注",
+          "tone": "red"
+        }
+      ]
+    },
+    "woodcraft": {
+      "id": "woodcraft",
+      "name": "木作定制",
+      "nameEn": "Woodcraft & Joinery",
+      "tagline": "实木桌柜 · 空间木作与安装",
+      "summary": "面向住宅与小型商业空间的全屋木作：以含水率、榫卯公差与安装验收为可核对的质量口径，演示多语言独立站与询盘分诊。",
+      "productTerms": ["餐桌", "书柜", "衣柜", "茶桌", "椅子", "床", "橱柜", "屏风", "木门", "户外家具", "定制家具", "空间木作"],
+      "glossary": [
+        {
+          "zh": "含水率",
+          "en": "moisture content",
+          "ja": "含水率",
+          "note": "8%–12%，每批养生后复测"
+        },
+        {
+          "zh": "榫卯",
+          "en": "mortise-and-tenon joint",
+          "ja": "指物（ほぞ組み）",
+          "note": "配合间隙 0.2–0.4mm"
+        },
+        {
+          "zh": "木蜡油",
+          "en": "hardwax oil",
+          "ja": "蜜蝋オイル",
+          "note": "两底两面，7 天完全固化"
+        },
+        {
+          "zh": "复尺",
+          "en": "site re-measurement",
+          "ja": "再採寸",
+          "note": "异形空间至少两次"
+        },
+        {
+          "zh": "深化图",
+          "en": "shop drawing",
+          "ja": "実施図",
+          "note": "确认后起算生产周期"
+        },
+        {
+          "zh": "打样",
+          "en": "sample / prototype",
+          "ja": "試作",
+          "note": "可选，确认材色与工艺"
+        },
+        {
+          "zh": "穿带",
+          "en": "breadboard cleat",
+          "ja": "反り止め",
+          "note": "大板防翘，配合卸力槽"
+        },
+        {
+          "zh": "起订量",
+          "en": "minimum order",
+          "ja": "最小ロット",
+          "note": "单件起，批量按项目议价"
+        }
+      ],
+      "knowledgeDocs": [
+        {
+          "id": "kb-wd-moisture",
+          "title": "木材含水率与榫卯稳定性",
+          "version": "v1.2",
+          "status": "published",
+          "source": "木作工艺标准（合成样例）",
+          "owner": "木作工艺组（合成）",
+          "updatedAt": "2026-10-20",
+          "chunks": [
+            {
+              "text": "实木家具投产前含水率应控制在 8%–12%，南方梅雨季建议上限 10%。每批木材需在养生 7–14 天后复测，含水率偏差超过 2% 的板材必须二次平衡。",
+              "keywords": [
+                "含水率",
+                "实木",
+                "养生",
+                "板材",
+                "梅雨季"
+              ]
+            },
+            {
+              "text": "榫卯配合间隙控制在 0.2–0.4mm，过紧会挤裂木纤维，过松会影响结构强度；组装前需在暗榫处预留 0.1mm 的胶层空间。",
+              "keywords": [
+                "榫卯",
+                "间隙",
+                "组装",
+                "公差",
+                "胶层"
+              ]
+            },
+            {
+              "text": "大板桌面含水率高于 12% 时，必须采用穿带或蝴蝶榫加固，并在背面开设卸力槽；开裂风险需在报价单中书面提示。",
+              "keywords": [
+                "大板",
+                "穿带",
+                "蝴蝶榫",
+                "开裂",
+                "卸力槽"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "kb-wd-finish",
+          "title": "木蜡油涂装与养护说明",
+          "version": "v1.5",
+          "status": "published",
+          "source": "涂装车间作业卡（合成样例）",
+          "owner": "涂装组（合成）",
+          "updatedAt": "2026-10-16",
+          "chunks": [
+            {
+              "text": "木蜡油采用两底两面工艺，每遍间隔 4 小时以上，最后一遍完成后 24 小时可轻度使用、7 天完全固化。施工环境温度宜在 15–30℃，湿度低于 75%。",
+              "keywords": [
+                "木蜡油",
+                "两底两面",
+                "固化",
+                "湿度",
+                "施工",
+                "涂装"
+              ]
+            },
+            {
+              "text": "打磨从 180 目起步，逐级到 320 目，最后顺纹轻磨；涂装前用除尘布清除木粉，避免油膜出现颗粒。",
+              "keywords": [
+                "打磨",
+                "目数",
+                "除尘",
+                "油膜"
+              ]
+            },
+            {
+              "text": "日常养护每 6–12 个月补涂一次木蜡油，先用 400 目砂纸顺纹轻磨再薄涂；不可使用含强碱或研磨颗粒的清洁剂。",
+              "keywords": [
+                "养护",
+                "补涂",
+                "清洁剂",
+                "木蜡油"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "kb-wd-custom",
+          "title": "木作定制流程、交期与安装",
+          "version": "v1.0",
+          "status": "published",
+          "source": "项目管理部交付手册（合成样例）",
+          "owner": "项目管理组（合成）",
+          "updatedAt": "2026-10-08",
+          "chunks": [
+            {
+              "text": "定制流程为需求访谈、现场或远程测量、深化图确认、打样（可选）、生产、试装、包装发货与上门安装八个阶段。深化图确认后生产周期为 25–35 个自然日。",
+              "keywords": [
+                "定制流程",
+                "测量",
+                "深化图",
+                "交期",
+                "安装",
+                "打样"
+              ]
+            },
+            {
+              "text": "异形空间必须现场复尺两次，复尺数据与图纸偏差超过 5mm 时暂停下料并书面确认。",
+              "keywords": [
+                "复尺",
+                "异形",
+                "图纸",
+                "偏差"
+              ]
+            },
+            {
+              "text": "安装验收检查门缝均匀度、抽屉推拉顺滑度、台面水平度与五金固定；验收单需客户签字并留存现场照片。",
+              "keywords": [
+                "安装",
+                "验收",
+                "门缝",
+                "五金",
+                "照片"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "kb-wd-qc",
+          "title": "木作出厂质检与包装规范",
+          "version": "v1.1",
+          "status": "published",
+          "source": "质检与物流联合规范（合成样例）",
+          "owner": "质检组（合成）",
+          "updatedAt": "2026-10-10",
+          "chunks": [
+            {
+              "text": "出厂质检逐件检查：榫卯缝隙不大于 0.3mm，表面无鼓包与漏涂，五金件开合顺畅，抽屉左右间隙差不大于 1mm。",
+              "keywords": [
+                "出厂质检",
+                "榫卯缝隙",
+                "五金",
+                "抽屉",
+                "漏涂"
+              ]
+            },
+            {
+              "text": "包装采用珍珠棉护角、气泡膜整体包裹与五层瓦楞纸箱；大件增加木架，运输标签注明“防潮、勿压、不可倒置”。",
+              "keywords": [
+                "包装",
+                "珍珠棉",
+                "木架",
+                "运输",
+                "防潮"
+              ]
+            },
+            {
+              "text": "到货 48 小时内完成外观与结构检查，发现运输破损需保留外包装并拍摄开箱视频，超时可能影响理赔。",
+              "keywords": [
+                "到货",
+                "运输破损",
+                "开箱视频",
+                "理赔"
+              ]
+            }
+          ]
+        }
+      ],
+      "agents": [
+        {
+          "id": "agent-wd-advisor",
+          "name": "木作交付顾问",
+          "model": "local-rule-engine",
+          "modelLabel": "本地规则引擎",
+          "systemPrompt": "你是木作定制企业的交付顾问。只依据已发布的知识库回答，引用必须给出文档标题、版本与 docId#chunk；不对开裂、交期做绝对承诺；需要现场条件时提示复尺；引导用户留下姓名、邮箱与空间需求并创建 CRM 线索；被要求做自动化时生成工作流草稿，不虚构执行结果。",
+          "tools": [
+            "search_knowledge",
+            "create_lead",
+            "draft_workflow"
+          ],
+          "starterQuestions": [
+            "黑胡桃餐桌的含水率要控制在多少？",
+            "木蜡油要涂几遍，多久能使用？",
+            "异形柜的复尺和交期怎么安排？"
+          ],
+          "intentHints": {
+            "lead": [
+              "询盘",
+              "请登记",
+              "留个联系方式",
+              "联系我",
+              "采购",
+              "预算",
+              "contact me",
+              "get a quote",
+              "send a quote",
+              "inquiry"
+            ],
+            "workflow": [
+              "自动化",
+              "工作流",
+              "workflow",
+              "automation",
+              "帮我做一个流程"
+            ]
+          }
+        }
+      ],
+      "workflowTemplates": [
+        {
+          "id": "wf-wd-inquiry",
+          "name": "木作询盘分诊与打样评估",
+          "version": "v1.1",
+          "status": "active",
+          "description": "空间木作询盘进入后：校验字段 → 检索含水率与交期口径 → 线索分级 → 写 CRM → 生成报价草稿 → 通知项目组。",
+          "trigger": {
+            "type": "inquiry.created",
+            "label": "官网 / 门店询盘提交时"
+          },
+          "requiredInputs": [
+            "name",
+            "email",
+            "interest"
+          ],
+          "inputExample": {
+            "name": "林女士",
+            "email": "lin@example.com",
+            "country": "CN",
+            "interest": "黑胡桃户外餐桌",
+            "budget": "120000",
+            "lang": "zh"
+          },
+          "steps": [
+            {
+              "name": "校验询盘必填字段",
+              "type": "validate_input",
+              "config": {
+                "required": [
+                  "name",
+                  "email",
+                  "interest"
+                ],
+                "emailField": "email"
+              }
+            },
+            {
+              "name": "检索含水率与交期",
+              "type": "search_knowledge",
+              "config": {
+                "queryField": "interest",
+                "querySuffix": "含水率 木蜡油 交期",
+                "topK": 2
+              }
+            },
+            {
+              "name": "线索分级",
+              "type": "score_lead",
+              "config": {
+                "aBudgetCents": 6000000,
+                "bBudgetCents": 2000000,
+                "priorityCountries": [
+                  "US",
+                  "JP",
+                  "DE",
+                  "GB",
+                  "AU",
+                  "CA"
+                ]
+              }
+            },
+            {
+              "name": "写入 CRM",
+              "type": "create_lead",
+              "config": {
+                "source": "工作流：木作询盘分诊"
+              }
+            },
+            {
+              "name": "生成报价草稿",
+              "type": "draft_quote",
+              "config": {
+                "currency": "CNY",
+                "baseRangeCents": [
+                  4800000,
+                  18000000
+                ],
+                "depositPct": 40,
+                "validityDays": 10,
+                "minQty": 1,
+                "note": "按材种、尺寸与安装范围复核"
+              }
+            },
+            {
+              "name": "通知项目组",
+              "type": "notify",
+              "config": {
+                "to": "项目组",
+                "channel": "in_app",
+                "message": "新询盘 {leadId}：{name} / {interest} / 等级 {grade}"
+              }
+            },
+            {
+              "name": "A 级线索升级提醒",
+              "type": "notify",
+              "config": {
+                "to": "项目负责人",
+                "channel": "in_app",
+                "message": "A 级线索 {leadId} 预算 {budgetText}，建议安排复尺"
+              },
+              "condition": {
+                "field": "grade",
+                "op": "eq",
+                "value": "A"
+              }
+            }
+          ]
+        },
+        {
+          "id": "wf-wd-site-seo",
+          "name": "三语站点发布前 SEO 检查",
+          "version": "v1.0",
+          "status": "active",
+          "description": "站点发布前检查三语 SEO 元数据与关键词覆盖，覆盖不足则失败，修改后重试。",
+          "trigger": {
+            "type": "manual",
+            "label": "发布前手动触发"
+          },
+          "requiredInputs": [
+            "lang"
+          ],
+          "inputExample": {
+            "lang": "zh"
+          },
+          "steps": [
+            {
+              "name": "校验语言参数",
+              "type": "validate_input",
+              "config": {
+                "required": [
+                  "lang"
+                ],
+                "enumField": "lang",
+                "enum": [
+                  "zh",
+                  "en",
+                  "ja"
+                ]
+              }
+            },
+            {
+              "name": "检查 SEO 关键词覆盖",
+              "type": "seo_check",
+              "config": {
+                "minCoverageBps": 8000
+              }
+            },
+            {
+              "name": "通知内容负责人",
+              "type": "notify",
+              "config": {
+                "to": "内容负责人",
+                "channel": "in_app",
+                "message": "语言 {lang} 的 SEO 检查完成，覆盖率 {coverageBps} bps"
+              }
+            }
+          ]
+        }
+      ],
+      "site": {
+        "zh": {
+          "lang": "zh",
+          "label": "中文",
+          "path": "/pages/ai.html?lang=zh",
+          "title": "山门木作 · 实木定制与空间木作（合成样例）",
+          "description": "实木桌柜与空间木作的定制交付：含水率 8%–12%，榫卯间隙 0.2–0.4mm，木蜡油两底两面，生产周期 25–35 天，安装验收留档。",
+          "keywords": [
+            "实木定制",
+            "木作",
+            "榫卯",
+            "木蜡油",
+            "含水率",
+            "交期"
+          ],
+          "hero": {
+            "headline": "让木头按空间的尺寸生长",
+            "subline": "从复尺、深化图到安装验收，每一步都有可核对的数字。",
+            "cta": "预约测量"
+          },
+          "sections": [
+            {
+              "heading": "木材先养生，再投产",
+              "body": "实木含水率控制在 8%–12%，每批养生 7–14 天后复测；偏差超过 2% 的板材二次平衡。"
+            },
+            {
+              "heading": "细木作的公差写进合同",
+              "body": "榫卯配合间隙 0.2–0.4mm，抽屉左右间隙差不超过 1mm，安装验收逐项签字。"
+            },
+            {
+              "heading": "涂装与交期",
+              "body": "木蜡油两底两面，环境湿度低于 75%；深化图确认后生产周期 25–35 天，异形空间需两次复尺。"
+            }
+          ],
+          "faq": [
+            {
+              "q": "实木会不会开裂？",
+              "a": "含水率控制在 8%–12% 并做穿带 / 卸力槽可降低风险，但实木仍有自然变化，报价单会书面提示。"
+            },
+            {
+              "q": "交期多久？",
+              "a": "深化图确认后 25–35 个自然日；异形或大板项目需额外预留养生与试装时间。"
+            },
+            {
+              "q": "运输和安装怎么算？",
+              "a": "大件使用木架包装，到货 48 小时内验收；安装范围与费用按项目单独确认。"
+            }
+          ]
+        },
+        "en": {
+          "lang": "en",
+          "label": "English",
+          "path": "/pages/ai.html?lang=en",
+          "title": "Shanmen Woodworks · Bespoke Solid Wood (Synthetic Demo)",
+          "description": "Bespoke custom furniture and fitted woodwork: solid-wood tables, cabinets and joinery with moisture content 8%–12%, 0.2–0.4 mm gaps, hardwax oil finish and 25–35 day lead time.",
+          "keywords": [
+            "custom furniture",
+            "joinery",
+            "hardwax oil",
+            "moisture content",
+            "lead time",
+            "fitted woodwork"
+          ],
+          "hero": {
+            "headline": "Let the wood grow to the size of the room",
+            "subline": "From site measurement to sign-off, every step has a number you can check.",
+            "cta": "Book a measurement"
+          },
+          "sections": [
+            {
+              "heading": "Custom furniture, built to the room",
+              "body": "This fitted woodwork starts with site measurement. Moisture content is held at 8%–12% and rechecked after 7–14 days of conditioning; boards off by more than 2% are re-balanced."
+            },
+            {
+              "heading": "Tolerances in the contract",
+              "body": "Joinery gaps stay between 0.2 and 0.4 mm, drawer side gaps within 1 mm, and installation is signed off item by item."
+            },
+            {
+              "heading": "Finish and lead time",
+              "body": "Two primer and two top coats of hardwax oil at humidity below 75%. Production takes 25–35 calendar days after shop drawings are approved."
+            }
+          ],
+          "faq": [
+            {
+              "q": "Will solid wood crack?",
+              "a": "Controlled moisture and relief grooves reduce the risk, but wood still moves. The quote states this in writing."
+            },
+            {
+              "q": "How long is the lead time?",
+              "a": "25–35 calendar days after shop drawings are approved; complex or large-slab projects need extra conditioning and trial assembly."
+            },
+            {
+              "q": "How are delivery and installation handled?",
+              "a": "Large pieces ship in timber crates and must be inspected within 48 hours. Installation scope and cost are confirmed per project."
+            }
+          ]
+        },
+        "ja": {
+          "lang": "ja",
+          "label": "日本語",
+          "path": "/pages/ai.html?lang=ja",
+          "title": "山門木工 · 無垢材オーダー家具と造作（合成サンプル）",
+          "description": "無垢材のテーブル、収納、造作家具の受注制作。含水率8〜12%、指物の隙間0.2〜0.4mm、蜜蝋オイル仕上げ、生産期間25〜35日、設置検査まで記録。",
+          "keywords": [
+            "オーダー家具",
+            "指物",
+            "蜜蝋オイル",
+            "含水率",
+            "納期",
+            "造作家具"
+          ],
+          "hero": {
+            "headline": "木を、空間の寸法に合わせて育てる",
+            "subline": "採寸、実施図、設置検査まで、すべて確認できる数字で残します。",
+            "cta": "採寸を予約する"
+          },
+          "sections": [
+            {
+              "heading": "まず木材を養生",
+              "body": "含水率は8〜12%に管理し、7〜14日の養生後に再測定。2%以上ずれた板材は再平衡します。"
+            },
+            {
+              "heading": "公差を契約に明記",
+              "body": "指物の隙間は0.2〜0.4mm、引き出しの左右差は1mm以内。設置検査は項目ごとに署名します。"
+            },
+            {
+              "heading": "塗装と納期",
+              "body": "蜜蝋オイルを下塗り2回・上塗り2回、湿度75%未満で施工。実施図確定後、生産期間は25〜35日です。"
+            }
+          ],
+          "faq": [
+            {
+              "q": "無垢材は割れますか？",
+              "a": "含水率管理と反り止め加工でリスクを下げますが、木材は動きます。見積書に書面で明記します。"
+            },
+            {
+              "q": "納期はどのくらいですか？",
+              "a": "実施図確定後25〜35日。異形や大判天板は養生と仮組みの追加期間が必要です。"
+            },
+            {
+              "q": "配送と設置は？",
+              "a": "大型品は木枠で梱包し、到着後48時間以内に検品。設置範囲と費用は案件ごとに確認します。"
+            }
+          ]
+        }
+      },
+      "crmStages": [
+        {
+          "id": "new",
+          "label": "新询盘",
+          "labelEn": "New",
+          "labelJa": "新規",
+          "tone": "blue"
+        },
+        {
+          "id": "contacted",
+          "label": "已联系",
+          "labelEn": "Contacted",
+          "labelJa": "連絡済み",
+          "tone": "blue"
+        },
+        {
+          "id": "measured",
+          "label": "已测量",
+          "labelEn": "Measured",
+          "labelJa": "採寸済み",
+          "tone": "amber"
+        },
+        {
+          "id": "quoted",
+          "label": "已报价",
+          "labelEn": "Quoted",
+          "labelJa": "見積提出済み",
+          "tone": "amber"
+        },
+        {
+          "id": "won",
+          "label": "已成交",
+          "labelEn": "Won",
+          "labelJa": "受注",
+          "tone": "green"
+        },
+        {
+          "id": "lost",
+          "label": "已流失",
+          "labelEn": "Lost",
+          "labelJa": "失注",
+          "tone": "red"
+        }
+      ]
+    }
+  }
+}

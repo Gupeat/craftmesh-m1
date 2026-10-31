@@ -1,0 +1,19 @@
+{
+  "_note": "M2 商务与制造规则。非程序员可直接改这里的数字，服务端每次请求按文件 mtime 热加载。",
+  "version": 2,
+  "currency": "CNY",
+  "platformFeeBps": 2500,
+  "licenseRoyaltyBps": 1000,
+  "depositPct": 0.3,
+  "minBatch": { "casting": 20, "inlay": 12, "engraving": 15, "joinery": 10, "carving": 12 },
+  "dispatch": {
+    "maxConcurrentOrdersPerWorkshop": 3,
+    "defaultDimensionMm": 60,
+    "requireLicenseSnapshot": true
+  },
+  "quality": {
+    "reworkLimit": 2,
+    "requireNoteOnMismatch": true
+  },
+  "dispute": { "defaultRefundPct": 0.3, "windowDays": 15 }
+}

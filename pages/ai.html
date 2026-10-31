@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>CraftMesh · B 企业 AI 服务层</title>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/pages/pages.css">
+<link rel="stylesheet" href="/pages/ai.css">
+</head>
+<body data-page="ai">
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main-column">
+    <header class="topbar" id="topbar"></header>
+    <div class="content">
+      <section class="page-head">
+        <div class="page-head-copy">
+          <div class="eyebrow">B · 六产业共享企业 AI 服务层</div>
+          <h1>知识、智能体与自动化，<br>在一个可点通的服务层里</h1>
+          <p class="lede">这不是静态原型：术语、知识库、智能体工具轨迹、工作流运行、CRM 线索、三语站点文案与 SEO 检查，全部由本地 Python API 与 SQLite 实时生成。引擎是<strong>本地确定性关键词 / 字符 n-gram 规则引擎</strong>，不调用外部大模型或 API；客户、工坊、价格与文案均为合成样例。</p>
+          <div class="ai-engine-badge"><span class="live-dot"></span><span id="engineChip">本地规则引擎 · 加载中</span><span class="dot-sep">·</span><span>可复跑 · 可审计 · 不虚标</span></div>
+        </div>
+        <div class="page-actions">
+          <label class="ai-industry-switch" for="industrySelect">
+            <span>行业配置</span>
+            <select id="industrySelect" data-perm="industry.switch" aria-label="切换行业配置">
+              <option value="jewelry">珠宝定制</option>
+              <option value="woodcraft">木作定制</option>
+            </select>
+          </label>
+          <button class="btn btn-primary" data-action="run-scenario" data-perm="scenario.run" id="btnScenario">
+            <svg class="icon"><use href="#i-refresh"></use></svg><span>一键全链路自检</span>
+          </button>
+          <button class="btn" data-action="reset-demo" data-perm="demo.reset" id="btnReset">重置演示数据</button>
+          <a class="btn btn-ghost" href="/api/ai/config" target="_blank" rel="noreferrer">查看行业配置</a>
+        </div>
+      </section>
+
+      <div class="role-strip" id="roleStrip"></div>
+
+      <div class="ai-flow-ribbon" aria-label="服务层数据流">
+        <span class="flow-chip"><b>行业配置</b> 术语 · 模板 · 三语文案</span><span class="flow-arrow">→</span>
+        <span class="flow-chip"><b>知识库</b> 切块 · 引用</span><span class="flow-arrow">→</span>
+        <span class="flow-chip"><b>智能体</b> 意图 · 工具调用</span><span class="flow-arrow">→</span>
+        <span class="flow-chip"><b>工作流</b> 条件 · 重试</span><span class="flow-arrow">→</span>
+        <span class="flow-chip"><b>CRM</b> 线索 · 阶段</span><span class="flow-arrow">→</span>
+        <span class="flow-chip"><b>增长</b> 三语站点 · SEO</span>
+      </div>
+
+      <section class="kpi-grid" id="kpis" aria-label="AI 服务层概览"></section>
+
+      <section class="panel" id="scenarioPanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">一键验收 · 服务端直接调用业务函数</div>
+            <h2>17 步企业 AI 全链路自检</h2>
+            <p class="panel-copy">自检会先重置本模块演示数据，再覆盖：切行业 → 建文档 → 检索引用 → 智能体两轮（检索 / 建线索）→ 询盘写 CRM → 推进阶段 → 工作流成功、缺字段失败、补齐重试 → 三语站点与 SEO → FDE 手册 → 越权与空查询被拒。第 ⑯⑰ 步为预期失败，用来证明权限与校验真实生效。</p>
+          </div>
+          <span class="server-chip" id="scenarioChip">未运行</span>
+        </div>
+        <div id="scenarioBody" class="scenario-body">
+          <p class="empty-copy">点击右上角「一键全链路自检」，或调用 <code>POST /api/ai/scenario</code>。步骤形状与验收驾驶舱统一。</p>
+        </div>
+      </section>
+
+      <section class="panel" id="knowledgePanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">行业知识库 · 带引用检索</div>
+            <h2>文档自动切块，命中可回溯到 docId#chunk</h2>
+            <p class="panel-copy">发布状态的文档才参与检索。写入正文会按段落与句号自动切块（单块 ≤180 字），抽取术语与字符 n-gram 关键词；检索打分由关键词、二元组、三元组、标题与术语表共同决定，空查询返回 400，无命中返回空结果与改写建议。</p>
+          </div>
+          <span class="server-chip" id="kbChip">加载中</span>
+        </div>
+        <div class="split-panel aside-left">
+          <div>
+            <div class="subhead"><h3>文档台账</h3><span class="server-chip" id="docCountChip">—</span></div>
+            <div class="ai-doc-list" id="knowledgeList"><p class="empty-copy">加载中…</p></div>
+            <form class="ai-form" id="knowledgeForm" data-perm-form="knowledge.write">
+              <div class="field-label">新建 / 更新文档 <span>合成样例 · 自动切块</span></div>
+              <label class="field"><span>标题 *</span><input name="title" required maxlength="120" placeholder="例如：户外木作含水率与养护（演示）"></label>
+              <div class="ai-form-row">
+                <label class="field"><span>状态</span><select name="status"><option value="published">已发布（参与检索）</option><option value="draft">草稿（不参与检索）</option><option value="retired">已下线</option></select></label>
+                <label class="field"><span>版本</span><input name="version" value="v1.0" maxlength="16"></label>
+              </div>
+              <label class="field"><span>正文 * <em>20–12000 字</em></span><textarea name="content" rows="5" required placeholder="粘贴合成样例正文；空行分段，句号/问号/分号会被作为切块边界。"></textarea></label>
+              <div class="ai-form-actions">
+                <button class="btn btn-primary btn-small" type="submit" data-perm="knowledge.write">写入并切块</button>
+                <span class="ai-hint" id="kbHint">写入后自动进入检索索引。</span>
+              </div>
+            </form>
+          </div>
+          <div>
+            <div class="subhead"><h3>检索验证</h3><span class="server-chip" id="searchChip">等待查询</span></div>
+            <form class="ai-searchbar" id="searchForm">
+              <input name="query" maxlength="200" placeholder="例如：木蜡油要涂几遍？含水率控制在多少？" aria-label="知识库检索词">
+              <select name="topK" aria-label="返回条数"><option value="3">Top 3</option><option value="5">Top 5</option><option value="8">Top 8</option></select>
+              <button class="btn btn-primary btn-small" type="submit" data-perm="knowledge.search">检索</button>
+            </form>
+            <div class="ai-chiprow" id="searchExamples"></div>
+            <div class="ai-search-results" id="searchResults"><p class="empty-copy">输入问题后检索；每条命中会显示 score 与引用。空查询会被服务端拒绝，无命中会给出建议而不是编造答案。</p></div>
+            <div id="knowledgeDetail"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="agentPanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">智能体 · 本地规则引擎 + 工具调用</div>
+            <h2>多轮对话，工具轨迹与引用都摊开给你看</h2>
+            <p class="panel-copy">意图路由只有三类：问知识 → <code>search_knowledge</code> 并引用；留联系方式 → <code>create_lead</code> 写 CRM；要自动化 → <code>draft_workflow</code> 生成草稿。所有工具调用都会记录参数、结果摘要、成功状态与耗时，不伪造未执行的工具。</p>
+          </div>
+          <div class="ai-head-actions">
+            <span class="server-chip" id="agentChip">未建会话</span>
+            <button class="btn btn-small" id="btnNewSession" data-action="new-session" data-perm="agent.chat">新建会话</button>
+          </div>
+        </div>
+        <div class="agent-layout">
+          <div class="agent-main">
+            <div class="agent-agentline" id="agentAgentLine"><span class="live-dot"></span><span>选择示例问题，或先新建会话。</span></div>
+            <div class="chat ai-chat" id="agentChat"><p class="empty-copy">还没有会话。示例问题会真实创建会话、调用工具并写入 SQLite。</p></div>
+            <div class="ai-chiprow" id="starterQuestions"></div>
+            <form class="ai-agent-form" id="agentForm" data-perm-form="agent.chat">
+              <textarea name="content" rows="2" maxlength="2000" placeholder="例如：黑胡桃餐桌的含水率要控制在多少？" aria-label="给智能体发消息"></textarea>
+              <div class="ai-agent-actions">
+                <span class="ai-hint">回复由本地确定性规则生成，不调用外部大模型。</span>
+                <button class="btn btn-primary btn-small" type="submit" data-perm="agent.chat">发送</button>
+              </div>
+            </form>
+          </div>
+          <aside class="agent-side">
+            <div class="ai-mini-panel">
+              <div class="ai-mini-kicker">ENGINE</div>
+              <div class="ai-mini-title" id="agentEngineLabel">本地规则引擎</div>
+              <p class="ai-mini-copy" id="agentEngineCopy">关键词与字符 n-gram 检索 + 意图路由，无外部 API。</p>
+              <div class="ai-kv" id="agentFacts"></div>
+            </div>
+            <div class="ai-mini-panel">
+              <div class="ai-mini-kicker">TOOL TRACE</div>
+              <div class="ai-mini-title">工具调用轨迹</div>
+              <div id="toolTrail"><p class="empty-copy">首轮回复后显示工具名、参数摘要与耗时。</p></div>
+            </div>
+            <div class="ai-mini-panel">
+              <div class="ai-mini-kicker">CITATIONS</div>
+              <div class="ai-mini-title">引用片段</div>
+              <div id="agentCitations"><p class="empty-copy">知识类回答会附带 docId#chunk 引用。</p></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="panel" id="workflowPanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">自动化工作流 · 触发 / 条件 / 动作 / 重试</div>
+            <h2>每一步都真执行，失败步骤可以补齐后重试</h2>
+            <p class="panel-copy">模板来自 <code>config/ai_industries.json</code>，实例落库后可反复运行。运行记录保存输入、逐步状态、耗时与失败原因；缺必填字段会让校验步骤真实失败，补齐后同一条失败运行可重试并生成 attempt 2，而不是把失败改成成功。</p>
+          </div>
+          <span class="server-chip" id="workflowChip">加载中</span>
+        </div>
+        <div class="split-panel aside-left">
+          <div>
+            <div class="subhead"><h3>工作流模板</h3><span class="server-chip" id="templateChip">—</span></div>
+            <div class="ai-workflow-list" id="workflowTemplates"><p class="empty-copy">加载中…</p></div>
+            <div class="subhead ai-subhead-gap"><h3>工作流实例</h3><span class="server-chip" id="instanceChip">—</span></div>
+            <div class="ai-workflow-list" id="workflowInstances"><p class="empty-copy">还没有实例。从模板创建一个即可运行。</p></div>
+          </div>
+          <div>
+            <div id="workflowDetail"><p class="empty-copy">选择左侧实例查看步骤、运行表单与结果。</p></div>
+            <div id="runResult"></div>
+          </div>
+        </div>
+        <div class="subhead ai-subhead-gap"><h3>运行历史</h3><span class="server-chip" id="runChip">—</span></div>
+        <div class="ai-run-history" id="runHistory"><p class="empty-copy">运行一次后显示历史记录（含失败与重试）。</p></div>
+      </section>
+
+      <section class="panel" id="crmPanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">询盘 / CRM · 与智能体共用一套线索</div>
+            <h2>表单、智能体与工作流写进同一张线索表</h2>
+            <p class="panel-copy">邮箱格式不通过返回 422；阶段只能按行业配置向前推进并记录 notes 与操作人。智能体的 <code>create_lead</code>、工作流的「写入 CRM」与本页询盘表单共用同一存储，不是三套演示数据。</p>
+          </div>
+          <span class="server-chip" id="leadChip">加载中</span>
+        </div>
+        <div class="split-panel aside-right">
+          <div>
+            <div class="table-wrap">
+              <table class="data-table" id="leadTable">
+                <thead><tr><th>线索</th><th>联系</th><th>意向</th><th>预算</th><th>评级</th><th>阶段</th></tr></thead>
+                <tbody><tr><td colspan="6" class="table-empty">加载中…</td></tr></tbody>
+              </table>
+            </div>
+            <div id="leadDetail"><p class="empty-copy">选择一条线索推进阶段并记录备注。</p></div>
+          </div>
+          <div>
+            <div class="subhead"><h3>独立站询盘</h3><span class="server-chip">写 CRM</span></div>
+            <form class="ai-form" id="inquiryForm">
+              <div class="ai-form-row">
+                <label class="field"><span>姓名 *</span><input name="name" required maxlength="60" placeholder="合成姓名，如 林女士"></label>
+                <label class="field"><span>邮箱 *</span><input name="email" type="email" required maxlength="120" placeholder="lin@example.com"></label>
+              </div>
+              <div class="ai-form-row">
+                <label class="field"><span>国家 / 地区</span><input name="country" maxlength="8" value="CN" placeholder="CN / US / JP"></label>
+                <label class="field"><span>预算（数字或文本）</span><input name="budget" maxlength="40" placeholder="120000 或 12 万"></label>
+              </div>
+              <label class="field"><span>需求 *</span><input name="interest" required maxlength="120" placeholder="例如：黑胡桃户外餐桌"></label>
+              <label class="field"><span>留言</span><textarea name="message" rows="3" maxlength="600" placeholder="希望 11 月上门复尺（合成样例）"></textarea></label>
+              <label class="field"><span>提交语言</span><select name="lang"><option value="zh">中文</option><option value="en">English</option><option value="ja">日本語</option></select></label>
+              <div class="ai-form-actions">
+                <button class="btn btn-primary btn-small" type="submit" data-perm="lead.create">提交询盘并写线索</button>
+                <span class="ai-hint">只接受 example.com 等合成样例邮箱；不做真实外发。</span>
+              </div>
+            </form>
+            <div id="inquiryResult"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="growthPanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">出海增长 · 三语独立站 + SEO 元数据</div>
+            <h2>中文 / English / 日本語，同一套行业配置驱动</h2>
+            <p class="panel-copy">站点文案、title / description / keywords、herobanner 与 FAQ 全部来自行业 JSON；SEO 面板用确定性字符串匹配统计关键词覆盖与长度检查，不承诺真实搜索排名。当前演示页设置 <code>noindex,nofollow</code>。</p>
+          </div>
+          <span class="server-chip" id="growthChip">加载中</span>
+        </div>
+        <div class="ai-tabs" id="langTabs" role="tablist">
+          <button class="ai-tab is-active" data-action="set-lang" data-lang="zh" role="tab">中文</button>
+          <button class="ai-tab" data-action="set-lang" data-lang="en" role="tab">English</button>
+          <button class="ai-tab" data-action="set-lang" data-lang="ja" role="tab">日本語</button>
+        </div>
+        <div class="split-panel aside-right">
+          <div class="ai-site-preview" id="sitePreview"><p class="empty-copy">加载中…</p></div>
+          <div id="seoPanel"><p class="empty-copy">加载中…</p></div>
+        </div>
+      </section>
+
+      <section class="panel" id="handbookPanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">FDE 驻企交付手册 · 可折叠</div>
+            <h2>访谈、接入、知识库运维、权限审计、验收与退出</h2>
+            <p class="panel-copy">这是给驻企交付工程师的工作手册，不是营销文案。内容明确写了「不做」的边界、SLA 演示口径、验收方法与退出交接条件；页面用轻量 markdown 渲染，不做富文本执行。</p>
+          </div>
+          <div class="ai-head-actions">
+            <span class="server-chip" id="handbookChip">加载中</span>
+            <button class="btn btn-small" data-action="expand-handbook">展开全部</button>
+            <button class="btn btn-small" data-action="collapse-handbook">收起全部</button>
+          </div>
+        </div>
+        <div class="ai-md-wrap" id="handbookBody"><p class="empty-copy">加载中…</p></div>
+      </section>
+
+      <p class="table-note">合成与脱敏声明：本页客户、工坊、报价、站点与知识文档均为演示样例（邮箱使用 example.com），不代表真实客户、真实工厂设备清单、版权归属或法律效力。AI 为本地规则引擎，不调用外部大模型、不发送真实邮件 / 短信。</p>
+    </div>
+  </main>
+</div>
+<script src="/pages/ui.js"></script>
+<script src="/pages/shell.js"></script>
+<script src="/pages/ai.js"></script>
+</body>
+</html>

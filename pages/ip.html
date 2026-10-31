@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>CraftMesh · C 文化 IP 短剧管线</title>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/pages/pages.css">
+<link rel="stylesheet" href="/pages/ip.css">
+</head>
+<body data-page="ip">
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main-column">
+    <header class="topbar" id="topbar"></header>
+    <div class="content">
+      <section class="page-head">
+        <div class="page-head-copy">
+          <div class="eyebrow">C · 文化 IP 短剧管线 · A07 内容资产纵切</div>
+          <h1>《山谷回声》——从双角色手册，到 40.4 秒可播放样片</h1>
+          <p class="lede">一个真实可点通的原创纸影短剧管线：双角色设定 → 6 场剧本 → 12 格分镜 → 自制 SVG 场景 → 本机语音合成 WAV + SRT 字幕 → 浏览器内时间轴样片 → 规则审核台 → 授权草稿与衍生品规格。所有数据、角色、品牌与规格均为合成样例；所有「智能」判断由本地确定性规则完成，不调用外部大模型。</p>
+          <div class="pill-row">
+            <span class="tag tag-green">可运行 · 非静态原型</span>
+            <span class="tag">合成 / 脱敏样例</span>
+            <span class="tag">离线生成 · 无外部素材</span>
+            <span class="tag">本地规则引擎</span>
+          </div>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-primary" data-action="run-scenario" id="btnScenario">
+            <svg class="icon"><use href="#i-refresh"></use></svg><span>一键跑通 16 步自检</span>
+          </button>
+          <button class="btn" data-action="reset-demo" id="btnReset">重置演示数据</button>
+          <a class="btn btn-ghost" href="/api/ip/config" target="_blank" rel="noreferrer">查看规则配置</a>
+        </div>
+      </section>
+
+      <div class="role-strip" id="roleStrip"></div>
+
+      <section class="kpi-grid" id="kpis" aria-label="文化 IP 管线概览">
+        <div class="kpi-card"><div class="kpi-top"><span>加载中</span></div><div class="kpi-value">—</div><div class="kpi-foot">读取本地 API…</div></div>
+      </section>
+
+      <section class="panel" id="characters">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">A07 · 角色手册 · 双原创角色</div>
+            <h2>远视与远听：先有「能与不能」，再有故事</h2>
+            <p class="panel-copy">两个角色的外观母题、声音画像、能与不能都来自 <code>config/ip_story.json</code>，不是页面里写死的装饰文案。头像与场景卡均为仓库内自制 SVG，无真人照片、无外部素材。</p>
+          </div>
+          <span class="server-chip" id="characterChip">—</span>
+        </div>
+        <div class="ip-character-grid" id="charactersGrid">
+          <p class="empty-copy">角色设定加载中…</p>
+        </div>
+      </section>
+
+      <section class="panel" id="sample">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">样片播放器 · 时间轴切场景 + 真实配音 + 字幕</div>
+            <h2>40.4 秒可播放样片：<span id="playerTitle">山谷回声</span></h2>
+            <p class="panel-copy">下方播放器用 <code>&lt;audio&gt;</code> 播放本机 SAPI 生成的总配音，并按服务端 <code>/api/ip/media-manifest</code> 的真实时间轴切换 12 张 SVG 场景卡。浏览器要求用户手势后才能播放声音，因此不会自动播放。</p>
+          </div>
+          <div class="ip-head-chips">
+            <span class="server-chip" id="playerDurationChip">—</span>
+            <span class="server-chip" id="playerFormatChip">—</span>
+          </div>
+        </div>
+        <div class="ip-player-grid">
+          <div class="ip-player-main">
+            <div class="ip-stage" id="stageFrame">
+              <img id="stageImage" src="/media/scenes/shot-01.svg" alt="分镜 1 场景卡">
+              <div class="ip-stage-shade"></div>
+              <div class="ip-stage-meta">
+                <span class="ip-scene-no" id="stageNo">SHOT 01 / 12</span>
+                <span id="stageScene">回声邮局 · 外景 · 夜</span>
+              </div>
+              <div class="ip-stage-title">山谷回声 <span>VALLEY ECHO</span></div>
+              <div class="ip-subtitle" id="stageCaption"><b id="stageSpeaker">旁白</b><span id="stageLine">山谷尽头的灯，今晚只剩一线。</span></div>
+              <button class="ip-endcard" id="endCard" type="button" data-action="restart-sample" aria-label="重播样片">
+                <span class="ip-endcard-mark">END</span>
+                <strong>样片结束</strong>
+                <span>点击重播 · 全部画面与声音均为本地自制</span>
+              </button>
+            </div>
+            <div class="ip-controls">
+              <button class="btn btn-primary ip-play" id="btnPlay" type="button" aria-label="播放样片"><span id="playLabel">播放</span></button>
+              <button class="btn btn-small" id="btnRestart" type="button">重播</button>
+              <button class="btn btn-small" id="btnMute" type="button" aria-pressed="false">静音</button>
+              <div class="ip-time"><span id="timeNow">00:00.0</span><span class="ip-time-sep">/</span><span id="timeTotal">00:40.4</span></div>
+              <span class="ip-play-note" id="playNote">点击播放，开始 40.4 秒样片</span>
+            </div>
+            <div class="ip-timeline" id="timeline" role="slider" aria-label="样片时间轴" aria-valuemin="0" aria-valuemax="40400" aria-valuenow="0" tabindex="0">
+              <div class="ip-timeline-segments" id="timelineSegments"></div>
+              <div class="ip-timeline-progress" id="timelineProgress"></div>
+              <div class="ip-timeline-head" id="timelineHead"></div>
+            </div>
+            <audio id="ipAudio" preload="metadata" src="/media/voice/ip_sample.wav"></audio>
+          </div>
+          <aside class="ip-shot-rail">
+            <div class="ip-rail-head"><strong>分镜跳转</strong><span id="railHint">点击缩略切换场景</span></div>
+            <div class="ip-thumbs" id="shotThumbs"><p class="empty-copy">分镜加载中…</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="panel" id="scenario">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">一键验收 · 可复跑</div>
+            <h2>16 步全链路自检</h2>
+            <p class="panel-copy">服务端直接调用与页面相同的业务函数，运行前重置本模块演示数据。最后两步故意制造失败：工坊角色越权审核、注入缺失 WAV，用来证明权限与素材校验真的会拦截。</p>
+          </div>
+          <span class="server-chip" id="scenarioChip">未运行</span>
+        </div>
+        <div id="scenarioBody" class="scenario-body">
+          <p class="empty-copy">点击右上角「一键跑通 16 步自检」，或直接调用 <code>POST /api/ip/scenario</code>。</p>
+        </div>
+      </section>
+
+      <section class="panel" id="story">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">剧本 · 分镜 · 时长校验</div>
+            <h2>6 场剧本，12 格分镜，总时长受代码约束</h2>
+            <p class="panel-copy">分镜总时长由服务端逐格累加并校验必须在 30–45 秒内；页面徽标展示同一份校验结果。每格字幕台词同时写入独立 SRT，并作为播放器字幕叠加层的数据来源。</p>
+          </div>
+          <span class="server-chip" id="durationBadge">—</span>
+        </div>
+        <div class="ip-beats" id="beatsGrid"></div>
+        <div class="table-wrap ip-shot-table">
+          <table class="data-table">
+            <thead><tr><th>镜号</th><th>场景</th><th>时长</th><th>画面 / 镜头</th><th>角色</th><th>字幕台词 / 音效</th></tr></thead>
+            <tbody id="shotTableBody"><tr><td colspan="6" class="table-empty">分镜加载中…</td></tr></tbody>
+          </table>
+        </div>
+        <p class="table-note" id="storyNotes">剧本、角色与台词均为原创合成样例；山谷为虚构地点，不对应真实非遗项目或真实人物。</p>
+      </section>
+
+      <section class="panel" id="assets">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">素材清单 · 存在性与时长校验</div>
+            <h2>41 项自制素材，全部可逐项核验</h2>
+            <p class="panel-copy">12 张场景 SVG、12 段分镜 WAV、12 段分镜 SRT、2 张角色设定 SVG、总配音、总字幕与主视觉，全部由仓库内脚本生成。校验会读取 wav 头与 SRT 条数，不只检查文件是否存在。</p>
+          </div>
+          <div class="ip-head-chips">
+            <span class="server-chip" id="assetChip">—</span>
+            <button class="btn btn-small" data-action="validate-assets" id="btnValidateAssets">重新校验素材</button>
+          </div>
+        </div>
+        <div class="split-panel">
+          <div>
+            <div class="ip-asset-summary" id="assetSummary"><p class="empty-copy">素材清单加载中…</p></div>
+            <div id="assetResult"></div>
+          </div>
+          <div>
+            <div class="subhead"><h3>六项硬校验</h3><span class="mono muted">读取文件头 / 字幕条数</span></div>
+            <div class="check-list" id="assetChecks"></div>
+          </div>
+        </div>
+        <details class="ip-asset-details">
+          <summary>展开查看 41 项素材清单（路径 / 大小 / 时长）</summary>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>类别</th><th>素材</th><th>路径</th><th>大小</th><th>时长 / 条数</th></tr></thead>
+              <tbody id="assetTableBody"><tr><td colspan="5" class="table-empty">素材清单加载中…</td></tr></tbody>
+            </table>
+          </div>
+        </details>
+      </section>
+
+      <section class="panel" id="review">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">内容审核台 · 规则 + 留痕</div>
+            <h2>9 条规则，逐条命中并给出修改建议</h2>
+            <p class="panel-copy">审核由本地关键词 / 否定词 / 豁免词规则完成，覆盖真人形象、医疗功效、暴力惊吓、未成年人、传统技艺真实性、改编授权、原创声明、隐私与商业夸大。每次审核写入 SQLite 留痕，可在下方历史中查询。</p>
+          </div>
+          <span class="server-chip" id="reviewCountChip">—</span>
+        </div>
+        <div class="split-panel">
+          <div>
+            <form id="reviewForm" class="ip-review-form" data-action="submit-review">
+              <div class="field">
+                <div class="field-label">待审文案 <span id="reviewChars">0 / 1000</span></div>
+                <textarea id="reviewText" name="text" rows="7" maxlength="1000" placeholder="粘贴一条短剧宣传文案，至少 4 个字">《山谷回声》为原创纸影短剧，角色、画面与配音均为自制；无真人扮演，无外部版权素材；已获授权用于合成样例演示。</textarea>
+              </div>
+              <div class="form-grid">
+                <label class="field"><span>审核对象（可选）</span><input id="reviewTarget" name="target" value="样片宣传文案" maxlength="60"></label>
+                <div class="field"><span>当前角色权限</span><div class="ip-form-static" id="reviewRoleHint">—</div></div>
+              </div>
+              <div class="action-row">
+                <button class="btn btn-small" type="button" data-action="fill-review-pass">填入合规示例</button>
+                <button class="btn btn-small" type="button" data-action="fill-review-reject">填入违规示例</button>
+                <button class="btn btn-primary btn-small" type="submit">提交审核</button>
+              </div>
+              <p class="form-hint">需要角色：<span id="reviewNeeded">—</span>。越权提交会返回 403，并显示服务端的中文拒绝原因。</p>
+            </form>
+          </div>
+          <div>
+            <div class="ip-review-result" id="reviewResult">
+              <div class="ip-result-empty">
+                <span class="ip-result-icon">审</span>
+                <strong>等待审核</strong>
+                <p>提交一条文案后，这里显示 verdict、命中规则、严重级别与服务端给出的修改建议。</p>
+              </div>
+            </div>
+            <p class="mini-note">规则数据位于 <code>config/ip_story.json → review.rules</code>；可增加关键词、严重级别、否定词、豁免词与修复建议，无需改代码。审核结果不构成法律意见。</p>
+          </div>
+        </div>
+        <div class="subhead ip-history-head"><h3>审核留痕</h3><span class="server-chip" id="reviewHistoryChip">—</span></div>
+        <div id="reviewHistory"><p class="empty-copy">暂无审核记录。</p></div>
+      </section>
+
+      <section class="panel" id="license">
+        <div class="panel-head">
+          <div>
+            <div class="panel-kicker">授权 · 衍生品 · 合同模板</div>
+            <h2>授权草稿与 6 个衍生品 SKU</h2>
+            <p class="panel-copy">填写被许可方、用途、区域与期限后，服务端从模板条款生成 12 条合同草稿并写入本地留痕。草稿明确标注「模板样例，不构成法律意见」，不产生真实授权效力。</p>
+          </div>
+          <span class="server-chip" id="licenseChip">—</span>
+        </div>
+        <div class="split-panel">
+          <div>
+            <form id="licenseForm" class="mod-form ip-license-form" data-action="preview-license">
+              <div class="form-grid">
+                <label class="field"><span>被许可方（2–60 字）</span><input name="licensee" value="合成样例文化品牌（演示）" maxlength="60" required></label>
+                <label class="field"><span>用途</span><select name="purpose" id="licensePurpose"></select></label>
+                <label class="field"><span>区域</span><select name="territory" id="licenseTerritory"></select></label>
+                <label class="field"><span>期限</span><select name="term" id="licenseTerm"></select></label>
+              </div>
+              <div class="form-actions">
+                <button class="btn btn-primary btn-small" type="submit">生成授权草稿</button>
+                <span class="form-hint" id="licenseNeeded">—</span>
+              </div>
+            </form>
+            <div class="ip-license-notice"><strong>模板声明</strong>　本页合同仅为产品演示用模板样例，不构成法律意见，也不产生真实授权效力；正式签署前须由执业律师审核。</div>
+            <div class="subhead ip-history-head"><h3>最近草稿</h3><span class="server-chip" id="licenseHistoryChip">—</span></div>
+            <div id="licenseHistory"><p class="empty-copy">暂无授权草稿。</p></div>
+          </div>
+          <div>
+            <div class="ip-license-draft" id="licenseResult">
+              <div class="ip-result-empty"><span class="ip-result-icon">约</span><strong>尚未生成</strong><p>填写左侧表单后，这里显示完整合同草稿、12 条条款与免责声明。</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="subhead ip-history-head"><h3>衍生品 SKU 规格</h3><span class="server-chip" id="skuChip">—</span></div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>SKU</th><th>品类</th><th>规格</th><th>起订量</th><th>建议零售价</th><th>分成</th><th>状态</th></tr></thead>
+            <tbody id="skuTableBody"><tr><td colspan="7" class="table-empty">SKU 加载中…</td></tr></tbody>
+          </table>
+        </div>
+        <p class="table-note" id="skuNote">SKU 规格为合成样例，不代表真实供应商、报价或已上市商品。</p>
+      </section>
+
+      <p class="table-note">本页所有角色、剧本、配音、合同、品牌、SKU 与金额均为合成 / 脱敏样例，不含真人形象，不引用真实客户、真实工厂、真实非遗项目或第三方版权素材；审核与授权内容不构成法律意见。</p>
+    </div>
+  </main>
+</div>
+<script src="/pages/ui.js"></script>
+<script src="/pages/shell.js"></script>
+<script src="/pages/ip.js"></script>
+</body>
+</html>

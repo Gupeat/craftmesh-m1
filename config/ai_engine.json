@@ -1,0 +1,227 @@
+{
+  "_note": "B · 企业 AI 服务层引擎参数与权限。所有判定在本地完成：关键词/字符 n-gram 检索 + 规则路由，不调用外部模型或 API。",
+  "version": "AI-B.1.0",
+  "engine": {
+    "id": "local-rules",
+    "label": "本地规则引擎",
+    "disclosure": "本地确定性关键词与规则引擎，非外部大模型，不调用任何外部 API。",
+    "languages": [
+      "zh",
+      "en",
+      "ja"
+    ],
+    "languageLabels": {
+      "zh": "中文",
+      "en": "English",
+      "ja": "日本語"
+    }
+  },
+  "chunking": {
+    "maxChars": 180,
+    "minChars": 24,
+    "maxChunks": 60
+  },
+  "search": {
+    "topKDefault": 3,
+    "topKMax": 8,
+    "minScore": 2,
+    "weights": {
+      "keyword": 6,
+      "bigram": 2,
+      "trigram": 1,
+      "title": 2,
+      "glossary": 4,
+      "phrase": 8
+    }
+  },
+  "limits": {
+    "contentMaxChars": 12000,
+    "titleMaxChars": 120,
+    "queryMaxChars": 200,
+    "messageMaxChars": 2000,
+    "sessionMessages": 200,
+    "runListLimit": 50
+  },
+  "workflow": {
+    "maxSteps": 20,
+    "retryLimit": 3,
+    "notifyChannel": "in_app"
+  },
+  "emailPattern": "^[A-Za-z0-9._%+\\-]+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,}$",
+  "roles": {
+    "designer": "设计 / 产品",
+    "ops": "运营 / 知识库管理员",
+    "workshop": "工坊（外部协作）",
+    "finance": "财务",
+    "buyer": "客户 / 销售",
+    "admin": "管理员"
+  },
+  "permissions": {
+    "knowledge.search": [
+      "designer",
+      "ops",
+      "workshop",
+      "finance",
+      "buyer",
+      "admin"
+    ],
+    "knowledge.write": [
+      "ops",
+      "admin"
+    ],
+    "agent.chat": [
+      "designer",
+      "ops",
+      "buyer",
+      "admin"
+    ],
+    "lead.create": [
+      "buyer",
+      "ops",
+      "admin"
+    ],
+    "lead.update": [
+      "buyer",
+      "ops",
+      "admin"
+    ],
+    "workflow.write": [
+      "ops",
+      "admin"
+    ],
+    "workflow.run": [
+      "ops",
+      "admin"
+    ],
+    "workflow.retry": [
+      "ops",
+      "admin"
+    ],
+    "industry.switch": [
+      "ops",
+      "admin"
+    ],
+    "scenario.run": [
+      "ops",
+      "admin"
+    ],
+    "demo.reset": [
+      "admin"
+    ]
+  },
+  "actionLabels": {
+    "knowledge.search": "检索知识库",
+    "knowledge.write": "写入知识库",
+    "agent.chat": "与智能体对话",
+    "lead.create": "创建 CRM 线索",
+    "lead.update": "推进 CRM 阶段",
+    "workflow.write": "创建工作流",
+    "workflow.run": "运行工作流",
+    "workflow.retry": "重试工作流",
+    "industry.switch": "切换行业",
+    "scenario.run": "运行全链路自检",
+    "demo.reset": "重置演示数据"
+  },
+  "statusLabels": {
+    "knowledge": {
+      "draft": "草稿",
+      "published": "已发布",
+      "retired": "已下线"
+    },
+    "workflow": {
+      "draft": "草稿",
+      "active": "启用",
+      "paused": "暂停"
+    },
+    "run": {
+      "success": "成功",
+      "failed": "失败"
+    },
+    "session": {
+      "active": "进行中",
+      "closed": "已关闭"
+    }
+  },
+  "stepTypeLabels": {
+    "validate_input": "校验输入",
+    "search_knowledge": "检索知识库",
+    "score_lead": "线索分级",
+    "create_lead": "写入 CRM",
+    "draft_quote": "生成报价草稿",
+    "notify": "通知（站内模拟）",
+    "seo_check": "SEO 覆盖检查"
+  },
+  "countryHints": [
+    {
+      "code": "CN",
+      "label": "中国",
+      "terms": [
+        "中国",
+        "china",
+        "cn",
+        "国内"
+      ]
+    },
+    {
+      "code": "US",
+      "label": "美国",
+      "terms": [
+        "美国",
+        "usa",
+        "us",
+        "united states",
+        "america"
+      ]
+    },
+    {
+      "code": "JP",
+      "label": "日本",
+      "terms": [
+        "日本",
+        "japan",
+        "jp",
+        "東京",
+        "tokyo"
+      ]
+    },
+    {
+      "code": "DE",
+      "label": "德国",
+      "terms": [
+        "德国",
+        "germany",
+        "de",
+        "deutschland"
+      ]
+    },
+    {
+      "code": "GB",
+      "label": "英国",
+      "terms": [
+        "英国",
+        "uk",
+        "united kingdom",
+        "britain"
+      ]
+    },
+    {
+      "code": "AU",
+      "label": "澳大利亚",
+      "terms": [
+        "澳大利亚",
+        "澳洲",
+        "australia",
+        "au"
+      ]
+    },
+    {
+      "code": "CA",
+      "label": "加拿大",
+      "terms": [
+        "加拿大",
+        "canada",
+        "ca"
+      ]
+    }
+  ]
+}
