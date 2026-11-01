@@ -1,6 +1,6 @@
 {
   "url": "https://d84403e8d50c1a.lhr.life",
-  "status": "online",
-  "updatedAt": "2026-11-01T14:08:02Z",
+  "status": "offline",
+  "updatedAt": "2026-11-01T14:38:05Z",
   "note": "Stable entry is GitHub Pages; this file is updated by scripts/publish_demo_url.py when the tunnel address changes."
 }
