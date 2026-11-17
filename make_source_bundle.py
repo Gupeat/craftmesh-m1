@@ -31,7 +31,7 @@ INCLUDE_SUFFIX = {
 }
 ROOT_FILES = (
     "README.md", "TEST-REPORT.md", "Dockerfile", ".dockerignore", ".gitignore",
-    "render.yaml", "requirements.txt",
+    "render.yaml", "requirements.txt", "index.html", "app.js", "styles.css",
 )
 EXCLUDE_PARTS = {".git", ".scratch", "__pycache__", "data", "downloads", "node_modules"}
 EXCLUDE_SUFFIX = {".db", ".pyc", ".log"}
