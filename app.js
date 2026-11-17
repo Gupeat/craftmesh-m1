@@ -247,21 +247,18 @@
     { id: "A05", item: "两个行业组件按配置接入 + FDE 手册", scope: "M3", state: "未开始", cls: "na" },
     { id: "A06", item: "多语言站点 / SEO / 询盘进入 CRM 的 E2E", scope: "M3", state: "未开始", cls: "na" },
     { id: "A07", item: "文化 IP 管线、1 支样片与授权模板", scope: "M4", state: "未开始", cls: "na" },
-    { id: "A08", item: "授权、规则、状态机、分账的单元测试，一条命令全绿", scope: "Demo / M1", state: "30/30", cls: "pass" },
+    { id: "A08", item: "授权、规则、状态机、分账的单元测试，一条命令全绿", scope: "Demo / M1", state: "85/85", cls: "pass" },
     { id: "A09", item: "文档、命令、界面真实对应，不靠 PPT 演示", scope: "Demo / M1", state: "已交付", cls: "pass" },
     { id: "A10", item: "合成数据；不接真实客户 / 工厂；不主张独占传统文化", scope: "Demo / M1", state: "已声明", cls: "pass" }
   ];
 
   const TEST_GROUPS = [
-    { group: "规则引擎", count: "10 条 + 3 硬约束", covers: "硬约束阻断、软约束复核、非法输入", result: "PASS" },
-    { group: "授权校验", count: "5 条", covers: "来源、范围、用途、编号、二创", result: "PASS" },
-    { group: "人工规则对照", count: "10/10", covers: "10 条人工判定与引擎结论一致，3 条硬约束阻断", result: "PASS" },
-    { group: "订单快照", count: "2 条", covers: "授权与报价固化、硬约束拒绝", result: "PASS" },
-    { group: "状态机", count: "4 条", covers: "全链路、越权、非法迁移、备注必填", result: "PASS" },
-    { group: "HTTP API", count: "6 条", covers: "health / bootstrap / check / 生命周期", result: "PASS" },
-    { group: "权限与重置", count: "2 条", covers: "角色 403、管理员 reset", result: "PASS" },
-    { group: "静态白名单", count: "1 条", covers: "页面/JS 可访问，源码与 DB 返回 404", result: "PASS" },
-    { group: "持久化", count: "1 条", covers: "临时 SQLite 关闭与清理", result: "PASS" }
+    { group: "核心逻辑", count: "21 条", covers: "规则引擎、授权校验、人工对照、状态机、持久化", result: "PASS" },
+    { group: "HTTP API", count: "10 条", covers: "health / bootstrap / check / 订单生命周期 / reset", result: "PASS" },
+    { group: "M2 预售与派单", count: "16 条", covers: "成团、工艺单、派单、质检返工、分账、争议", result: "PASS" },
+    { group: "企业 AI", count: "18 条", covers: "知识库、智能体、工作流、三语站、CRM", result: "PASS" },
+    { group: "文化 IP", count: "14 条", covers: "双角色、分镜、配音字幕、审核、授权与 SKU", result: "PASS" },
+    { group: "验收证据", count: "6 条", covers: "静态检查、驾驶舱、证据包、下载", result: "PASS" }
   ];
 
   function renderVerdict() {
