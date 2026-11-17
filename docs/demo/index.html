@@ -98,7 +98,7 @@
     </div>
 
     <div class="sidebar-note">
-      <div class="note-kicker">这不是静态原型</div>
+      <div class="note-kicker">真实运行快照</div>
       <p>页面上的判定、授权、报价、订单状态与审计记录，均由本地 API 与 SQLite 生成。</p>
     </div>
 
@@ -123,7 +123,7 @@
         </div>
       </div>
       <div class="topbar-right">
-        <span class="api-badge" id="apiBadge"><span class="live-dot"></span><span>API 在线</span></span>
+        <span class="api-badge" id="apiBadge"><span class="live-dot"></span><span>静态快照</span></span>
         <label class="role-switcher">
           <span>当前角色</span>
           <select id="roleSelect" aria-label="切换演示角色"><option value="designer">林工 · 设计 / 工艺</option><option value="reviewer">周审 · 评审</option><option value="ops">陈厂 · 生产运营</option><option value="qc">质检组 · 质检</option><option value="finance">财务组 · 结算</option><option value="admin">管理员 · 平台管理</option></select>
@@ -395,7 +395,7 @@
           <div class="boundary-grid">
             <div class="boundary-item is-in">
               <div class="boundary-mark">✓</div>
-              <div><strong>已实现</strong><p>纹样授权校验（来源 / 范围 / 用途 / 编号 / 二创）、10 条规则、3 条硬约束、10/10 人工对照、订单状态机、角色权限、审计、SQLite 持久化、HTTP API、静态资源白名单、30 个自动化测试。</p></div>
+              <div><strong>已实现</strong><p>纹样授权校验（来源 / 范围 / 用途 / 编号 / 二创）、10 条规则、3 条硬约束、10/10 人工对照、订单状态机、角色权限、审计、SQLite 持久化、HTTP API、静态资源白名单、85 个自动化测试。</p></div>
             </div>
             <div class="boundary-item is-out">
               <div class="boundary-mark">—</div>
@@ -504,7 +504,7 @@
           <div class="page-head-copy">
             <div class="eyebrow">EVIDENCE / 05</div>
             <h1>能跑的代码，才叫交付</h1>
-            <p class="lede">核心逻辑与 HTTP API 分开测试：21 个核心单测 + 9 个 API 集成测试。下面是本轮实际运行结果与可复现命令。</p>
+            <p class="lede">核心逻辑与 HTTP API 分开测试：85 个自动化测试，六组：核心 21、API 10、M2 16、AI 18、IP 14、证据 6。下面是本轮实际运行结果与可复现命令。</p>
           </div>
           <div class="page-actions">
             <a class="btn btn-ghost" href="https://github.com/Gupeat/craftmesh-m1/blob/main/TEST-REPORT.md" target="_blank" rel="noreferrer">
@@ -515,10 +515,10 @@
         </header>
 
         <div class="test-metrics">
-          <div class="test-metric is-primary"><span>自动化测试</span><strong>30 / 30</strong><small>全部通过</small></div>
+          <div class="test-metric is-primary"><span>自动化测试</span><strong>85 / 85</strong><small>全部通过</small></div>
           <div class="test-metric"><span>核心单测</span><strong>21</strong><small>规则 / 授权 / 状态机</small></div>
-          <div class="test-metric"><span>API 集成</span><strong>9</strong><small>真实 HTTP 请求</small></div>
-          <div class="test-metric"><span>本轮耗时</span><strong>0.99s</strong><small>Windows · CPython 3.12</small></div>
+          <div class="test-metric"><span>API 集成</span><strong>10</strong><small>真实 HTTP 请求</small></div>
+          <div class="test-metric"><span>本轮耗时</span><strong>8.0s</strong><small>Windows · CPython 3.12</small></div>
         </div>
 
         <div class="two-column">
@@ -530,7 +530,7 @@
               </div>
               <span class="server-chip"><span class="chip-dot"></span>unittest</span>
             </div>
-            <pre class="code-block">cd 1724-demo
+            <pre class="code-block">cd <解压目录>
 python -m unittest discover -s tests -v</pre>
             <p class="panel-copy">测试使用临时 SQLite 数据库，结束后自动清理；API 测试真实启动 HTTP 服务并发出请求，不 mock 传输层。</p>
           </section>
@@ -543,7 +543,7 @@ python -m unittest discover -s tests -v</pre>
               </div>
               <span class="status-pill pass"><span class="status-dot"></span>OK</span>
             </div>
-            <pre class="code-block code-log">Ran 30 tests in 0.987s
+            <pre class="code-block code-log">Ran 85 tests in 8.0s
 
 OK
 
