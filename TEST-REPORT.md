@@ -21,7 +21,7 @@
 复跑命令：
 
 ~~~bash
-cd craftmesh-1724-source
+cd <解压目录>
 
 # 全量单测（85 个）
 python -m unittest discover -s tests -v
