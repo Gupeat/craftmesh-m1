@@ -21,7 +21,7 @@
 复跑命令：
 
 ~~~bash
-cd clawhunt/1724-demo
+cd craftmesh-1724-source
 
 # 全量单测（85 个）
 python -m unittest discover -s tests -v
