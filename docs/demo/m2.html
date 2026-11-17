@@ -51,7 +51,7 @@
       </div>
       <div class="sidebar-note">
         <div class="note-kicker">不是静态原型</div>
-        <p>本页所有状态、金额与判定均由本地 API 与 SQLite 实时生成，可复跑、可审计。</p>
+        <p>本页数据取自一次真实本地 API 运行，为只读快照；复跑见源码包。</p>
       </div>
       <div class="sidebar-foot">
         <span class="live-dot"></span>
@@ -69,7 +69,7 @@
         </div>
       </div>
       <div class="topbar-right">
-        <span class="api-badge" id="apiBadge"><span class="live-dot"></span><span>API 在线</span></span>
+        <span class="api-badge" id="apiBadge"><span class="live-dot"></span><span>静态快照</span></span>
         <label class="role-switcher"><span>当前角色</span>
           <select id="shellRole" aria-label="切换演示角色">
             <option value="designer">设计师</option><option value="ops">生产运营</option><option value="workshop">工坊</option><option value="finance">财务</option><option value="buyer">买家 / 支持者</option><option value="admin">管理员</option>
@@ -82,7 +82,7 @@
         <div class="page-head-copy">
           <div class="eyebrow">M2 · C2M 预售与制造协同</div>
           <h1>从一张纹样，到预售成团、工坊派单与分账</h1>
-          <p class="lede">预售价复用 M1 的报价与授权规则；成团、派单、质检、返工、结算、争议全部由本地 API 与 SQLite 实时生成。派单前会按工坊公开能力（工艺 / 材料 / 尺寸 / 起订量 / 在制产能）做 5 项校验，不匹配就拒绝并说明原因。</p>
+          <p class="lede">预售价复用 M1 的报价与授权规则；成团、派单、质检、返工、结算、争议均由本地规则引擎处理，本页取自一次真实运行的只读快照。派单前会按工坊公开能力（工艺 / 材料 / 尺寸 / 起订量 / 在制产能）做 5 项校验，不匹配就拒绝并说明原因。</p>
         </div>
         <div class="page-actions">
           <button class="btn btn-primary" data-action="run-scenario" id="btnScenario">
